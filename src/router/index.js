@@ -76,84 +76,15 @@ export const constantRouterMap = [
         meta: { title: 'dashboard', icon: 'dashboard', noCache: true, affix: true }
       }
     ]
-  },
-  // 数据模型demo
-  {
-    path: '/data-model',
-    component: Layout,
-    redirect: '/data-model/index',
-    hidden: true,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/data-model/index'),
-        name: 'DataModel',
-        meta: { title: '数据模型', icon: 'dataModel', noCache: true, affix: true }
-      }
-    ]
-  },
-  // 数据报表demo
-  {
-    path: '/data-report',
-    component: Layout,
-    redirect: '/data-report/index',
-    hidden: true,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/data-report/DataReport.vue'),
-        name: 'DataReport',
-        meta: { title: '数据报表', icon: 'dataReport', noCache: true, affix: true }
-      }
-    ]
-  },
-  // 笔记识别demo
-  {
-    path: '/handwriting',
-    component: Layout,
-    redirect: '/handwriting/index',
-    hidden: true,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/handwriting/index'),
-        name: 'Handwriting',
-        meta: { title: '笔记识别', icon: 'Handwriting', noCache: true, affix: true }
-      },
-      {
-        path: 'result',
-        component: () => import('@/views/handwriting/result/index'),
-        name: 'Handwriting.result',
-        meta: { title: '对比分析结果', icon: 'Handwriting', noCache: true, affix: true }
-      },
-      {
-        path: 'cutDemo',
-        component: () => import('@/views/handwriting/cut-demo/index'),
-        name: 'Handwriting.cutDemo',
-        meta: {
-          title: '切片调整demo',
-          icon: 'Handwriting',
-          noCache: true,
-          affix: true
-        }
-      }
-    ]
-  },
-  // 印章鉴定demo
-  {
-    path: '/stamp',
-    component: Layout,
-    redirect: '/stamp/index',
-    hidden: true,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/stamp/index'),
-        name: 'Stamp',
-        meta: { title: '印章鉴定', icon: 'Stamp', noCache: true, affix: true }
-      }
-    ]
   }
+  // {
+  //   path: '',
+  //   component: Layout,
+  //   redirect: '',
+  //   children:[
+
+  //   ]
+  // }
 ]
 
 export default new Router({

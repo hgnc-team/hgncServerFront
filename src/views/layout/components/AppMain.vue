@@ -29,6 +29,8 @@ export default {
   width: 100%;
   position: relative;
   overflow: hidden;
+  /*一屏高度,传递到子元素亦是一屏，不做次设置，即使子元素设置height:100%,无法生效，占满一屏*/
+  display:flex;
 }
 </style>
 
