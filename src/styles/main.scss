@@ -1,0 +1,28 @@
+$custom-brand-color: #409EFF;
+
+.label-info, .badge-info{
+    background: $custom-brand-color;
+}
+.badge {
+    margin-left:5px;
+}
+.nav-pills{
+    li{
+        a{
+            padding: 5px 8px;
+        }
+    }
+    .active{
+        a{
+            .badge{
+                color:#fff;
+                background: $custom-brand-color;
+            }
+        }
+    }
+}
+
+// 定制样式
+.py-nav{
+    display:inline-block;
+}

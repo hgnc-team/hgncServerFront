@@ -1,6 +1,17 @@
 export default {
   route: {
     dashboard: '首页',
+    vendorsManage: '商家管理',
+    vendorsManageSelfRunShop: '自营店铺',
+    checkInBusiness: '入驻商家',
+    businessToBeAudited: '待审核商家',
+    businessCateManage: '商家分类',
+    engageCities: '经营城市',
+    goodsManage: '商品管理',
+    goodsList: '商品列表',
+    goodsRecycleBin: '商品回收站',
+    goodsCates: '商品分类',
+    goodsBrands: '商品品牌',
     introduction: '简述',
     documentation: '文档',
     guide: '引导页',

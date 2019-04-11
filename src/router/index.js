@@ -76,15 +76,97 @@ export const constantRouterMap = [
         meta: { title: 'dashboard', icon: 'dashboard', noCache: true, affix: true }
       }
     ]
+  },
+  {
+    // 商家管理
+    path: '/vendorsManage',
+    component: Layout,
+    redirect: '/vendorsManage/index',
+    meta: { title: 'vendorsManage', icon: 'dashboard', noCache: true, affix: true },
+    children: [
+    // 自营店铺
+      {
+        path: 'index',
+        component: () =>
+                    import('@/views/vendors-manage/index'),
+        name: 'vendorsManageIndex',
+        meta: { title: 'checkInBusiness', icon: 'dashboard', noCache: true, affix: true }
+      },
+      // 入住商家
+      {
+        path: 'selfRunShop',
+        component: () =>
+                import('@/views/vendors-manage/self-run-shop'),
+        name: 'vendorsManageSelfRunShop',
+        meta: { title: 'vendorsManageSelfRunShop', icon: 'dashboard', noCache: true }
+      },
+      // 待审核商家
+      {
+        path: 'businessToBeAudited',
+        component: () =>
+                import('@/views/vendors-manage/business-to-be-audited'),
+        name: 'businessToBeAudited',
+        meta: { title: 'businessToBeAudited', icon: 'dashboard', noCache: true }
+      },
+      // 商家分类
+      {
+        path: 'businessCateManage',
+        component: () =>
+                import('@/views/vendors-manage/business-cate-manage'),
+        name: 'businessCateManage',
+        meta: { title: 'businessCateManage', icon: 'dashboard', noCache: true }
+      },
+      // 经营城市
+      {
+        path: 'engageCities',
+        component: () =>
+                import('@/views/vendors-manage/engage-cities'),
+        name: 'engageCities',
+        meta: { title: 'engageCities', icon: 'dashboard', noCache: true }
+      }
+    ]
+  },
+  {
+    // 商品管理
+    path: '/goodsManage',
+    component: Layout,
+    redirect: '/goodsManage/index',
+    meta: { title: 'goodsManage', icon: 'dashboard', noCache: true, affix: true },
+    children: [
+      // 商品列表
+      {
+        path: 'index',
+        component: () =>
+                    import('@/views/goods-manage/index'),
+        name: 'goodsManageIndex',
+        meta: { title: 'goodsList', icon: 'dashboard', noCache: true, affix: true }
+      },
+      // 商品回收站
+      {
+        path: '/goodsRecycleBin',
+        component: () =>
+                import('@/views/goods-manage/goods-recycle-bin'),
+        name: 'goodsRecycleBin',
+        meta: { title: 'goodsRecycleBin', icon: 'dashboard', noCache: true }
+      },
+      // 商品分类
+      {
+        path: '/goodsCates',
+        component: () =>
+                import('@/views/goods-manage/goods-cates'),
+        name: 'goodsCates',
+        meta: { title: 'goodsCates', icon: 'dashboard', noCache: true }
+      },
+      // 商品品牌
+      {
+        path: '/goodsBrands',
+        component: () =>
+                import('@/views/goods-manage/goods-brands'),
+        name: 'goodsBrands',
+        meta: { title: 'goodsBrands', icon: 'dashboard', noCache: true }
+      }
+    ]
   }
-  // {
-  //   path: '',
-  //   component: Layout,
-  //   redirect: '',
-  //   children:[
-
-  //   ]
-  // }
 ]
 
 export default new Router({
