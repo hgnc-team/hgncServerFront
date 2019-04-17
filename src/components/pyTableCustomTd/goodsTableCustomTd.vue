@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!--显示缩略图-->
     <span v-if="type === 'image'" class="thumb-img-wrap">
       <el-popover
         placement="right"
@@ -9,6 +10,7 @@
         <span slot="reference" class="editable-click cursor_pointer" ><img :src="data.thumb"></span>
       </el-popover>
     </span>
+    <!--带编辑功能文本字段-->
     <span v-else-if="type === 'input'">
       <el-popover
         placement="top"
@@ -34,6 +36,7 @@
         <span slot="reference" class="editable-click cursor_pointer">{{ copyData[prop] }}</span>
       </el-popover>
       <br>
+      <!--特殊的文本下面 展示一行操作按钮 ecjia的设计-->
       <span v-if="isRowMenuWrapCell && data.id === currentId">
         <ul class="goodsOpMenu">
           <li><a href="jvascript:void(0)">编辑</a></li>
@@ -47,13 +50,43 @@
         </ul>
       </span>
     </span>
+    <!--开关式字段-->
     <span v-else-if="type === 'switch'">
       <el-form :inline="true" :model="data">
         <el-switch v-model="data[prop]" />
       </el-form>
     </span>
+    <!--普通文本字段-->
     <span v-else-if="type === 'text'">
       <span class="py-text-danger">{{ data[prop] }}</span>
+    </span>
+    <!--下拉列表字段-->
+    <span v-else-if="type === 'select'">
+      <el-popover
+        placement="top"
+        popper-class="editablePopper"
+        trigger="click"
+        @hide="resetData">
+        <div class="editable-container">
+          <h3 class="popover-title">请输入{{ name }}</h3>
+          <div class="popover-content">
+            <el-form :inline="true" :model="data" class="editable-form-inline">
+              <el-form-item label="">
+                <el-select v-model="data.reviewStatus" size="mini" placeholder="请选择审核状态" value-key="value">
+                  <el-option v-for="item in preList.reviewStatusList" :key="item.value" :label="item.label" :value="item" />
+                </el-select>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" size="mini">确定</el-button>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="default" size="mini">取消</el-button>
+              </el-form-item>
+            </el-form>
+          </div>
+        </div>
+        <span slot="reference" class="editable-click cursor_pointer">{{ copyData[prop] }}</span>
+      </el-popover>
     </span>
   </div>
 </template>
@@ -93,7 +126,33 @@ export default {
       // 表单模型
       formModel: {},
       // data副本
-      copyData: _.clone(this.data)
+      copyData: _.clone(this.data),
+      // 以下内容在src\views\goods-manage\index.vue中有重复
+      preList: {
+        // 选择审核状态预置选项
+        reviewStatusList: [
+          {
+            value: '-1',
+            label: '请选择审核状态'
+          },
+          {
+            value: '0',
+            label: '未审核'
+          },
+          {
+            value: '1',
+            label: '审核未通过'
+          },
+          {
+            value: '2',
+            label: '已审核'
+          },
+          {
+            value: '3',
+            label: '无需审核'
+          }
+        ]
+      }
     }
   },
   methods: {
