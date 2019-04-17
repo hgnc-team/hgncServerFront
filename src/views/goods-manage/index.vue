@@ -83,6 +83,7 @@
       <el-table
         :data="tableData"
         style="width:100%;"
+        header-row-class-name="py-table-header"
         stripe
         @cell-mouse-enter="handleCellMouseEnter"
         @cell-mouse-leave="handleCellMouseLeave">
@@ -93,6 +94,17 @@
           </template>
         </el-table-column>
       </el-table>
+      <div class="pageNavWrap">
+        <el-pagination
+          :current-page="1"
+          :page-sizes="[100, 200, 300, 400]"
+          :page-size="100"
+          :total="400"
+          layout="total, sizes, prev, pager, next, jumper"
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange" />
+      </div>
     </el-main>
   </el-container>
 </template>
@@ -259,6 +271,12 @@ export default {
     }, 0)
   },
   methods: {
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`)
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`)
+    },
     handleCommand(command) {
       console.log(command)
       this.mainForm.batchOp = command

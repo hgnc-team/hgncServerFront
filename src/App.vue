@@ -32,4 +32,22 @@ export default{
   // 区别于bootstrap工具类.text-danger
   color:#c62626
 }
+//el-table表头定制样式
+.py-table-header{
+  th{
+    background-color:#ebf2f6;
+    font-weight:bold;
+    text-shadow: 1px 1px 0 #fff;
+    color:#222;
+  }
+}
+.pageNavWrap{
+  background-color: #F5F5F5;
+  border: 1px solid #E3E3E3;
+  border-radius: 4px;
+  box-shadow: none;
+  margin: 10px 0px;
+  padding: 5px;
+  text-align:right;
+}
 </style>
