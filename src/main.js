@@ -36,6 +36,9 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  data: {
+    eventHub: new Vue()
+  },
   store,
   i18n,
   render: h => h(App)

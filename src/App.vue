@@ -23,4 +23,13 @@ export default{
     padding-bottom: 5px;
   }
 }
+
+//列表列可编辑popper弹窗样式
+.editablePopper{
+  padding:0;
+}
+.py-text-danger{
+  // 区别于bootstrap工具类.text-danger
+  color:#c62626
+}
 </style>
