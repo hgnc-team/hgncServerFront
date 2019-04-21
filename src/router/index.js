@@ -73,7 +73,7 @@ export const constantRouterMap = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: 'dashboard', icon: 'dashboard', noCache: true, affix: true }
+        meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
       }
     ]
   },
@@ -82,7 +82,7 @@ export const constantRouterMap = [
     path: '/vendorsManage',
     component: Layout,
     redirect: '/vendorsManage/index',
-    meta: { title: 'vendorsManage', icon: 'dashboard', noCache: true, affix: true },
+    meta: { title: 'vendorsManage', icon: 'dashboard', noCache: true },
     children: [
     // 自营店铺
       {
@@ -90,7 +90,7 @@ export const constantRouterMap = [
         component: () =>
                     import('@/views/vendors-manage/index'),
         name: 'vendorsManageIndex',
-        meta: { title: 'checkInBusiness', icon: 'dashboard', noCache: true, affix: true }
+        meta: { title: 'checkInBusiness', icon: 'dashboard', noCache: true }
       },
       // 入住商家
       {
@@ -131,15 +131,24 @@ export const constantRouterMap = [
     path: '/goodsManage',
     component: Layout,
     redirect: '/goodsManage/index',
-    meta: { title: 'goodsManage', icon: 'dashboard', noCache: true, affix: true },
+    meta: { title: 'goodsManage', icon: 'dashboard', noCache: true },
     children: [
       // 商品列表
       {
         path: 'index',
         component: () =>
                     import('@/views/goods-manage/index'),
-        name: 'goodsManageIndex',
-        meta: { title: 'goodsList', icon: 'dashboard', noCache: true, affix: true }
+        name: 'goodsList',
+        meta: { title: 'goodsList', icon: 'dashboard', noCache: true },
+        children: [
+          { path: 'prodEdit',
+            hidden: true,
+            component: () =>
+                  import('@/views/goods-manage/prod-edit/index'),
+            name: 'prodEditIndex',
+            meta: { title: 'prodEdit.title', icon: 'dashboard', noCache: true }
+          }
+        ]
       },
       // 商品回收站
       {

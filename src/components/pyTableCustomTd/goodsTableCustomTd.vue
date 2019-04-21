@@ -39,7 +39,7 @@
       <!--特殊的文本下面 展示一行操作按钮 ecjia的设计-->
       <span v-if="isRowMenuWrapCell && data.id === currentId">
         <ul class="goodsOpMenu">
-          <li><a href="jvascript:void(0)">编辑</a></li>
+          <li><router-link to="/goodsManage/index/prodEdit">编辑</router-link></li>
           <li><a href="jvascript:void(0)">商品属性</a></li>
           <li><a href="jvascript:void(0)">商品相册</a></li>
           <li><a href="jvascript:void(0)">关联商品</a></li>

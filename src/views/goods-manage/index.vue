@@ -106,6 +106,7 @@
           @current-change="handleCurrentChange" />
       </div>
     </el-main>
+    <router-view />
   </el-container>
 </template>
 
@@ -122,6 +123,11 @@ export default {
   },
   data() {
     return {
+      // 一个蹩脚的办法，当前商品列表 和 编辑商品被组成了父子路由关系
+      // 为的是在面包屑导航上显示出"首页/商品列表/编辑商品"的效果
+      // 引起另一个问题，父子路由同时显示在页面上，
+      // currentLevel 指定当前页面显示的路由深度 0 代表父 1 代表子 2代表孙依次类推
+      currentLevel: 0,
       // 商品列表sheme
       tableSheme: tableSheme,
       // 当前选中商品的id
@@ -265,6 +271,15 @@ export default {
       }
     }
   },
+  // beforeRouteUpdate(to, from, next) {
+  //   console.log(to)
+  //   console.log(from)
+  //   if (to.name === 'prodEditIndex') {
+  //     this.currentLevel = 1
+  //     // alert(1)
+  //   }
+  //   next()
+  // },
   mounted() {
     setTimeout(() => {
       this.tableData = tableDataForTest

@@ -12,6 +12,9 @@ export default {
     goodsRecycleBin: '商品回收站',
     goodsCates: '商品分类',
     goodsBrands: '商品品牌',
+    prodEdit: {
+      title: '编辑商品'
+    },
     introduction: '简述',
     documentation: '文档',
     guide: '引导页',
