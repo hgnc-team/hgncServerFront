@@ -7,9 +7,9 @@
         </el-form-item>
         <el-form-item label="商品货号">
           <el-input v-model="form.prodNo" />
-          <small>
+          <!-- <small>
             如果您不输入商品货号，系统将自动生成一个唯一的货号。
-          </small>
+          </small> -->
         </el-form-item>
 
         <el-form-item label="本店售价">

@@ -57,6 +57,7 @@
         "sortablejs": "1.7.0",
         "tui-editor": "1.2.7",
         "v-charts": "^1.19.0",
+        "v-umeditor": "^0.4.4",
         "vue": "2.5.17",
         "vue-contextmenu": "^1.5.6",
         "vue-count-to": "1.0.13",
