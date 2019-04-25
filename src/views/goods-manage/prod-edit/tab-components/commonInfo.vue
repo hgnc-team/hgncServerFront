@@ -1,7 +1,7 @@
 <template>
-  <el-container>
-    <el-main style="padding:20px;">
-      <el-form ref="commonInfoForm" :model="form" :label-position="'left'" label-width="100px;" class="commonForm" >
+  <el-form ref="commonInfoForm" :model="form" :label-position="'left'" label-width="100px;" class="commonForm" >
+    <el-container>
+      <el-main style="padding:20px;">
         <el-form-item label="商品名称">
           <el-input v-model="form.prodName" />
         </el-form-item>
@@ -56,7 +56,7 @@
           </el-checkbox>
         </el-form-item>
 
-        <el-collapse v-model="activeCollapseName">
+        <el-collapse>
           <el-collapse-item title="SEO优化" name="1">
             <el-form-item label="关键字">
               <el-input v-model="form.seoKeywords" />
@@ -69,18 +69,52 @@
           </el-collapse-item>
         </el-collapse>
 
-        <el-collapse v-model="activeCollapseName">
+        <el-collapse>
           <el-collapse-item title="备注信息" name="1">
             <el-form-item label="商家备注">
               <el-input v-model="form.remarks" type="textarea" />
             </el-form-item>
           </el-collapse-item>
         </el-collapse>
-      </el-form>
-    </el-main>
+      </el-main>
 
-    <el-aside style="width:350px;">132</el-aside>
-  </el-container>
+      <el-aside style="width:350px;">
+        <el-collapse>
+          <el-collapse-item title="发布" name="1">
+            <el-form-item label="上架：">
+              <el-checkbox v-model="form.onSale">
+                打勾表示允许销售，否则不允许销售。
+              </el-checkbox>
+            </el-form-item>
+
+            <el-form-item label="加入推荐：">
+              <!-- {{ form.addSuggestList }} -->
+              <el-checkbox-group v-model="form.addSuggestList">
+                <el-checkbox label="精品" value="0" />
+                <el-checkbox label="新品" value="1" />
+                <el-checkbox label="热销" value="2" />
+              </el-checkbox-group>
+            </el-form-item>
+
+          </el-collapse-item>
+        </el-collapse>
+
+        <el-collapse>
+          <el-collapse-item title="商品分类" name="1">
+            <el-form-item label="选择商品分类">
+              123
+            </el-form-item>
+
+            <el-form-item label="选择扩展分类">
+              123
+            </el-form-item>
+
+          </el-collapse-item>
+        </el-collapse>
+
+      </el-aside>
+    </el-container>
+  </el-form>
 </template>
 
 <script>
@@ -109,6 +143,8 @@ export default {
         unit: 'g',
         // 作为商品
         forSale: true,
+        // 上架
+        onSale: true,
         // 是否包邮
         freeShip: false,
         // seo优化-关键字
@@ -116,7 +152,9 @@ export default {
         // seo优化-简单描述
         seoDescrib: '',
         // 商家备注
-        remarks: ''
+        remarks: '',
+        // 加入推荐数组
+        addSuggestList: []
       }
     }
   }
