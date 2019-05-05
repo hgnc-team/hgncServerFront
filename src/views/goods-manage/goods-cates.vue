@@ -4,10 +4,16 @@
       <h3 class="heading">商品分类
         <span style="float:right;margin-top:-3px;">
           <router-link to="/goodsManage/index">
-            <el-button type="default" size="mini" style="">转移商品</el-button>
+            <el-button type="default" size="mini" style="">
+              <font-awesome-icon :icon="['fas', 'exchange-alt']" />
+              转移商品
+            </el-button>
           </router-link>
           <router-link to="/goodsManage/index">
-            <el-button type="default" size="mini" style="">添加商品分类</el-button>
+            <el-button type="default" size="mini" style="">
+              <font-awesome-icon :icon="['fas', 'plus']" />
+              添加商品分类
+            </el-button>
           </router-link>
         </span>
       </h3>
@@ -27,6 +33,21 @@
           <span v-else-if="item.prop !== 'cateName'">
             <goods-table-custom-td :prop="item.prop" :name="item.name" :link-color="item.linkColor" :type="item.type" :data="scope.row" :is-row-menu-wrap-cell="item.isRowMenuWrapCell || false"/>
           </span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="operate" label="操作" width="130">
+        <template slot-scope="scope">
+          <div>
+            <el-button size="medium" type="text">
+              <font-awesome-icon :icon="['fas', 'sign-in-alt']" size="lg" fixed-width/>
+            </el-button>
+            <el-button size="medium" type="text">
+              <font-awesome-icon :icon="['fas', 'edit']" size="lg" fixed-width/>
+            </el-button>
+            <el-button size="medium" type="text">
+              <font-awesome-icon :icon="['fas', 'trash-alt']" size="lg" fixed-width class="py-text-danger"/>
+            </el-button>
+          </div>
         </template>
       </el-table-column>
     </el-table>
