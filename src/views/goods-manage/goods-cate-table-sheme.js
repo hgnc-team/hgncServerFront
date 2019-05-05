@@ -11,6 +11,7 @@ export default [
     prop: 'goodsNum',
     name: '商品数量',
     type: 'text',
+    linkColor: 'normal',
     editable: false,
     sortable: false,
     width: 'auto'
@@ -26,33 +27,33 @@ export default [
   {
     prop: 'priceGrade',
     name: '价格分级',
-    type: 'text',
-    editable: false,
+    type: 'input',
+    editable: true,
     sortable: false,
     width: 'auto'
   },
   {
     prop: 'sort',
     name: '排序',
-    type: 'text',
-    editable: false,
+    type: 'input',
+    editable: true,
     sortable: true,
     width: 'auto'
   },
   {
     prop: 'visible',
     name: '是否显示',
-    type: 'text',
-    editable: false,
-    sortable: false,
-    width: 'auto'
-  },
-  {
-    prop: 'operate',
-    name: '操作',
-    type: 'text',
+    type: 'switch',
     editable: false,
     sortable: false,
     width: 'auto'
   }
+  // {
+  //   prop: 'operate',
+  //   name: '操作',
+  //   type: 'text',
+  //   editable: false,
+  //   sortable: false,
+  //   width: 'auto'
+  // }
 ]

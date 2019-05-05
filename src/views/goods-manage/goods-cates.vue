@@ -19,7 +19,14 @@
       stripe>
       <el-table-column v-for="item in tableSheme" :key="item.prop" :prop="item.prop" :label="item.name" :sortable="item.sortable" :width="item.width">
         <template slot-scope="scope">
-          {{ scope.row[item.prop] }}
+          <span v-if="item.prop === 'cateName'">
+            <router-link to="/goodsManage/index">
+              <font-awesome-icon :icon="['far', 'minus-square']" style="margin-right:5px;"/>{{ scope.row[item.prop] }}
+            </router-link>
+          </span>
+          <span v-else-if="item.prop !== 'cateName'">
+            <goods-table-custom-td :prop="item.prop" :name="item.name" :link-color="item.linkColor" :type="item.type" :data="scope.row" :is-row-menu-wrap-cell="item.isRowMenuWrapCell || false"/>
+          </span>
         </template>
       </el-table-column>
     </el-table>
@@ -29,17 +36,16 @@
 <script>
 import tableSheme from './goods-cate-table-sheme'
 import tableDataForTest from './goods-cate-table-test-data'
+import goodsTableCustomTd from '../../components/pyTableCustomTd/goodsTableCustomTd'
 
 export default {
   name: 'GoodsCates',
   components: {
-
+    goodsTableCustomTd
   },
   data() {
     return {
-      tableData: [
-
-      ],
+      tableData: [],
       tableSheme: tableSheme
     }
   },

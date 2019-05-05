@@ -58,7 +58,7 @@
     </span>
     <!--普通文本字段-->
     <span v-else-if="type === 'text'">
-      <span class="py-text-danger">{{ data[prop] }}</span>
+      <span :class="{'py-text-danger': linkColor === 'danger'}">{{ data[prop] }}</span>
     </span>
     <!--下拉列表字段-->
     <span v-else-if="type === 'select'">
@@ -99,6 +99,10 @@ export default {
     type: {
       type: String,
       default: 'text'
+    },
+    linkColor: {
+      type: String,
+      default: 'normal'
     },
     data: {
       type: Object,

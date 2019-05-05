@@ -18,6 +18,7 @@ export default [
     prop: 'sellerName',
     name: '商家名称',
     type: 'text',
+    linkColor: 'danger',
     editable: false,
     sortable: false
   },
