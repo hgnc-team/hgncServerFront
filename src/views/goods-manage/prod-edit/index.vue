@@ -3,7 +3,10 @@
     <div>
       <h3 class="heading">编辑商品
         <router-link to="/goodsManage/index">
-          <el-button type="default" size="mini" style="float:right;margin-top:-3px;">返回商品列表</el-button>
+          <el-button type="default" size="mini" style="float:right;margin-top:-3px;">
+            <font-awesome-icon :icon="['fas', 'reply']" />
+            返回商品列表
+          </el-button>
         </router-link>
       </h3>
     </div>

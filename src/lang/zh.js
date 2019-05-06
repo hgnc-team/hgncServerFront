@@ -15,6 +15,12 @@ export default {
     prodEdit: {
       title: '编辑商品'
     },
+    cateEdit: {
+      title: '编辑商品分类',
+      add: '添加商品分类',
+      edit: '编辑商品分类',
+      transfer: '转移商品'
+    },
     introduction: '简述',
     documentation: '文档',
     guide: '引导页',

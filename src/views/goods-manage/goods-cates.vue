@@ -3,13 +3,13 @@
     <div>
       <h3 class="heading">商品分类
         <span style="float:right;margin-top:-3px;">
-          <router-link to="/goodsManage/index">
+          <router-link to="/goodsCates/transferProds">
             <el-button type="default" size="mini" style="">
               <font-awesome-icon :icon="['fas', 'exchange-alt']" />
               转移商品
             </el-button>
           </router-link>
-          <router-link to="/goodsManage/index">
+          <router-link to="/goodsCates/goodsCateEdit">
             <el-button type="default" size="mini" style="">
               <font-awesome-icon :icon="['fas', 'plus']" />
               添加商品分类
@@ -41,9 +41,11 @@
             <el-button size="medium" type="text">
               <font-awesome-icon :icon="['fas', 'sign-in-alt']" size="lg" fixed-width/>
             </el-button>
-            <el-button size="medium" type="text">
-              <font-awesome-icon :icon="['fas', 'edit']" size="lg" fixed-width/>
-            </el-button>
+            <router-link to="/goodsCates/goodsCateEdit">
+              <el-button size="medium" type="text">
+                <font-awesome-icon :icon="['fas', 'edit']" size="lg" fixed-width/>
+              </el-button>
+            </router-link>
             <el-button size="medium" type="text">
               <font-awesome-icon :icon="['fas', 'trash-alt']" size="lg" fixed-width class="py-text-danger"/>
             </el-button>
@@ -51,6 +53,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <router-view />
   </el-main>
 </template>
 

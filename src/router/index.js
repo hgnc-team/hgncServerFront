@@ -73,7 +73,7 @@ export const constantRouterMap = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
+        meta: { title: 'dashboard', icon: 'home', noCache: true }
       }
     ]
   },
@@ -82,23 +82,23 @@ export const constantRouterMap = [
     path: '/vendorsManage',
     component: Layout,
     redirect: '/vendorsManage/index',
-    meta: { title: 'vendorsManage', icon: 'dashboard', noCache: true },
+    meta: { title: 'vendorsManage', icon: 'store', noCache: true },
     children: [
-    // 自营店铺
+    // 入住商家
       {
         path: 'index',
         component: () =>
                     import('@/views/vendors-manage/index'),
         name: 'vendorsManageIndex',
-        meta: { title: 'checkInBusiness', icon: 'dashboard', noCache: true }
+        meta: { title: 'checkInBusiness', icon: 'store-alt', noCache: true }
       },
-      // 入住商家
+      // 自营店铺
       {
         path: 'selfRunShop',
         component: () =>
                 import('@/views/vendors-manage/self-run-shop'),
         name: 'vendorsManageSelfRunShop',
-        meta: { title: 'vendorsManageSelfRunShop', icon: 'dashboard', noCache: true }
+        meta: { title: 'vendorsManageSelfRunShop', icon: 'certificate', noCache: true }
       },
       // 待审核商家
       {
@@ -106,7 +106,7 @@ export const constantRouterMap = [
         component: () =>
                 import('@/views/vendors-manage/business-to-be-audited'),
         name: 'businessToBeAudited',
-        meta: { title: 'businessToBeAudited', icon: 'dashboard', noCache: true }
+        meta: { title: 'businessToBeAudited', icon: 'envelope-open-text', noCache: true }
       },
       // 商家分类
       {
@@ -114,7 +114,7 @@ export const constantRouterMap = [
         component: () =>
                 import('@/views/vendors-manage/business-cate-manage'),
         name: 'businessCateManage',
-        meta: { title: 'businessCateManage', icon: 'dashboard', noCache: true }
+        meta: { title: 'businessCateManage', icon: 'list-alt', noCache: true }
       },
       // 经营城市
       {
@@ -122,7 +122,7 @@ export const constantRouterMap = [
         component: () =>
                 import('@/views/vendors-manage/engage-cities'),
         name: 'engageCities',
-        meta: { title: 'engageCities', icon: 'dashboard', noCache: true }
+        meta: { title: 'engageCities', icon: 'city', noCache: true }
       }
     ]
   },
@@ -131,7 +131,7 @@ export const constantRouterMap = [
     path: '/goodsManage',
     component: Layout,
     redirect: '/goodsManage/index',
-    meta: { title: 'goodsManage', icon: 'dashboard', noCache: true },
+    meta: { title: 'goodsManage', icon: 'cubes', noCache: true },
     children: [
       // 商品列表
       {
@@ -139,14 +139,14 @@ export const constantRouterMap = [
         component: () =>
                     import('@/views/goods-manage/index'),
         name: 'goodsList',
-        meta: { title: 'goodsList', icon: 'dashboard', noCache: true },
+        meta: { title: 'goodsList', icon: 'list-alt', noCache: true },
         children: [
           { path: 'prodEdit',
             hidden: true,
             component: () =>
                   import('@/views/goods-manage/prod-edit/index'),
             name: 'prodEditIndex',
-            meta: { title: 'prodEdit.title', icon: 'dashboard', noCache: true }
+            meta: { title: 'prodEdit.title', icon: 'list-alt', noCache: true }
           }
         ]
       },
@@ -156,7 +156,7 @@ export const constantRouterMap = [
         component: () =>
                 import('@/views/goods-manage/goods-recycle-bin'),
         name: 'goodsRecycleBin',
-        meta: { title: 'goodsRecycleBin', icon: 'dashboard', noCache: true }
+        meta: { title: 'goodsRecycleBin', icon: 'recycle', noCache: true }
       },
       // 商品分类
       {
@@ -164,7 +164,25 @@ export const constantRouterMap = [
         component: () =>
                 import('@/views/goods-manage/goods-cates'),
         name: 'goodsCates',
-        meta: { title: 'goodsCates', icon: 'dashboard', noCache: true }
+        meta: { title: 'goodsCates', icon: 'list-alt', noCache: true },
+        children: [
+          // 添加或者编辑分类页面
+          { path: 'goodsCateEdit',
+            hidden: true,
+            component: () => import('@/views/goods-manage/goods-cates-edit/eidt-cate'),
+            name: 'goodsCateEdit',
+            // to do 如何传递参数 使得 cateEdit.title能显示 添加 和 编辑的 字样区别 ？
+            meta: { title: 'cateEdit.title', icon: 'list-alt', noCache: true }
+          },
+          // 转移商品
+          {
+            path: 'transferProds',
+            hidden: true,
+            component: () => import('@/views/goods-manage/goods-cates-edit/transfer-cate'),
+            name: 'transferProds',
+            meta: { title: 'cateEdit.transfer', icon: 'exchange-alt', noCache: true }
+          }
+        ]
       },
       // 商品品牌
       {
@@ -172,7 +190,7 @@ export const constantRouterMap = [
         component: () =>
                 import('@/views/goods-manage/goods-brands'),
         name: 'goodsBrands',
-        meta: { title: 'goodsBrands', icon: 'dashboard', noCache: true }
+        meta: { title: 'goodsBrands', icon: 'copyright', noCache: true }
       }
     ]
   }
