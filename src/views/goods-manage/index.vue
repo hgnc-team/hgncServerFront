@@ -52,10 +52,13 @@
             <el-form-item>
               <el-dropdown @command="handleCommand">
                 <el-button type="default" size="mini">
-                  批量操作<i class="el-icon-arrow-down el-icon--right" />
+                  <font-awesome-icon :icon="['fas', 'cog']" fixed-width />批量操作<i class="el-icon-arrow-down el-icon--right" />
                 </el-button>
                 <el-dropdown-menu slot="dropdown" size="mini">
-                  <el-dropdown-item v-for="item in preList.batchOpList" :command="item" :key="item.value">{{ item.label }}</el-dropdown-item>
+                  <el-dropdown-item v-for="item in preList.batchOpList" :command="item" :key="item.value">
+                    <font-awesome-icon :icon="[item.iconType, item.icon]" fixed-width />
+                    {{ item.label }}
+                  </el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </el-form-item>
@@ -200,72 +203,86 @@ export default {
           {
             value: '0',
             label: '移至回收站',
-            icon: ''
+            iconType: 'fas',
+            icon: 'archive'
           },
           {
             value: '1',
             label: '上架',
-            icon: ''
+            iconType: 'fas',
+            icon: 'arrow-alt-circle-up'
           },
           {
             value: '2',
             label: '下架',
-            icon: ''
+            iconType: 'fas',
+            icon: 'arrow-alt-circle-down'
           },
           {
             value: '3',
             label: '精品',
-            icon: ''
+            iconType: 'fas',
+            icon: 'star'
           },
           {
             value: '4',
             label: '取消精品',
-            icon: ''
+            iconType: 'far',
+            icon: 'star'
           },
           {
             value: '5',
             label: '新品',
-            icon: ''
+            iconType: 'fas',
+            icon: 'flag'
           },
           {
             value: '6',
             label: '取消新品',
-            icon: ''
+            iconType: 'far',
+            icon: 'flag'
           },
           {
             value: '7',
             label: '热销',
-            icon: ''
+            iconType: 'fas',
+            icon: 'thumbs-up'
           },
           {
             value: '8',
             label: '取消热销',
-            icon: ''
+            iconType: 'far',
+            icon: 'thumbs-up'
           },
           {
             value: '9',
             label: '转移到分类',
-            icon: ''
+            iconType: 'fas',
+            icon: 'share'
           },
           {
             value: '10',
             label: '审核通过',
-            icon: ''
+            iconType: 'fas',
+            icon: 'check-circle'
           },
           {
             value: '11',
             label: '审核未通过',
-            icon: ''
+            iconType: 'fas',
+            icon: 'times-circle'
           },
           {
             value: '12',
             label: '设为未审核',
-            icon: ''
+            iconType: 'fas',
+            icon: 'question-circle'
           },
           {
             value: '13',
             label: '无需审核',
-            icon: ''
+            iconType: 'fas',
+            icon: 'dot-circle'
           }
         ]
       }
