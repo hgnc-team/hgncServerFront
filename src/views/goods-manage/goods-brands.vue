@@ -1,11 +1,18 @@
 <template>
-  <el-container class="goods-manage-wrap">
-    <el-main>
-      <div>
-        商品品牌
-      </div>
-    </el-main>
-  </el-container>
+  <el-main class="contentwrapper">
+    <div>
+      <h3 class="heading">商品品牌
+        <span style="float:right;margin-top:-3px;">
+          <router-link to="/goodsCates/goodsCateEdit">
+            <el-button type="default" size="mini" style="">
+              <font-awesome-icon :icon="['fas', 'plus']" />
+              添加商品
+            </el-button>
+          </router-link>
+        </span>
+      </h3>
+    </div>
+  </el-main>
 </template>
 
 <script>
