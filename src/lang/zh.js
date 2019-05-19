@@ -21,6 +21,13 @@ export default {
       edit: '编辑商品分类',
       transfer: '转移商品'
     },
+    // 商品库
+    goodsRepo: '商品库',
+    goodsRepoEdit: {
+      add: '添加商品',
+      list: '商品库商品',
+      spec: '商品库规格'
+    },
     introduction: '简述',
     documentation: '文档',
     guide: '引导页',

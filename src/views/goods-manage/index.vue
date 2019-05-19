@@ -334,7 +334,7 @@ export default {
                 id: o.id,
                 thumb: o.imageUrl,
                 goodName: o.title,
-                sellerName: '此列是假数据', // to do
+                sellerName: '后台无此列数据', // to do
                 reviewStatus: 1,
                 goodsNo: o.id,
                 price: o.price,

@@ -193,6 +193,33 @@ export const constantRouterMap = [
         meta: { title: 'goodsBrands', icon: 'copyright', noCache: true }
       }
     ]
+  },
+  // 商品库
+  {
+    path: '/goodsRepo',
+    component: Layout,
+    redirect: '/goodsRepo/add',
+    meta: { title: 'goodsRepo', icon: 'cubes', noCache: true },
+    children: [
+      // 添加商品界面
+      { path: 'add',
+        component: () => import('@/views/goods-repo/goods-repo-add'),
+        name: 'goodsRepoAdd',
+        meta: { title: 'goodsRepoEdit.add', icon: 'list-alt', noCache: true }
+      },
+      // 商品库商品
+      { path: 'list',
+        component: () => import('@/views/goods-repo/goods-repo-list'),
+        name: 'goodsRepoList',
+        meta: { title: 'goodsRepoEdit.list', icon: 'list-alt', noCache: true }
+      },
+      // 商品库规格
+      { path: 'spec',
+        component: () => import('@/views/goods-repo/goods-repo-spec'),
+        name: 'goodsRepoSpec',
+        meta: { title: 'goodsRepoEdit.spec', icon: 'list-alt', noCache: true }
+      }
+    ]
   }
 ]
 
