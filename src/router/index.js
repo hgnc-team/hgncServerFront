@@ -199,13 +199,13 @@ export const constantRouterMap = [
     path: '/goodsRepo',
     component: Layout,
     redirect: '/goodsRepo/add',
-    meta: { title: 'goodsRepo', icon: 'cubes', noCache: true },
+    meta: { title: 'goodsRepo', icon: 'warehouse', noCache: true },
     children: [
       // 添加商品界面
       { path: 'add',
         component: () => import('@/views/goods-repo/goods-repo-add'),
         name: 'goodsRepoAdd',
-        meta: { title: 'goodsRepoEdit.add', icon: 'list-alt', noCache: true }
+        meta: { title: 'goodsRepoEdit.add', icon: 'plus-square', noCache: true }
       },
       // 商品库商品
       { path: 'list',
@@ -217,7 +217,7 @@ export const constantRouterMap = [
       { path: 'spec',
         component: () => import('@/views/goods-repo/goods-repo-spec'),
         name: 'goodsRepoSpec',
-        meta: { title: 'goodsRepoEdit.spec', icon: 'list-alt', noCache: true }
+        meta: { title: 'goodsRepoEdit.spec', icon: 'kaaba', noCache: true }
       }
     ]
   }
