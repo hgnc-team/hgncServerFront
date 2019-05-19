@@ -1,6 +1,6 @@
 import router from './router'
 import store from './store'
-import { Message } from 'element-ui'
+// import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
 import { getToken } from '@/utils/auth' // getToken from cookie
@@ -24,19 +24,27 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
+      store.dispatch('GenerateRoutes', { roles: ['admin'] })
       if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
-        store.dispatch('GetUserInfo').then(res => { // 拉取user_info
-          const roles = res.data.roles // note: roles must be a array! such as: ['editor','develop']
-          store.dispatch('GenerateRoutes', { roles }).then(() => { // 根据roles权限生成可访问的路由表
-            router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
-            next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
-          })
-        }).catch((err) => {
-          store.dispatch('FedLogOut').then(() => {
-            Message.error(err)
-            next({ path: '/' })
-          })
+        // debugger
+        // store.dispatch('GetUserInfo').then(res => { // 拉取user_info
+        //   const roles = res.data.roles // note: roles must be a array! such as: ['editor','develop']
+        //   store.dispatch('GenerateRoutes', { roles }).then(() => { // 根据roles权限生成可访问的路由表
+        //     router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+        //     next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+        //   })
+        // }).catch((err) => {
+        //   store.dispatch('FedLogOut').then(() => {
+        //     Message.error(err)
+        //     next({ path: '/' })
+        //   })
+        // })
+        store.dispatch('FedLogOut').then(() => {
+          // Message.error(err)
+          next({ path: '/' })
         })
+        // 在login接口，后台已经返回了用户信息，存入store,这里不再需要再用GetUserInfo去获取
+        // next()
       } else {
         // 没有动态改变权限的需求可直接next() 删除下方权限判断 ↓
         if (hasPermission(store.getters.roles, to.meta.roles)) {

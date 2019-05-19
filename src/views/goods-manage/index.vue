@@ -99,10 +99,10 @@
       </el-table>
       <div class="pageNavWrap">
         <el-pagination
-          :current-page="1"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
-          :total="400"
+          :current-page="pageNav.pageNo"
+          :page-sizes="[10, 20, 50, 100]"
+          :page-size="pageNav.pageSize"
+          :total="pageNav.total"
           layout="total, sizes, prev, pager, next, jumper"
           background
           @size-change="handleSizeChange"
@@ -115,9 +115,10 @@
 
 <script>
 import tableSheme from './goods-list-table-sheme'
-import tableDataForTest from './goods-list-table-test-data'
+// import tableDataForTest from './goods-list-table-test-data'
 import goodsTableCustomTd from '../../components/pyTableCustomTd/goodsTableCustomTd'
 import _ from 'lodash'
+import { getProdsList } from '@/api/goodsManage'
 
 export default {
   name: 'GoodsManageIndex',
@@ -126,6 +127,15 @@ export default {
   },
   data() {
     return {
+      // 分页导航
+      pageNav: {
+        total: 0,
+        pageNo: 1,
+        pageSize: 10
+      },
+      goodsManageMapApi: {
+        query: getProdsList
+      },
       // 一个蹩脚的办法，当前商品列表 和 编辑商品被组成了父子路由关系
       // 为的是在面包屑导航上显示出"首页/商品列表/编辑商品"的效果
       // 引起另一个问题，父子路由同时显示在页面上，
@@ -298,16 +308,58 @@ export default {
   //   next()
   // },
   mounted() {
-    setTimeout(() => {
-      this.tableData = tableDataForTest
-    }, 0)
+    this.getProdsListByPageNo()
   },
   methods: {
+    getProdsListByPageNo() {
+      this.goodsManageMapApi.query({
+      // type: "39",
+        page: this.pageNav.pageNo,
+        pageSize: this.pageNav.pageSize,
+        orderBy: [
+          [
+            'price',
+            'desc'
+          ]
+        ]
+      }).then(res => {
+        // console.log(res)
+        const tempArr = []
+        if (res.status === 200) {
+          res.data.data.forEach(o => {
+            // 设置分页
+            this.pageNav.total = res.data.total
+            tempArr.push(
+              {
+                id: o.id,
+                thumb: o.imageUrl,
+                goodName: o.title,
+                sellerName: '此列是假数据', // to do
+                reviewStatus: 1,
+                goodsNo: o.id,
+                price: o.price,
+                onSale: o.alive === 1, // 1 上架 0下架
+                prime: 1,
+                new: 1,
+                hot: 1,
+                inventory: o.inventory,
+                sort: 0
+              }
+            )
+          })
+          this.tableData = tempArr
+        }
+      })
+    },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`)
+      // console.log(`每页 ${val} 条`)
+      this.pageNav.pageSize = val
+      this.getProdsListByPageNo()
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`)
+      // console.log(`当前页: ${val}`)
+      this.pageNav.pageNo = val
+      this.getProdsListByPageNo()
     },
     handleCommand(command) {
       console.log(command)

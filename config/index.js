@@ -10,21 +10,28 @@ module.exports = {
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         proxyTable: {
-            '/data': {
-                target: 'http://192.168.8.80:80/data', //设置你调用的接口域名和端口号 别忘了加http
-                // target: 'http://10.90.131.133:8082/data',
+            '/v1/api': {
+                target: 'http://server.maiyidesan.cn/v1/api',
                 changeOrigin: true,
                 pathRewrite: {
-                    '^/data': ''
-                }
-            },
-            '/seal': {
-                target: 'http://192.168.8.80:80/seal', //设置你调用的接口域名和端口号 别忘了加http
-                changeOrigin: true,
-                pathRewrite: {
-                    '^/seal': ''
-                }
+                  '^/v1/api': ''
+              }
             }
+            // '/data': {
+            //     target: 'http://192.168.8.80:80/data', //设置你调用的接口域名和端口号 别忘了加http
+            //     // target: 'http://10.90.131.133:8082/data',
+            //     changeOrigin: true,
+            //     pathRewrite: {
+            //         '^/data': ''
+            //     }
+            // },
+            // '/seal': {
+            //     target: 'http://192.168.8.80:80/seal', //设置你调用的接口域名和端口号 别忘了加http
+            //     changeOrigin: true,
+            //     pathRewrite: {
+            //         '^/seal': ''
+            //     }
+            // }
         },
 
         // Various Dev Server settings
