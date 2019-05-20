@@ -62,6 +62,14 @@ export default {
       dayBill: '日账单',
       orderSharing: '订单分成'
     },
+    // 买单管理
+    checkoutManage: {
+      index: '买单管理',
+      list: '订单列表',
+      query: '买单订单查询',
+      count: '买单订单统计',
+      detail: '买单销售明细'
+    },
     introduction: '简述',
     documentation: '文档',
     guide: '引导页',

@@ -194,6 +194,43 @@ export const constantRouterMap = [
       }
     ]
   },
+  // 买单管理
+  {
+    path: '/checkoutManage',
+    component: Layout,
+    redirect: '/checkoutManage/index',
+    meta: { title: 'checkoutManage.index', icon: 'money-check-alt', noCache: true },
+    children: [
+      // 订单列表
+      {
+        path: 'index',
+        component: () => import('@/views/checkout-manage/checkout-manage-list'),
+        name: 'checkoutManageList',
+        meta: { title: 'checkoutManage.list', icon: 'list-alt', noCache: true }
+      },
+      // 买单订单查询
+      {
+        path: 'query',
+        component: () => import('@/views/checkout-manage/checkout-manage-query'),
+        name: 'checkoutManageQuery',
+        meta: { title: 'checkoutManage.query', icon: 'search-dollar', noCache: true }
+      },
+      // 买单订单统计
+      {
+        path: 'count',
+        component: () => import('@/views/checkout-manage/checkout-manage-count'),
+        name: 'checkoutManageCount',
+        meta: { title: 'checkoutManage.count', icon: 'chart-area', noCache: true }
+      },
+      // 买单销售明细
+      {
+        path: 'detail',
+        component: () => import('@/views/checkout-manage/checkout-manage-detail'),
+        name: 'checkoutManageDetail',
+        meta: { title: 'checkoutManage.detail', icon: 'clipboard-list', noCache: true }
+      }
+    ]
+  },
   // 商品库
   {
     path: '/goodsRepo',
