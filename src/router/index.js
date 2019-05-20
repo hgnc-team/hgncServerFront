@@ -220,6 +220,160 @@ export const constantRouterMap = [
         meta: { title: 'goodsRepoEdit.spec', icon: 'kaaba', noCache: true }
       }
     ]
+  },
+  // 订单管理(在线订单)
+  {
+    path: '/onlineOrderManage',
+    component: Layout,
+    redirect: '/onlineOrderManage/index',
+    meta: { title: 'onlineOrderManage', icon: 'money-check-alt', noCache: true },
+    children: [
+      // 配送订单
+      { path: 'index',
+        component: () => import('@/views/onlineOrder/onlineOrder-delivery'),
+        name: 'onlineOrderDelivery',
+        meta: { title: 'onlineOrder.delivery', icon: 'truck', noCache: true }
+      },
+      // 订单统计
+      {
+        path: 'orderCount',
+        component: () => import('@/views/onlineOrder/onlineOrder-count'),
+        name: 'onlineOrderCount',
+        meta: { title: 'onlineOrder.count', icon: 'chart-bar', noCache: true }
+      },
+      // 发货单列表
+      {
+        path: 'orderTobeSent',
+        component: () => import('@/views/onlineOrder/onlineOrder-tobe-sent'),
+        name: 'onlineOrderTobeSent',
+        meta: { title: 'onlineOrder.sent', icon: 'truck-loading', noCache: true }
+      },
+      // 售后列表
+      {
+        path: 'postSaleList',
+        component: () => import('@/views/onlineOrder/onlineOrder-post-sale'),
+        name: 'onlineOrderPostSale',
+        meta: { title: 'onlineOrder.postsale', icon: 'truck-loading', noCache: true }
+      }
+    ]
+  },
+  // 会员管理
+  {
+    path: '/memberManage',
+    component: Layout,
+    redirect: '/memberManage/index',
+    meta: { title: 'memberManage.manage', icon: 'users', noCache: true },
+    children: [
+      // 会员列表
+      {
+        path: 'index',
+        component: () => import('@/views/member-manage/member-list'),
+        name: 'memberList',
+        meta: { title: 'memberManage.list', icon: 'list-alt', noCache: true }
+      },
+      // 添加会员
+      {
+        path: 'add',
+        component: () => import('@/views/member-manage/member-add'),
+        name: 'memberAdd',
+        meta: { title: 'memberManage.add', icon: 'user-plus', noCache: true }
+      },
+      // 注销申请
+      {
+        path: 'dropApply',
+        component: () => import('@/views/member-manage/member-drop-apply'),
+        name: 'memberDropApply',
+        meta: { title: 'memberManage.dropApply', icon: 'user-minus', noCache: true }
+      },
+      // 会员排行
+      {
+        path: 'topN',
+        component: () => import('@/views/member-manage/member-top-n'),
+        name: 'memberTopN',
+        meta: { title: 'memberManage.topN', icon: 'user-tag', noCache: true }
+      }
+    ]
+  },
+  // 财务管理
+  {
+    path: '/financialManage',
+    component: Layout,
+    redirect: '/financialManage/capital',
+    meta: { title: 'financialManage.index', icon: 'wallet', noCache: true },
+    children: [
+      // 资金管理
+      {
+        path: 'capital',
+        component: () => import('@/views/financial-manage/financial-manage-capital'),
+        name: 'financialManageCapital',
+        meta: { title: 'financialManage.capital', icon: 'money-check-alt', noCache: true }
+      },
+      // 积分管理
+      {
+        path: 'cent',
+        component: () => import('@/views/financial-manage/financial-manage-cent'),
+        name: 'financialManageCent',
+        meta: { title: 'financialManage.cent', icon: 'coins', noCache: true }
+      },
+      // 交易流水
+      {
+        path: 'transactionFlow',
+        component: () => import('@/views/financial-manage/financial-manage-trans-flow'),
+        name: 'financialManageTransFlow',
+        meta: { title: 'financialManage.transactionFlow', icon: 'clipboard-list', noCache: true }
+      },
+      // 交易退款
+      {
+        path: 'refund',
+        component: () => import('@/views/financial-manage/financial-manage-refund'),
+        name: 'financialManageRefund',
+        meta: { title: 'financialManage.refund', icon: 'undo', noCache: true }
+      },
+      // 退款流水
+      {
+        path: 'transactionRefund',
+        component: () => import('@/views/financial-manage/financial-manage-refund'),
+        name: 'financialManageTransRefund',
+        meta: { title: 'financialManage.transactionRefund', icon: 'file-invoice-dollar', noCache: true }
+      }
+    ]
+  },
+  // 商家结算
+  {
+    path: 'vendorSettlement',
+    component: Layout,
+    redirect: '/vendorSettlement/',
+    meta: { title: 'vendorSettlement.index', icon: 'cash-register', noCache: true },
+    children: [
+      // 商家提现
+      {
+        path: 'withdraw',
+        component: () => import('@/views/vendor-settlement/vendor-settlement-withdraw'),
+        name: 'vendorSettlementWithdraw',
+        meta: { title: 'vendorSettlement.withdraw', icon: 'money-bill-wave', noCache: true }
+      },
+      // 月账单
+      {
+        path: 'monthBill',
+        component: () => import('@/views/vendor-settlement/vendor-settlement-month-bill'),
+        name: 'vendorSettlementMonthBill',
+        meta: { title: 'vendorSettlement.monthBill', icon: 'calendar-alt', noCache: true }
+      },
+      // 日账单
+      {
+        path: 'dayBill',
+        component: () => import('@/views/vendor-settlement/vendor-settlement-day-bill'),
+        name: 'vendorSettlementDayBill',
+        meta: { title: 'vendorSettlement.dayBill', icon: 'calendar-day', noCache: true }
+      },
+      // 订单分成
+      {
+        path: 'orderSharing',
+        component: () => import('@/views/vendor-settlement/vendor-settlement-order-sharing'),
+        name: 'vendorSettlementOrderSharing',
+        meta: { title: 'vendorSettlement.orderSharing', icon: 'hand-holding-usd', noCache: true }
+      }
+    ]
   }
 ]
 

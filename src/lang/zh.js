@@ -28,6 +28,40 @@ export default {
       list: '商品库商品',
       spec: '商品库规格'
     },
+    // 订单管理
+    onlineOrderManage: '订单管理',
+    // 在线订单
+    onlineOrder: {
+      delivery: '配送订单',
+      count: '订单统计',
+      sent: '发货单列表',
+      postsale: '售后列表'
+    },
+    // 会员管理
+    memberManage: {
+      manage: '会员管理',
+      list: '会员列表',
+      add: '添加会员',
+      dropApply: '注销申请',
+      topN: '会员排行'
+    },
+    // 财务管理
+    financialManage: {
+      index: '财务管理',
+      capital: '资金管理',
+      cent: '积分管理',
+      transactionFlow: '交易流水',
+      refund: '交易退款',
+      transactionRefund: '退款流水'
+    },
+    // 商家结算
+    vendorSettlement: {
+      index: '商家结算',
+      withdraw: '商家提现',
+      monthBill: '月账单',
+      dayBill: '日账单',
+      orderSharing: '订单分成'
+    },
     introduction: '简述',
     documentation: '文档',
     guide: '引导页',
