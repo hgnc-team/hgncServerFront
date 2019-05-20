@@ -59,8 +59,10 @@
 
 <script>
 import tableSheme from './goods-cate-table-sheme'
-import tableDataForTest from './goods-cate-table-test-data'
+// import tableDataForTest from './goods-cate-table-test-data'
 import goodsTableCustomTd from '../../components/pyTableCustomTd/goodsTableCustomTd'
+// import _ from 'lodash'
+import { getTopClass } from '@/api/goodsManage'
 
 export default {
   name: 'GoodsCates',
@@ -70,13 +72,38 @@ export default {
   data() {
     return {
       tableData: [],
-      tableSheme: tableSheme
+      tableSheme: tableSheme,
+      // api接口
+      goodsCateMapApi: {
+        // 顶级分类
+        firstClass: getTopClass
+      }
     }
   },
   mounted() {
-    setTimeout(() => {
-      this.tableData = tableDataForTest
-    }, 0)
+    this.goodsCateMapApi.firstClass({
+      classScheme: 'cat1'
+    })
+      .then(res => {
+        const tempArr = []
+        if (res.status === 200) {
+          res.data.forEach(o => {
+            console.log(o)
+            tempArr.push({
+              cateName: o.name,
+              cateId: o.id,
+              pId: -1,
+              goodsNum: 1,
+              numUnit: '',
+              priceGrade: 0,
+              sort: 1,
+              visible: true,
+              operate: ''
+            })
+          })
+          this.tableData = tempArr
+        }
+      })
   },
   methods: {}
 }

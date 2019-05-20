@@ -19,3 +19,13 @@ export function getProdsList(data) {
     data: data
   })
 }
+
+// 商品分类管理相关接口
+// 获取顶级分类
+export function getTopClass(data) {
+  return request({
+    url: '/v1/api/goods/topClass',
+    method: 'post',
+    data
+  })
+}
