@@ -101,7 +101,20 @@
             <!--添加产品封面图 start-->
             <el-collapse v-model="activeNames[3]" class="custom-collapse">
               <el-collapse-item title="商品图片" name="1">
-                <div>
+                <div class="upload-pic-wrap">
+                  <el-input
+                    id="createFile"
+                    v-model="form.uploadFile"
+                    type="file"
+                    style="position:absolute;z-index:11;opacity:0;width:100%;height:100%;cursor:pointer;"
+                    @change="uploadPic" />
+                  <span v-if="!form.imageUrl" class="add-icon">
+                    <font-awesome-icon :icon="['fas', 'plus']" style="font-size:45px;margin-top:17px;" />
+                  </span>
+                  <!-- <el-input v-model="form.fileName" /> -->
+                  <img v-if="form.imageUrl" :src="form.imageUrl">
+                </div>
+                <!-- <div class="preview">
                   <el-form-item label="上传商品图片" class="custom-form-item-label-top">
                     <div class="fileupload-btn preview-img">
                       <img src="../../assets/images/test-goods-img.png">
@@ -113,7 +126,7 @@
                       <img src="../../assets/images/test-goods-thumb-img.png">
                     </div>
                   </el-form-item>
-                </div>
+                </div> -->
                 <small>点击更换商品图片或商品缩略图</small>
               </el-collapse-item>
             </el-collapse>
@@ -126,6 +139,9 @@
 </template>
 
 <script>
+// function createObjectURL(object) {
+//   return (window.URL) ? window.URL.createObjectURL(object) : window.webkitURL.createObjectURL(object)
+// }
 export default {
   name: 'GoodsRepoAdd',
   data() {
@@ -158,7 +174,13 @@ export default {
         // 是否可以导入店铺
         forSale: false,
         // 选择的品牌
-        selectedBrand: null
+        selectedBrand: null,
+        // 上传文件句柄
+        uploadFile: null,
+        // 商品封面图
+        imageUrl: '',
+        // 商品封面图名称
+        fileName: ''
       },
       preSetData: {
         brandList: [
@@ -185,10 +207,69 @@ export default {
         ]
       }
     }
+  },
+  methods: {
+    // 上传图片
+    uploadPic(file) {
+      var dom = document.getElementById('createFile')
+      var files = dom.files
+      var r = new FileReader()
+      var that = this
+      r.readAsDataURL(files[0])
+      r.onload = function(e) {
+        that.form.imageUrl = this.result
+      }
+      if (files.length !== 0) {
+        this.form.fileName = files[0].name
+      }
+    }
+    // handlePicSuccess(res, file) {
+    //   console.log(123)
+    // },
+    // beforePicUpload(file) {
+    //   this.imageUrl = URL.createObjectURL(file.raw)
+    //   console.log(file)
+    //   return true
+    // }
   }
 }
 </script>
 
-<style>
-
+<style lang="scss">
+.upload-pic-wrap{
+  width: 320px;
+  height:320px;
+  max-height:320px;
+  border:1px dashed #ccc;
+  color:#999;
+  overflow:hidden;
+  background-color:#eee;
+  position:relative;
+  .el-input{
+    background-color:red;
+    >input{
+      display:block;
+      width:100%;
+      height:100%;
+      cursor:pointer;
+    }
+  }
+  .add-icon{
+    display:inline-block;
+    width:80px;
+    height:80px;
+    background:rgba(153, 153, 153, 0.1);
+    border-radius: 100%;
+    text-align:center;
+    position:absolute;
+    left:50%;
+    top:50%;
+    margin-left:-40px;
+    margin-top:-40px;
+  }
+  img{
+    display:inline-block;
+    width: 100%;
+  }
+}
 </style>
