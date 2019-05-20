@@ -7,19 +7,185 @@
             <router-link to="/goodsRepo/list">
               <el-button type="default" size="mini" style="">
                 <font-awesome-icon :icon="['fas', 'reply']" />
-                转移商品
+                返回商品列表
               </el-button>
             </router-link>
           </span>
         </h3>
       </div>
+
+      <el-form ref="commonInfoForm" :model="form" :label-position="'left'" label-width="100px;" class="commonForm" >
+        <el-container>
+          <el-main style="padding:20px;">
+            <el-form-item label="商品名称：">
+              <el-input v-model="form.prodName" />
+            </el-form-item>
+
+            <el-form-item label="商品货号：">
+              <el-input v-model="form.prodNo" />
+              <small>
+                如果您不输入商品货号，系统将自动生成一个唯一的货号。
+              </small>
+            </el-form-item>
+
+            <el-form-item label="本店售价：">
+              <div style="display:flex;">
+                <el-input v-model="form.price" />
+                <el-button type="default" class="inline-block right-beside-btn">按市场价计算</el-button>
+              </div>
+            </el-form-item>
+
+            <el-form-item label="市场售价：">
+              <div style="display:flex;">
+                <el-input v-model="form.marketPrice" />
+                <el-button type="default" class="inline-block right-beside-btn">取整数</el-button>
+              </div>
+            </el-form-item>
+            <el-form-item label="商品重量：">
+              <div style="display:flex">
+                <el-input v-model="form.weight" class="input-with-select" />
+                <el-select slot="append" v-model="form.unit" placeholder="请选择单位" class="right-beside-btn">
+                  <el-option label="克" value="g" />
+                  <el-option label="千克" value="kg" />
+                </el-select>
+              </div>
+            </el-form-item>
+
+            <el-form-item label="上架：">
+              <el-checkbox v-model="form.forSale">
+                打勾表示商家可见此商品，并允许商家将此商品导入店铺，否则不显示并不可导入
+              </el-checkbox>
+            </el-form-item>
+            <!--SEO优化 start-->
+            <el-collapse v-model="activeNames[0]" class="custom-collapse">
+              <el-collapse-item title="SEO优化" name="1">
+                <el-form-item label="关键字">
+                  <el-input v-model="form.seoKeywords" />
+                  <small>用英文逗号分隔</small>
+                </el-form-item>
+
+                <el-form-item label="简单描述">
+                  <el-input v-model="form.seoDescrib" type="textarea" />
+                </el-form-item>
+              </el-collapse-item>
+            </el-collapse>
+            <!--SEO优化 end-->
+
+            <el-form-item>
+              <el-button type="primary">下一步</el-button>
+            </el-form-item>
+          </el-main>
+          <el-aside style="width:350px;">
+            <!--选择商品分类 start-->
+            <el-collapse v-model="activeNames[1]" class="custom-collapse">
+              <el-collapse-item title="商品分类" name="1">
+                <el-form-item label="选择商品分类" class="custom-form-item-label-top">
+                  123
+                </el-form-item>
+              </el-collapse-item>
+            </el-collapse>
+            <!--选择商品分类 end-->
+
+            <!--选择品牌 start-->
+            <el-collapse v-model="activeNames[2]" class="custom-collapse">
+              <el-collapse-item title="商品品牌" name="1">
+                <el-form-item label="选择商品品牌" class="custom-form-item-label-top">
+                  <el-select v-model="form.selectedBrand" placeholder="请选择...">
+                    <el-option v-for="item in preSetData.brandList" :key="item.value" :label="item.label" :value="item.value" />
+                  </el-select>
+                </el-form-item>
+              </el-collapse-item>
+            </el-collapse>
+            <!--选择品牌 end-->
+
+            <!--添加产品封面图 start-->
+            <el-collapse v-model="activeNames[3]" class="custom-collapse">
+              <el-collapse-item title="商品图片" name="1">
+                <div>
+                  <el-form-item label="上传商品图片" class="custom-form-item-label-top">
+                    <div class="fileupload-btn preview-img">
+                      <img src="../../assets/images/test-goods-img.png">
+                    </div>
+                  </el-form-item>
+
+                  <el-form-item label="商品缩略图" class="custom-form-item-label-top">
+                    <div class="fileupload-btn preview-img thumb_img">
+                      <img src="../../assets/images/test-goods-thumb-img.png">
+                    </div>
+                  </el-form-item>
+                </div>
+                <small>点击更换商品图片或商品缩略图</small>
+              </el-collapse-item>
+            </el-collapse>
+            <!--添加产品封面图 end-->
+          </el-aside>
+        </el-container>
+      </el-form>
     </el-main>
   </el-container>
 </template>
 
 <script>
 export default {
-  name: 'GoodsRepoAdd'
+  name: 'GoodsRepoAdd',
+  data() {
+    return {
+      // 激活面板名称
+      activeNames: [
+        // seo优化
+        ['1'],
+        // 商品分类
+        ['1'],
+        // 商品品牌
+        ['1'],
+        // 商品图片
+        ['1']
+      ],
+      // 新增商品表单
+      form: {
+        // 商品名称
+        prodName: '',
+        // 商品货号
+        prodNo: '',
+        // 本店售价
+        price: 0,
+        // 市场售价
+        marketPrice: 0,
+        // 商品重量
+        weight: 0,
+        // 重量单位
+        unit: 'g',
+        // 是否可以导入店铺
+        forSale: false,
+        // 选择的品牌
+        selectedBrand: null
+      },
+      preSetData: {
+        brandList: [
+          {
+            value: '0',
+            label: '尤妮佳'
+          },
+          {
+            value: '1',
+            label: '香奈儿'
+          },
+          {
+            value: '2',
+            label: 'SKII'
+          },
+          {
+            value: '3',
+            label: '华为'
+          },
+          {
+            value: '4',
+            label: '海尔'
+          }
+        ]
+      }
+    }
+  }
 }
 </script>
 

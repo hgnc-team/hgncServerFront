@@ -1,5 +1,4 @@
 import { loginByUsername, logout } from '@/api/login'
-// import { loginByUsername, logout, getUserInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
@@ -67,7 +66,12 @@ const user = {
         })
       })
     },
+    // 获取用户信息
+    // GetUserInfo({ commit, state }) {
+    //   return new Promise((resolve, reject) => {
 
+    //   })
+    // }
     // 获取用户信息,没有使用
     // GetUserInfo({ commit, state }) {
     //   return new Promise((resolve, reject) => {

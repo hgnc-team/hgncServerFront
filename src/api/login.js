@@ -19,11 +19,11 @@ export function logout() {
   })
 }
 
-// export function getUserInfo(userId) {
-//   return request({
-//     url: '/user/info',
-//     method: 'post',
-//     params: { userId }
-//   })
-// }
+export function getUserInfo(userId) {
+  return request({
+    url: '/v1/api/user/userInfo',
+    method: 'post',
+    params: { userId }
+  })
+}
 
