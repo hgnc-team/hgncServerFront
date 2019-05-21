@@ -4,6 +4,7 @@
       :options="firstClass"
       :props="props"
       :size="size"
+      :placeholder="placeholder"
       @active-item-change="handleItemChange" />
   </div>
 </template>
@@ -18,6 +19,10 @@ export default {
     size: {
       type: String,
       default: 'medium'
+    },
+    placeholder: {
+      type: String,
+      default: '请选择'
     }
   },
   data() {

@@ -54,7 +54,10 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="12">placeholder
+          <el-col :span="12">
+            <el-form-item>
+              <cate-casecader :size="'mini'" :placeholder="'所有分类'"/>
+            </el-form-item>
             <el-form-item>
               <el-input v-model="mainForm.sellerKeyWord" placeholder="请输入商家关键字" size="mini"/>
             </el-form-item>
@@ -112,11 +115,12 @@
 <script>
 import tableSheme from '@/views/goods-manage/goods-recycle-bin-table-sheme'
 import tableData from '@/views/goods-manage/goods-recycle-bin-table-test-data'
+import CateCasecader from '@/components/cateCasecader'
 
 export default {
   name: 'GoodsRecycleBin',
   components: {
-
+    CateCasecader
   },
   data() {
     return {
