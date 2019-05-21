@@ -3,6 +3,7 @@
     <el-cascader
       :options="firstClass"
       :props="props"
+      :size="size"
       @active-item-change="handleItemChange" />
   </div>
 </template>
@@ -13,6 +14,12 @@ import { getTopClass, getSecondClass } from '@/api/goodsManage'
 
 export default {
   name: 'CateCasecader',
+  props: {
+    size: {
+      type: String,
+      default: 'medium'
+    }
+  },
   data() {
     return {
       firstClass: [],
@@ -31,6 +38,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.size)
     // 获取顶级分类
     this.cateCasecaderMapApi.firstClass({
       classScheme: 'cat1'

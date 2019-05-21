@@ -79,7 +79,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="12"><cate-casecader /></el-col>
+          <el-col :span="12"><cate-casecader :size="'mini'"/></el-col>
         </el-row>
       </el-form>
 
