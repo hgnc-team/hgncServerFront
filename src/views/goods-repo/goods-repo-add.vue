@@ -101,19 +101,33 @@
             <!--添加产品封面图 start-->
             <el-collapse v-model="activeNames[3]" class="custom-collapse">
               <el-collapse-item title="商品图片" name="1">
-                <div class="upload-pic-wrap">
-                  <el-input
-                    id="createFile"
-                    v-model="form.uploadFile"
-                    type="file"
-                    style="position:absolute;z-index:11;opacity:0;width:100%;height:100%;cursor:pointer;"
-                    @change="uploadPic" />
-                  <span v-if="!form.imageUrl" class="add-icon">
-                    <font-awesome-icon :icon="['fas', 'plus']" style="font-size:45px;margin-top:17px;" />
-                  </span>
-                  <!-- <el-input v-model="form.fileName" /> -->
-                  <img v-if="form.imageUrl" :src="form.imageUrl">
-                </div>
+                <el-form-item label="上传商品图片" class="custom-form-item-label-top">
+                  <div class="upload-pic-wrap">
+                    <el-input
+                      id="createFile"
+                      v-model="form.uploadFile"
+                      type="file"
+                      style="position:absolute;z-index:11;opacity:0;width:100%;height:100%;cursor:pointer;"
+                      @change="uploadPic('createFile')" />
+                    <span v-if="!form.imageUrl" class="add-icon">
+                      <font-awesome-icon :icon="['fas', 'plus']" style="font-size:45px;margin-top:17px;" />
+                    </span>
+                    <!-- <el-input v-model="form.fileName" /> -->
+                    <img v-if="form.imageUrl" :src="form.imageUrl">
+                  </div>
+                </el-form-item>
+
+                <el-form-item v-if="form.imageUrl" label="商品缩略图" class="custom-form-item-label-top">
+                  <div class="upload-pic-wrap" style="width:80px;height:80px;">
+                    <el-input
+                      id="createFile2"
+                      v-model="form.uploadFile"
+                      type="file"
+                      style="position:absolute;z-index:11;opacity:0;width:100%;height:100%;cursor:pointer;"
+                      @change="uploadPic('createFile2')" />
+                    <img v-if="form.imageUrl" :src="form.imageUrl">
+                  </div>
+                </el-form-item>
                 <!-- <div class="preview">
                   <el-form-item label="上传商品图片" class="custom-form-item-label-top">
                     <div class="fileupload-btn preview-img">
@@ -210,7 +224,8 @@ export default {
   },
   methods: {
     // 上传图片
-    uploadPic(file) {
+    uploadPic(el) {
+      console.log(el)
       var dom = document.getElementById('createFile')
       var files = dom.files
       var r = new FileReader()

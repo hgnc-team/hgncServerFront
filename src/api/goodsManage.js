@@ -29,3 +29,13 @@ export function getTopClass(data) {
     data
   })
 }
+
+// 获取商品二级分类
+export function getSecondClass(data) {
+  return request({
+    url: '/v1/api/goods/secondClass',
+    method: 'post',
+    data
+  })
+}
+
