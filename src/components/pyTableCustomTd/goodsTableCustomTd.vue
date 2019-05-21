@@ -33,7 +33,7 @@
             </el-form>
           </div>
         </div>
-        <span slot="reference" class="editable-click cursor_pointer">{{ copyData[prop] }}</span>
+        <span slot="reference" class="editable-click cursor_pointer">{{ data[prop] }}</span>
       </el-popover>
       <br>
       <!--特殊的文本下面 展示一行操作按钮 ecjia的设计-->
@@ -85,7 +85,7 @@
             </el-form>
           </div>
         </div>
-        <span slot="reference" class="editable-click cursor_pointer">{{ copyData[prop] }}</span>
+        <span slot="reference" class="editable-click cursor_pointer">{{ data[prop] }}</span>
       </el-popover>
     </span>
   </div>

@@ -317,13 +317,14 @@ export default {
       this.goodsManageMapApi.query({
       // type: "39",
         page: this.pageNav.pageNo,
-        pageSize: this.pageNav.pageSize,
-        orderBy: [
-          [
-            'price',
-            'desc'
-          ]
-        ]
+        pageSize: this.pageNav.pageSize
+        // 一下排序字段要么传，要么不传
+        // orderBy: [
+        //   [
+        //     'price',
+        //     'desc'
+        //   ]
+        // ]
       }).then(res => {
         // console.log(res)
         const tempArr = []

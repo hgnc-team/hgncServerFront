@@ -72,7 +72,7 @@
             <!--SEO优化 end-->
 
             <el-form-item>
-              <el-button type="primary">下一步</el-button>
+              <el-button type="primary" @click="addProdToRepo">下一步</el-button>
             </el-form-item>
           </el-main>
           <el-aside style="width:350px;">
@@ -157,6 +157,7 @@
 //   return (window.URL) ? window.URL.createObjectURL(object) : window.webkitURL.createObjectURL(object)
 // }
 import CateCasecader from '@/components/cateCasecader'
+import { addProdToRepo } from '@/api/goodsManage'
 
 export default {
   name: 'GoodsRepoAdd',
@@ -165,6 +166,10 @@ export default {
   },
   data() {
     return {
+      // 数据交互api
+      prodRepoAddMapApi: {
+        add: addProdToRepo
+      },
       // 激活面板名称
       activeNames: [
         // seo优化
@@ -198,6 +203,8 @@ export default {
         uploadFile: null,
         // 上传缩略图句柄
         uploadFileThumb: null,
+        // 当前上传文件对象
+        uploadFileInstance: null,
         // 商品封面图
         imageUrl: '',
         // 商品封面图名称
@@ -230,7 +237,7 @@ export default {
     }
   },
   methods: {
-    // 上传图片
+    // 上传图片，没有做实际上传，仅本地预览
     uploadPic(el) {
       console.log(el)
       var dom = document.getElementById(el)
@@ -242,17 +249,27 @@ export default {
         that.form.imageUrl = this.result
       }
       if (files.length !== 0) {
+        this.form.uploadFileInstance = files[0]
         this.form.fileName = files[0].name
       }
+    },
+    // 添加商品
+    addProdToRepo() {
+      const selectedCateArr = this.$store.state.user.selectedCateArr
+      const formData = new FormData()
+      formData.append('title', this.form.prodName)
+      formData.append('type', selectedCateArr[selectedCateArr.length - 1])
+      formData.append('price', this.form.price)
+      // formData.append('stardardTitle', null)
+      formData.append('pointRate', 0)
+      formData.append('detail', 0)
+      if (this.form.uploadFileInstance) {
+        formData.append('titleImage', this.form.uploadFileInstance)
+      }
+      // formData.append('flowImages', null)
+      // formData.append('detailImages', null)
+      this.prodRepoAddMapApi.add(formData)
     }
-    // handlePicSuccess(res, file) {
-    //   console.log(123)
-    // },
-    // beforePicUpload(file) {
-    //   this.imageUrl = URL.createObjectURL(file.raw)
-    //   console.log(file)
-    //   return true
-    // }
   }
 }
 </script>

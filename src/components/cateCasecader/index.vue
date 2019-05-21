@@ -65,7 +65,8 @@ export default {
   },
   methods: {
     handleItemChange(val) {
-      console.log('active item:', val)
+      // console.log('active item:', val)
+      this.$store.commit('SET_SEL_CATE_ARR', val)
       this.cateCasecaderMapApi.secondClass({
         topClass: val
       })
