@@ -80,7 +80,7 @@
             <el-collapse v-model="activeNames[1]" class="custom-collapse">
               <el-collapse-item title="商品分类" name="1">
                 <el-form-item label="选择商品分类" class="custom-form-item-label-top">
-                  123
+                  <cate-casecader />
                 </el-form-item>
               </el-collapse-item>
             </el-collapse>
@@ -156,8 +156,13 @@
 // function createObjectURL(object) {
 //   return (window.URL) ? window.URL.createObjectURL(object) : window.webkitURL.createObjectURL(object)
 // }
+import CateCasecader from '@/components/cateCasecader'
+
 export default {
   name: 'GoodsRepoAdd',
+  components: {
+    CateCasecader
+  },
   data() {
     return {
       // 激活面板名称

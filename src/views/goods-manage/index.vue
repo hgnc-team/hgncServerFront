@@ -79,7 +79,7 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="12">placeholder</el-col>
+          <el-col :span="12"><cate-casecader /></el-col>
         </el-row>
       </el-form>
 
@@ -119,11 +119,13 @@ import tableSheme from './goods-list-table-sheme'
 import goodsTableCustomTd from '../../components/pyTableCustomTd/goodsTableCustomTd'
 import _ from 'lodash'
 import { getProdsList } from '@/api/goodsManage'
+import CateCasecader from '@/components/cateCasecader'
 
 export default {
   name: 'GoodsManageIndex',
   components: {
-    goodsTableCustomTd
+    goodsTableCustomTd,
+    CateCasecader
   },
   data() {
     return {

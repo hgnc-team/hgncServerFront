@@ -77,6 +77,7 @@ export default {
       goodsCateMapApi: {
         // 顶级分类
         firstClass: getTopClass,
+        // 二级分类
         secondClass: getSecondClass
       }
     }
