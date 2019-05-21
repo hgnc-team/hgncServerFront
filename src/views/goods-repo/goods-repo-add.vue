@@ -120,11 +120,11 @@
                 <el-form-item v-if="form.imageUrl" label="商品缩略图" class="custom-form-item-label-top">
                   <div class="upload-pic-wrap" style="width:80px;height:80px;">
                     <el-input
-                      id="createFile2"
-                      v-model="form.uploadFile"
+                      id="createFileThumb"
+                      v-model="form.uploadFileThumb"
                       type="file"
                       style="position:absolute;z-index:11;opacity:0;width:100%;height:100%;cursor:pointer;"
-                      @change="uploadPic('createFile2')" />
+                      @change="uploadPic('createFileThumb')" />
                     <img v-if="form.imageUrl" :src="form.imageUrl">
                   </div>
                 </el-form-item>
@@ -191,6 +191,8 @@ export default {
         selectedBrand: null,
         // 上传文件句柄
         uploadFile: null,
+        // 上传缩略图句柄
+        uploadFileThumb: null,
         // 商品封面图
         imageUrl: '',
         // 商品封面图名称
@@ -226,7 +228,7 @@ export default {
     // 上传图片
     uploadPic(el) {
       console.log(el)
-      var dom = document.getElementById('createFile')
+      var dom = document.getElementById(el)
       var files = dom.files
       var r = new FileReader()
       var that = this
