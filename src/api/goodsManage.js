@@ -51,3 +51,27 @@ export function addProdToRepo(data) {
   })
 }
 
+// 2019-05-22
+// http://yapi.maiyidesan.cn:3000/project/24/interface/api/461
+// 回收站商品列表
+export function getGoodsRecycleBinList(data) {
+  return request({
+    url: '/v1/api/goods/recycle/list',
+    method: 'post',
+    data
+  })
+}
+
+// 2019-05-24
+// http://yapi.maiyidesan.cn:3000/project/24/interface/api/467
+// 商品列表中删除商品(移入回收站)
+export function goodsFakeDel(ids) {
+  return request({
+    url: '/v1/api/goods/del',
+    method: 'post',
+    data: {
+      ids: ids
+    }
+  })
+}
+

@@ -46,7 +46,7 @@
           <li><a href="jvascript:void(0)">关联文章</a></li>
           <li><a href="jvascript:void(0)">预览</a></li>
           <li><a href="jvascript:void(0)">导入商品库</a></li>
-          <li><a href="jvascript:void(0)" class="py-text-danger">删除</a></li>
+          <li><a href="jvascript:void(0)" class="py-text-danger" @click="fakeDel(data)">删除</a></li>
         </ul>
       </span>
     </span>
@@ -92,6 +92,7 @@
 </template>
 
 <script>
+import { goodsFakeDel } from '@/api/goodsManage'
 import _ from 'lodash'
 export default {
   name: 'GoodsTableCustomTd',
@@ -127,6 +128,10 @@ export default {
   },
   data() {
     return {
+      // api接口
+      goodOperMapApi: {
+        fakeDel: goodsFakeDel
+      },
       // 表单模型
       formModel: {},
       // data副本
@@ -160,7 +165,24 @@ export default {
     }
   },
   methods: {
-    resetData() {}
+    resetData() {},
+    // 删除商品，入回收站
+    fakeDel(data) {
+      // console.log(data)
+      this.goodOperMapApi.fakeDel([
+        data.id
+      ])
+        .then(res => {
+          console.log(res)
+          if (res.status === 200) {
+            this.$message({
+              type: 'success',
+              message: '删除成功，已移入回收站'
+            })
+            this.$root.eventHub.$emit('refreshGoodsListEvent')
+          }
+        })
+    }
   }
 }
 </script>

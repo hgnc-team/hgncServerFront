@@ -1,10 +1,17 @@
 <template>
-  <h3>商品相册</h3>
+  <div class="">
+    <h3>商品相册</h3>
+    <pics-management />
+  </div>
 </template>
 
 <script>
+import PicsManagement from '@/components/PicsManagement'
 export default {
-  name: 'ProdPhotos'
+  name: 'ProdPhotos',
+  components: {
+    PicsManagement
+  }
 }
 </script>
 

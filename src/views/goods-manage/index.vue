@@ -310,6 +310,7 @@ export default {
   //   next()
   // },
   mounted() {
+    this.$root.eventHub.$on('refreshGoodsListEvent', this.getProdsListByPageNo)
     this.getProdsListByPageNo()
   },
   methods: {

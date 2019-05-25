@@ -116,6 +116,7 @@
 import tableSheme from '@/views/goods-manage/goods-recycle-bin-table-sheme'
 import tableData from '@/views/goods-manage/goods-recycle-bin-table-test-data'
 import CateCasecader from '@/components/cateCasecader'
+import { getGoodsRecycleBinList } from '@/api/goodsManage'
 
 export default {
   name: 'GoodsRecycleBin',
@@ -149,10 +150,27 @@ export default {
         sellerKeyWord: '',
         // 商品关键字
         goodsKeyWord: ''
+      },
+      // api接口调用
+      goodsRecycleBinMapApi: {
+        query: getGoodsRecycleBinList
       }
     }
   },
+  mounted() {
+    this.renderList()
+  },
   methods: {
+    renderList() {
+      this.goodsRecycleBinMapApi.query({
+        // type: "39",
+        page: 1,
+        pageSize: 10
+      })
+        .then(res => {
+          console.log(res)
+        })
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`)
     },
