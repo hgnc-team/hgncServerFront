@@ -77,7 +77,6 @@
         header-row-class-name="py-table-header"
         stripe>
         <el-table-column type="selection" />
-        <el-table-column label="序号" type="index" />
         <el-table-column v-for="item in tableSheme" :key="item.prop" :prop="item.prop" :label="item.name" :sortable="item.sortable" :width="item.width">
           <template slot-scope="scope">
             {{ scope.row[item.prop] }}
@@ -177,9 +176,9 @@ export default {
         .then(res => {
           if (res.status === 200) {
             const tempArr = []
-            res.data.data.forEach(o => {
+            res.data.data.forEach((o, index) => {
               tempArr.push({
-                // id: o.id,
+                id: (this.pageNav.pageNo - 1) * this.pageNav.pageSize + index + 1,
                 storeName: '后台未提供',
                 prodName: o.title,
                 prodId: o.id,

@@ -1,11 +1,11 @@
 export default [
-  // {
-  //   prop: 'id',
-  //   name: '编号',
-  //   type: 'text',
-  //   editable: false,
-  //   sortable: false
-  // },
+  {
+    prop: 'id',
+    name: '序号',
+    type: 'text',
+    editable: false,
+    sortable: false
+  },
   {
     prop: 'storeName',
     name: '商家名称',
