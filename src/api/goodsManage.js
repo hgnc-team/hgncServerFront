@@ -75,3 +75,36 @@ export function goodsFakeDel(ids) {
   })
 }
 
+// 2019-05-26
+// http://yapi.maiyidesan.cn:3000/project/15/interface/api/455
+// oss上传图片
+export function uploadImagesToOSS(data) {
+  return request({
+    url: '/v1/api/user/images/upload',
+    method: 'post',
+    data,
+    headers: { 'Content-Type': 'multipart/form-data' }
+  })
+}
+
+// 2019-05-26
+// http://yapi.maiyidesan.cn:3000/project/15/interface/api/457
+// 存储到oss上我的图片列表
+export function getOSSImagesList() {
+  return request({
+    url: '/v1/api/user/images/myImages',
+    method: 'post'
+  })
+}
+
+// 2019-05-26
+// http://yapi.maiyidesan.cn:3000/project/15/interface/api/459
+// 删除存储到oss上的图片
+export function delOSSImage(ids) {
+  return request({
+    url: '/v1/api/user/images/delete',
+    method: 'post',
+    ids
+  })
+}
+

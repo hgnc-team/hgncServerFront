@@ -82,3 +82,5 @@ service.interceptors.response.use(
 )
 
 export default service
+
+export const BASE_URL = 'http://server.maiyidesan.cn/v1/api/'

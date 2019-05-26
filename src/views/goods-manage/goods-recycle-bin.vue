@@ -77,6 +77,7 @@
         header-row-class-name="py-table-header"
         stripe>
         <el-table-column type="selection" />
+        <el-table-column label="序号" type="index" />
         <el-table-column v-for="item in tableSheme" :key="item.prop" :prop="item.prop" :label="item.name" :sortable="item.sortable" :width="item.width">
           <template slot-scope="scope">
             {{ scope.row[item.prop] }}
@@ -98,10 +99,10 @@
 
       <div class="pageNavWrap">
         <el-pagination
-          :current-page="1"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
-          :total="400"
+          :current-page="pageNav.pageNo"
+          :page-sizes="[10, 20, 50, 100]"
+          :page-size="pageNav.pageSize"
+          :total="pageNav.total"
           layout="total, sizes, prev, pager, next, jumper"
           background
           @size-change="handleSizeChange"
@@ -125,6 +126,12 @@ export default {
   },
   data() {
     return {
+      // 分页导航
+      pageNav: {
+        total: 0,
+        pageNo: 1,
+        pageSize: 10
+      },
       // 表头字段
       tableSheme: tableSheme,
       // 表格数据
@@ -164,18 +171,37 @@ export default {
     renderList() {
       this.goodsRecycleBinMapApi.query({
         // type: "39",
-        page: 1,
-        pageSize: 10
+        page: this.pageNav.pageNo,
+        pageSize: this.pageNav.pageSize
       })
         .then(res => {
-          console.log(res)
+          if (res.status === 200) {
+            const tempArr = []
+            res.data.data.forEach(o => {
+              tempArr.push({
+                // id: o.id,
+                storeName: '后台未提供',
+                prodName: o.title,
+                prodId: o.id,
+                price: o.price
+              })
+            })
+            this.tableData = tempArr
+            this.pageNav.total = res.data.total
+            this.pageNav.pageSize = res.data.pageSize
+            this.pageNav.pageNo = res.data.page
+          }
         })
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`)
+      // console.log(`每页 ${val} 条`)
+      this.pageNav.pageSize = val
+      this.renderList()
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`)
+      // console.log(`当前页: ${val}`)
+      this.pageNav.pageNo = val
+      this.renderList()
     },
     handleCommand(command) {
       console.log(command)

@@ -168,19 +168,31 @@ export default {
     resetData() {},
     // 删除商品，入回收站
     fakeDel(data) {
-      // console.log(data)
-      this.goodOperMapApi.fakeDel([
-        data.id
-      ])
-        .then(res => {
-          console.log(res)
-          if (res.status === 200) {
-            this.$message({
-              type: 'success',
-              message: '删除成功，已移入回收站'
+      this.$confirm('您确定把该商品放入回收站吗？', '', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          this.goodOperMapApi.fakeDel([
+            data.id
+          ])
+            .then(res => {
+              console.log(res)
+              if (res.status === 200) {
+                this.$message({
+                  type: 'success',
+                  message: '删除成功，已移入回收站'
+                })
+                this.$root.eventHub.$emit('refreshGoodsListEvent')
+              }
             })
-            this.$root.eventHub.$emit('refreshGoodsListEvent')
-          }
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
         })
     }
   }

@@ -20,6 +20,9 @@ import './permission' // permission control
 import './mock' // simulation data
 
 import * as filters from './filters' // global filters
+// 图片预览组件
+import vuePicturePreview from 'vue-picture-preview'
+Vue.use(vuePicturePreview)
 
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
