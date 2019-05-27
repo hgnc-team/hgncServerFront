@@ -93,7 +93,7 @@
         <el-table-column type="selection" />
         <el-table-column v-for="item in tableSheme" :key="item.prop" :prop="item.prop" :label="item.name" :sortable="item.sortable">
           <template slot-scope="scope">
-            <goods-table-custom-td :current-id="currentId" :prop="item.prop" :name="item.name" :link-color="item.linkColor" :type="item.type" :data="scope.row" :is-row-menu-wrap-cell="item.isRowMenuWrapCell || false"/>
+            <goods-table-custom-td :table-user-name="'GoodsManageIndex'" :current-id="currentId" :prop="item.prop" :name="item.name" :link-color="item.linkColor" :type="item.type" :data="scope.row" :is-row-menu-wrap-cell="item.isRowMenuWrapCell || false"/>
           </template>
         </el-table-column>
       </el-table>

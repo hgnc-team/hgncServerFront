@@ -38,7 +38,7 @@
       <br>
       <!--特殊的文本下面 展示一行操作按钮 ecjia的设计-->
       <span v-if="isRowMenuWrapCell && data.id === currentId">
-        <ul class="goodsOpMenu">
+        <ul v-if="tableUserName === 'GoodsManageIndex'" class="goodsOpMenu">
           <li><router-link to="/goodsManage/index/prodEdit">编辑</router-link></li>
           <li><a href="jvascript:void(0)">商品属性</a></li>
           <li><a href="jvascript:void(0)">商品相册</a></li>
@@ -46,6 +46,13 @@
           <li><a href="jvascript:void(0)">关联文章</a></li>
           <li><a href="jvascript:void(0)">预览</a></li>
           <li><a href="jvascript:void(0)">导入商品库</a></li>
+          <li><a href="jvascript:void(0)" class="py-text-danger" @click="fakeDel(data)">删除</a></li>
+        </ul>
+        <ul v-if="tableUserName === 'GoodsRepoList'" class="goodsOpMenu">
+          <li><router-link to="/goodsManage/index/prodEdit">编辑</router-link></li>
+          <li><a href="jvascript:void(0)">商品属性</a></li>
+          <li><a href="jvascript:void(0)">商品相册</a></li>
+          <li><a href="jvascript:void(0)">预览</a></li>
           <li><a href="jvascript:void(0)" class="py-text-danger" @click="fakeDel(data)">删除</a></li>
         </ul>
       </span>
@@ -124,6 +131,10 @@ export default {
     name: {
       type: String,
       default: ''
+    },
+    tableUserName: {
+      type: String,
+      default: 'GoodsManageIndex'
     }
   },
   data() {

@@ -90,7 +90,7 @@
             <el-collapse v-model="activeNames[2]" class="custom-collapse">
               <el-collapse-item title="商品品牌" name="1">
                 <el-form-item label="选择商品品牌" class="custom-form-item-label-top">
-                  <el-select v-model="form.selectedBrand" placeholder="请选择...">
+                  <el-select v-model="form.selectedBrand" placeholder="请选择">
                     <el-option v-for="item in preSetData.brandList" :key="item.value" :label="item.label" :value="item.value" />
                   </el-select>
                 </el-form-item>
