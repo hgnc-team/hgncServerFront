@@ -56,13 +56,13 @@
 
           <el-col :span="12">
             <el-form-item>
-              <cate-casecader :size="'mini'" :placeholder="'所有分类'"/>
+              <cate-casecader :size="'mini'" :placeholder="'所有分类'" :clearable="true"/>
             </el-form-item>
             <el-form-item>
-              <el-input v-model="mainForm.sellerKeyWord" placeholder="请输入商家关键字" size="mini"/>
+              <el-input v-model="mainForm.sellerKeyWord" placeholder="请输入商家关键字" size="mini" clearable/>
             </el-form-item>
             <el-form-item>
-              <el-input v-model="mainForm.goodsKeyWord" placeholder="请输入商品关键字" size="mini"/>
+              <el-input v-model="mainForm.goodsKeyWord" placeholder="请输入商品关键字" size="mini" clearable/>
             </el-form-item>
 
             <el-form-item>

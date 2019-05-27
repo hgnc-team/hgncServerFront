@@ -1,6 +1,7 @@
 <template>
   <div class="">
     <el-cascader
+      :clearable="clearable"
       :options="firstClass"
       :props="props"
       :size="size"
@@ -28,6 +29,7 @@ export default {
   data() {
     return {
       firstClass: [],
+      clearable: false,
       props: {
         value: 'id',
         children: 'children',
@@ -43,6 +45,8 @@ export default {
     }
   },
   mounted() {
+    // console.log(this)
+    this.clearable = this.$attrs.clearable
     // console.log(this.size)
     // 获取顶级分类
     this.cateCasecaderMapApi.firstClass({

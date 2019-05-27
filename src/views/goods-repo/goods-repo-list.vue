@@ -43,10 +43,10 @@
               </el-dropdown>
             </el-form-item>
             <el-form-item>
-              <cate-casecader :size="'mini'"/>
+              <cate-casecader :size="'mini'" :clearable="true"/>
             </el-form-item>
             <el-form-item>
-              <el-select v-model="mainForm.selectedBrand" placeholder="请选择" size="mini">
+              <el-select v-model="mainForm.selectedBrand" placeholder="请选择" size="mini" clearable>
                 <el-option v-for="item in preList.brandList" :key="item.value" :label="item.label" :value="item.value" />
               </el-select>
             </el-form-item>
@@ -57,7 +57,7 @@
           <el-col :span="12">
             <el-form-item>
               <el-form-item>
-                <el-input v-model="mainForm.goodsKeyWord" placeholder="请输入商品关键字" size="mini"/>
+                <el-input v-model="mainForm.goodsKeyWord" placeholder="请输入商品关键字" size="mini" clearable/>
               </el-form-item>
             </el-form-item>
             <el-form-item>

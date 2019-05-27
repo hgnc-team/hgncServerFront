@@ -35,10 +35,10 @@
           </el-col>
           <el-col :span="12">
             <el-form-item>
-              <el-input v-model="mainForm.sellerKeyWord" placeholder="请输入商家关键字" size="mini"/>
+              <el-input v-model="mainForm.sellerKeyWord" placeholder="请输入商家关键字" size="mini" clearable />
             </el-form-item>
             <el-form-item>
-              <el-input v-model="mainForm.goodsKeyWord" placeholder="请输入商品关键字" size="mini"/>
+              <el-input v-model="mainForm.goodsKeyWord" placeholder="请输入商品关键字" size="mini" clearable />
             </el-form-item>
 
             <el-form-item>
@@ -63,13 +63,13 @@
               </el-dropdown>
             </el-form-item>
             <el-form-item>
-              <el-select v-model="mainForm.reviewStatus" size="mini" placeholder="请选择审核状态" value-key="value">
+              <el-select v-model="mainForm.reviewStatus" size="mini" placeholder="请选择审核状态" value-key="value" clearable>
                 <el-option v-for="item in preList.reviewStatusList" :key="item.value" :label="item.label" :value="item" />
               </el-select>
             </el-form-item>
 
             <el-form-item>
-              <el-select v-model="mainForm.seller" size="mini" placeholder="请选商家" value-key="value">
+              <el-select v-model="mainForm.seller" size="mini" placeholder="请选商家" value-key="value" clearable>
                 <el-option v-for="item in preList.sellerList" :key="item.value" :label="item.label" :value="item" />
               </el-select>
             </el-form-item>
@@ -79,7 +79,16 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="12"><cate-casecader :size="'mini'"/></el-col>
+          <el-col :span="12">
+            <el-form-item>
+              <cate-casecader :size="'mini'" :clearable="true" placeholder="请选择分类" />
+            </el-form-item>
+            <el-form-item>
+              <el-select v-model="mainForm.selectedBrand" placeholder="请选择品牌" size="mini" clearable>
+                <el-option v-for="item in preList.brandList" :key="item.value" :label="item.label" :value="item.value" />
+              </el-select>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
 
@@ -169,15 +178,13 @@ export default {
         // 商家关键字
         sellerKeyWord: '',
         // 商品关键字
-        goodsKeyWord: ''
+        goodsKeyWord: '',
+        // 品牌
+        selectedBrand: ''
       },
       preList: {
         // 选择审核状态预置选项
         reviewStatusList: [
-          {
-            value: '-1',
-            label: '请选择审核状态'
-          },
           {
             value: '0',
             label: '未审核'
@@ -197,10 +204,6 @@ export default {
         ],
         // 选择商家预置选项
         sellerList: [
-          {
-            value: '-1',
-            label: '请选择商家'
-          },
           {
             value: '0',
             label: '天天果园'
@@ -295,6 +298,29 @@ export default {
             label: '无需审核',
             iconType: 'fas',
             icon: 'dot-circle'
+          }
+        ],
+        // 品牌列表
+        brandList: [
+          {
+            value: '0',
+            label: '尤妮佳'
+          },
+          {
+            value: '1',
+            label: '香奈儿'
+          },
+          {
+            value: '2',
+            label: 'SKII'
+          },
+          {
+            value: '3',
+            label: '华为'
+          },
+          {
+            value: '4',
+            label: '海尔'
           }
         ]
       }
