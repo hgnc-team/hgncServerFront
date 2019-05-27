@@ -1,6 +1,6 @@
 export default [
   {
-    prop: 'id',
+    prop: 'no',
     name: '序号',
     type: 'text',
     editable: false,

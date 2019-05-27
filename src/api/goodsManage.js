@@ -1,16 +1,5 @@
 import request from '@/utils/request'
 
-// {
-//   "type": "39",
-//   "page": 1,
-//   "pageSize": 10,
-//   "orderBy": [
-//     [
-//       "price",
-//       "desc"
-//     ]
-//   ]
-// }
 // 2019-05-19
 export function getProdsList(data) {
   return request({
@@ -70,7 +59,7 @@ export function goodsFakeDel(ids) {
     url: '/v1/api/goods/del',
     method: 'post',
     data: {
-      ids: ids
+      ids
     }
   })
 }
@@ -104,7 +93,37 @@ export function delOSSImage(ids) {
   return request({
     url: '/v1/api/user/images/delete',
     method: 'post',
-    ids
+    data: {
+      ids
+    }
+  })
+}
+
+// 2019-05-27
+// http://yapi.maiyidesan.cn:3000/project/24/interface/api/465
+// 删除回收站中的商品
+// /v1/api/goods/recycle/clear
+export function delRecycleBinGoods(ids) {
+  return request({
+    url: '/v1/api/goods/recycle/clear',
+    method: 'post',
+    data: {
+      ids
+    }
+  })
+}
+
+// 2019-05-27
+// http://yapi.maiyidesan.cn:3000/project/24/interface/api/463
+// 恢复回收站中的商品到商品库中
+// /v1/api/goods/recycle/recover
+export function recoverRecycleBinGoods(ids) {
+  return request({
+    url: '/v1/api/goods/recycle/recover',
+    method: 'post',
+    data: {
+      ids
+    }
   })
 }
 

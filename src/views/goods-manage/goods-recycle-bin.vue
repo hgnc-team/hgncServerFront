@@ -71,11 +71,13 @@
           </el-col>
         </el-row>
       </el-form>
+      <!-- {{ multipleSelection }} -->
       <el-table
         :data="tableData"
         style="width:100%;"
         header-row-class-name="py-table-header"
-        stripe>
+        stripe
+        @selection-change="handleSelectionChange">
         <el-table-column type="selection" />
         <el-table-column v-for="item in tableSheme" :key="item.prop" :prop="item.prop" :label="item.name" :sortable="item.sortable" :width="item.width">
           <template slot-scope="scope">
@@ -85,10 +87,10 @@
         <el-table-column prop="operate" label="操作" width="90">
           <template slot-scope="scope">
             <div>
-              <el-button size="medium" type="text">
+              <el-button size="medium" type="text" title="还原" @click="recoverGoods(scope.row)">
                 <font-awesome-icon :icon="['fas', 'share-square']" size="lg" fixed-width/>
               </el-button>
-              <el-button size="medium" type="text">
+              <el-button size="medium" type="text" title="删除" @click="delGoods(scope.row)">
                 <font-awesome-icon :icon="['fas', 'trash-alt']" size="lg" fixed-width class="py-text-danger"/>
               </el-button>
             </div>
@@ -116,7 +118,8 @@
 import tableSheme from '@/views/goods-manage/goods-recycle-bin-table-sheme'
 import tableData from '@/views/goods-manage/goods-recycle-bin-table-test-data'
 import CateCasecader from '@/components/cateCasecader'
-import { getGoodsRecycleBinList } from '@/api/goodsManage'
+import { getGoodsRecycleBinList, delRecycleBinGoods, recoverRecycleBinGoods } from '@/api/goodsManage'
+import _ from 'lodash'
 
 export default {
   name: 'GoodsRecycleBin',
@@ -125,6 +128,8 @@ export default {
   },
   data() {
     return {
+      // 选中的表格行
+      multipleSelection: [],
       // 分页导航
       pageNav: {
         total: 0,
@@ -159,7 +164,9 @@ export default {
       },
       // api接口调用
       goodsRecycleBinMapApi: {
-        query: getGoodsRecycleBinList
+        query: getGoodsRecycleBinList,
+        del: delRecycleBinGoods,
+        recover: recoverRecycleBinGoods
       }
     }
   },
@@ -167,6 +174,95 @@ export default {
     this.renderList()
   },
   methods: {
+    // 选中表格行发生变化事件处理
+    handleSelectionChange(val) {
+      this.multipleSelection = val
+    },
+    // 恢复商品至商品库
+    recoverGoods(data) {
+      const tempArr = []
+      const recover = (tempArr, title) => {
+        this.$confirm(title, '', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+          .then(() => {
+            this.goodsRecycleBinMapApi.recover(tempArr)
+              .then(res => {
+                if (res.status === 200) {
+                  this.$message({
+                    type: 'success',
+                    message: '恢复成功！'
+                  })
+                  // 刷新列表
+                  this.renderList()
+                }
+              })
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
+          })
+      }
+      // 兼容单个操作和批量操作,通过参数类型判断
+      if (data && _.isObject(data)) {
+        // 当前页的单个操作
+        tempArr.push(data.prodId)
+        recover(tempArr, '您确定要把该商品还原吗？')
+      } else {
+        // 当前页面批量操作
+        this.multipleSelection.forEach(o => {
+          tempArr.push(o.prodId)
+          recover(tempArr, '您确定要把选中商品还原吗？')
+        })
+      }
+    },
+    // 删除商品
+    delGoods(data) {
+      const tempArr = []
+      const del = (tempArr, title) => {
+        this.$confirm(title, '', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+          .then(() => {
+            this.goodsRecycleBinMapApi.del(tempArr)
+              .then(res => {
+                if (res.status === 200) {
+                  this.$message({
+                    type: 'success',
+                    message: '删除成功！'
+                  })
+                  // 刷新列表
+                  this.renderList()
+                }
+              })
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
+          })
+      }
+      // 兼容单个操作和批量操作,通过参数类型判断
+      if (data && _.isObject(data)) {
+        // 当前页的单个操作
+        tempArr.push(data.prodId)
+        del(tempArr, '您确定删除该商品吗？')
+      } else {
+        // 当前页面批量操作
+        this.multipleSelection.forEach(o => {
+          tempArr.push(o.prodId)
+          del(tempArr, '您确定批量删除选中商品吗？')
+        })
+      }
+    },
+    // 加载、刷新列表
     renderList() {
       this.goodsRecycleBinMapApi.query({
         // type: "39",
@@ -178,7 +274,7 @@ export default {
             const tempArr = []
             res.data.data.forEach((o, index) => {
               tempArr.push({
-                id: (this.pageNav.pageNo - 1) * this.pageNav.pageSize + index + 1,
+                no: (this.pageNav.pageNo - 1) * this.pageNav.pageSize + index + 1,
                 storeName: '后台未提供',
                 prodName: o.title,
                 prodId: o.id,
@@ -193,18 +289,22 @@ export default {
         })
     },
     handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`)
       this.pageNav.pageSize = val
       this.renderList()
     },
     handleCurrentChange(val) {
-      // console.log(`当前页: ${val}`)
       this.pageNav.pageNo = val
       this.renderList()
     },
     handleCommand(command) {
-      console.log(command)
+      // console.log(command)
       this.mainForm.batchOp = command
+      // 批量还原操作
+      if (command.value === '0') {
+        this.recoverGoods()
+      } else if (command.value === '1') {
+        this.delGoods()
+      }
     }
   }
 }

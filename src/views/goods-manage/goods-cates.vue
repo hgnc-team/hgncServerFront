@@ -38,15 +38,15 @@
       <el-table-column prop="operate" label="操作" width="130">
         <template slot-scope="scope">
           <div>
-            <el-button size="medium" type="text" @click="getSubClass(scope.row)">
+            <el-button size="medium" type="text" title="进入子分类" @click="getSubClass(scope.row)">
               <font-awesome-icon :icon="['fas', 'sign-in-alt']" size="lg" fixed-width/>
             </el-button>
             <router-link to="/goodsCates/goodsCateEdit">
-              <el-button size="medium" type="text">
+              <el-button size="medium" type="text" title="编辑">
                 <font-awesome-icon :icon="['fas', 'edit']" size="lg" fixed-width/>
               </el-button>
             </router-link>
-            <el-button size="medium" type="text">
+            <el-button size="medium" type="text" title="删除">
               <font-awesome-icon :icon="['fas', 'trash-alt']" size="lg" fixed-width class="py-text-danger"/>
             </el-button>
           </div>
