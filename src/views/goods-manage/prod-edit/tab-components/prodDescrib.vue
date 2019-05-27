@@ -32,16 +32,16 @@ export default {
   },
   methods: {
     ueditorReady(ue) {
-      console.log('Ready')
+      // console.log('Ready')
       this.ue = ue
       // this.ue.setContent('v-ueditor')
     },
     ueditorChange(ue) {
-      console.log(ue.getContent())
+      // console.log(ue.getContent())
     },
     getContent() {
-      console.log(this.ue.getContent())
-      console.log(window.UM.getEditor('ueditor').getContent())
+      // console.log(this.ue.getContent())
+      // console.log(window.UM.getEditor('ueditor').getContent())
     }
   }
 }

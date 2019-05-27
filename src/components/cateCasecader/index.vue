@@ -43,13 +43,13 @@ export default {
     }
   },
   mounted() {
-    console.log(this.size)
+    // console.log(this.size)
     // 获取顶级分类
     this.cateCasecaderMapApi.firstClass({
       classScheme: 'cat1'
     })
       .then(res => {
-        console.log(res)
+        // console.log(res)
         if (res.status === 200) {
           const tempArr = []
           res.data.forEach(o => {

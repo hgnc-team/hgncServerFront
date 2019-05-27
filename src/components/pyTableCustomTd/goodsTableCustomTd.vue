@@ -39,19 +39,19 @@
       <!--特殊的文本下面 展示一行操作按钮 ecjia的设计-->
       <span v-if="isRowMenuWrapCell && data.id === currentId">
         <ul v-if="tableUserName === 'GoodsManageIndex'" class="goodsOpMenu">
-          <li><router-link to="/goodsManage/index/prodEdit">编辑</router-link></li>
-          <li><a href="jvascript:void(0)">商品属性</a></li>
-          <li><a href="jvascript:void(0)">商品相册</a></li>
-          <li><a href="jvascript:void(0)">关联商品</a></li>
-          <li><a href="jvascript:void(0)">关联文章</a></li>
+          <li><router-link :to="{name:'prodEditIndex', params: data, query: {tabIndex: 0}}">编辑</router-link></li>
+          <li><router-link :to="{name:'prodEditIndex', params: data, query: {tabIndex: 2}}">商品属性</router-link></li>
+          <li><router-link :to="{name:'prodEditIndex', params: data, query: {tabIndex: 3}}">商品相册</router-link></li>
+          <li><router-link :to="{name:'prodEditIndex', params: data, query: {tabIndex: 4}}">关联商品</router-link></li>
+          <li><router-link :to="{name:'prodEditIndex', params: data, query: {tabIndex: 5}}">关联文章</router-link></li>
           <li><a href="jvascript:void(0)">预览</a></li>
           <li><a href="jvascript:void(0)">导入商品库</a></li>
           <li><a href="jvascript:void(0)" class="py-text-danger" @click="fakeDel(data)">删除</a></li>
         </ul>
         <ul v-if="tableUserName === 'GoodsRepoList'" class="goodsOpMenu">
-          <li><router-link to="/goodsManage/index/prodEdit">编辑</router-link></li>
-          <li><a href="jvascript:void(0)">商品属性</a></li>
-          <li><a href="jvascript:void(0)">商品相册</a></li>
+          <li><router-link :to="{name:'prodEditIndex', params: data, query: {tabIndex: 0}}">编辑</router-link></li>
+          <li><router-link :to="{name:'prodEditIndex', params: data, query: {tabIndex: 2}}">商品属性</router-link></li>
+          <li><router-link :to="{name:'prodEditIndex', params: data, query: {tabIndex: 3}}">商品相册</router-link></li>
           <li><a href="jvascript:void(0)">预览</a></li>
           <li><a href="jvascript:void(0)" class="py-text-danger" @click="fakeDel(data)">删除</a></li>
         </ul>

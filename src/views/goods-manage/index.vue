@@ -366,7 +366,7 @@ export default {
       this.getProdsListByPageNo()
     },
     handleCommand(command) {
-      console.log(command)
+      // console.log(command)
       this.mainForm.batchOp = command
     },
     // 鼠标经过单元格

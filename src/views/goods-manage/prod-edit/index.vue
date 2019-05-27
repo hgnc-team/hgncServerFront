@@ -76,6 +76,12 @@ export default {
         }
       ]
     }
+  },
+  mounted() {
+    // 读取路由带过来的参数
+    console.log(this.$route.params)
+    console.log(this.$route.query.tabIndex)
+    this.currentTabVal = (this.$route.query.tabIndex + 1) + ''
   }
 }
 </script>
