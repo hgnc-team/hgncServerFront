@@ -133,32 +133,19 @@
         <el-collapse v-model="activeNames[5]" class="custom-collapse">
           <el-collapse-item title="商品图片" name="1">
             <el-form-item label="上传商品图片" class="custom-form-item-label-top">
-              <div class="upload-pic-wrap" @click="openPicsCenter">
+              <div class="upload-pic-wrap" @click="togglePicsCenter">
                 <span v-if="!form.imageUrl" class="add-icon">
                   <font-awesome-icon :icon="['fas', 'plus']" style="font-size:45px;margin-top:17px;" />
                 </span>
                 <img v-if="form.imageUrl" :src="form.imageUrl">
               </div>
             </el-form-item>
-
             <el-form-item v-if="form.imageUrl" label="商品缩略图" class="custom-form-item-label-top">
-              <div class="upload-pic-wrap" style="width:80px;height:80px;" @click="openPicsCenter">
+              <div class="upload-pic-wrap" style="width:80px;height:80px;" @click="togglePicsCenter">
                 <img v-if="form.imageUrl" :src="form.imageUrl">
               </div>
             </el-form-item>
             <small>点击更换商品图片或商品缩略图</small>
-            <!-- <el-form-item label="上传商品图片" class="custom-form-item-label-top">
-              <div class="fileupload-btn preview-img">
-                <img src="../../../../assets/images/test-goods-img.png">
-              </div>
-            </el-form-item>
-
-            <el-form-item label="商品缩略图" class="custom-form-item-label-top">
-              <div class="fileupload-btn preview-img thumb_img">
-                <img src="../../../../assets/images/test-goods-thumb-img.png">
-              </div>
-            </el-form-item>
-            <small>点击更换商品图片或商品缩略图</small> -->
           </el-collapse-item>
         </el-collapse>
 
@@ -390,7 +377,7 @@ export default {
   },
   methods: {
     // 打开素材中心
-    openPicsCenter() {
+    togglePicsCenter() {
       this.$root.eventHub.$emit('togglePicsCenterEvent')
     },
     initForm() {

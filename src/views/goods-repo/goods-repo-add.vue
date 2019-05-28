@@ -102,29 +102,15 @@
             <el-collapse v-model="activeNames[3]" class="custom-collapse">
               <el-collapse-item title="商品图片" name="1">
                 <el-form-item label="上传商品图片" class="custom-form-item-label-top">
-                  <div class="upload-pic-wrap">
-                    <el-input
-                      id="createFile"
-                      v-model="form.uploadFile"
-                      type="file"
-                      style="position:absolute;z-index:11;opacity:0;width:100%;height:100%;cursor:pointer;"
-                      @change="uploadPic('createFile')" />
+                  <div class="upload-pic-wrap" @click="togglePicsCenter()">
                     <span v-if="!form.imageUrl" class="add-icon">
                       <font-awesome-icon :icon="['fas', 'plus']" style="font-size:45px;margin-top:17px;" />
                     </span>
-                    <!-- <el-input v-model="form.fileName" /> -->
                     <img v-if="form.imageUrl" :src="form.imageUrl">
                   </div>
                 </el-form-item>
-
                 <el-form-item v-if="form.imageUrl" label="商品缩略图" class="custom-form-item-label-top">
-                  <div class="upload-pic-wrap" style="width:80px;height:80px;">
-                    <el-input
-                      id="createFileThumb"
-                      v-model="form.uploadFileThumb"
-                      type="file"
-                      style="position:absolute;z-index:11;opacity:0;width:100%;height:100%;cursor:pointer;"
-                      @change="uploadPic('createFileThumb')" />
+                  <div class="upload-pic-wrap" style="width:80px;height:80px;" @click="togglePicsCenter()">
                     <img v-if="form.imageUrl" :src="form.imageUrl">
                   </div>
                 </el-form-item>
@@ -136,6 +122,7 @@
         </el-container>
       </el-form>
     </el-main>
+    <pics-management :dialog-visible="visible" />
   </el-container>
 </template>
 
@@ -145,14 +132,18 @@
 // }
 import CateCasecader from '@/components/cateCasecader'
 import { addProdToRepo } from '@/api/goodsManage'
+import PicsManagement from '@/components/PicsManagement'
 
 export default {
   name: 'GoodsRepoAdd',
   components: {
-    CateCasecader
+    CateCasecader,
+    PicsManagement
   },
   data() {
     return {
+      // 素材中心弹窗可见状态
+      visible: false,
       // 数据交互api
       prodRepoAddMapApi: {
         add: addProdToRepo
@@ -223,22 +214,31 @@ export default {
       }
     }
   },
+  mounted() {
+    // 监听素材中心弹窗打开事件
+    this.$root.eventHub.$on('togglePicsCenterEvent', () => {
+      this.visible = !this.visible
+    })
+  },
   methods: {
     // 上传图片，没有做实际上传，仅本地预览
-    uploadPic(el) {
-      console.log(el)
-      var dom = document.getElementById(el)
-      var files = dom.files
-      var r = new FileReader()
-      var that = this
-      r.readAsDataURL(files[0])
-      r.onload = function(e) {
-        that.form.imageUrl = this.result
-      }
-      if (files.length !== 0) {
-        this.form.uploadFileInstance = files[0]
-        this.form.fileName = files[0].name
-      }
+    // uploadPic(el) {
+    //   console.log(el)
+    //   var dom = document.getElementById(el)
+    //   var files = dom.files
+    //   var r = new FileReader()
+    //   var that = this
+    //   r.readAsDataURL(files[0])
+    //   r.onload = function(e) {
+    //     that.form.imageUrl = this.result
+    //   }
+    //   if (files.length !== 0) {
+    //     this.form.uploadFileInstance = files[0]
+    //     this.form.fileName = files[0].name
+    //   }
+    // },
+    togglePicsCenter() {
+      this.$root.eventHub.$emit('togglePicsCenterEvent')
     },
     // 添加商品
     addProdToRepo() {

@@ -37,7 +37,7 @@
               <!-- <li class="item active">最近</li> -->
               <li class="item active">上传</li>
             </ul>
-            <div class="close pull-right" @click="closeDialog()">
+            <div class="close pull-right" @click="togglePicsCenter()">
               <font-awesome-icon :icon="['fas', 'times']" />
             </div>
           </el-header>
@@ -98,7 +98,7 @@ export default {
     this.refreshImageList()
   },
   methods: {
-    closeDialog() {
+    togglePicsCenter() {
       this.$root.eventHub.$emit('togglePicsCenterEvent')
     },
     // 刷新已上传图片列表
