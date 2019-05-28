@@ -4,9 +4,10 @@
       :visible="dialogVisible"
       :show-close="false"
       :append-to-body="true"
+      width="1096px"
       custom-class="pics-manage-compontent-dialog"
       title="">
-      <el-container style="height:500px;" class="left-side">
+      <el-container style="height:548px;" class="left-side">
         <el-aside width="120px" style="background-color:#212121;position:relative;">
           <div class="title-wrap">
             <h2>素材中心</h2>
@@ -220,17 +221,24 @@ export default {
       // 已上传图片列表显示
       .category-bd-wrap{
         ul.images-list{
+          width:936px;
+          display: flex;
+          justify-content: flex-start;
+          align-content: flex-start;
+          flex-wrap: wrap;
           padding: 20px;
           list-style:none;
           margin:0;
           padding:0;
           li{
+            flex: none;
             display:inline-block;
             vertical-align: top;
             position:relative;
-            &.image-item:not(:nth-child(5n)){
-              margin-right:10px;
-            }
+            margin:10px;
+            // &.image-item:not(:nth-child(5n)){
+            //   margin-right:10px;
+            // }
             .cover{
               position:relative;
               width:136px;
