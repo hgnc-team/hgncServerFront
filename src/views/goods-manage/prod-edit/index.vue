@@ -17,9 +17,10 @@
         :key="item.name"
         :label="item.title"
         :name="item.name">
-        <component :is="item.component" />
+        <component :is="item.component" v-bind="prodData"/>
       </el-tab-pane>
     </el-tabs>
+    <pics-management :dialog-visible="visible" />
   </el-main>
 </template>
 
@@ -31,13 +32,20 @@ import prodDescrib from './tab-components/prodDescrib.vue'
 import prodPhotos from './tab-components/prodPhotos.vue'
 import prodProperty from './tab-components/prodProperty.vue'
 import associateProd from './tab-components/associateProd.vue'
+import PicsManagement from '@/components/PicsManagement'
 
 export default {
   name: 'ProdEditIndex',
+  components: {
+    PicsManagement
+  },
   data() {
     return {
       // 当前选中tab
       currentTabVal: '1',
+      prodData: null,
+      // 素材中心弹窗初始状态
+      visible: false,
       prodEditTabs: [
         {
           title: '通用信息',
@@ -78,9 +86,14 @@ export default {
     }
   },
   mounted() {
+    // 监听素材中心弹窗打开事件
+    this.$root.eventHub.$on('togglePicsCenterEvent', () => {
+      this.visible = !this.visible
+    })
     // 读取路由带过来的参数
-    console.log(this.$route.params)
-    console.log(this.$route.query.tabIndex)
+    // console.log(this.$route.params)
+    this.prodData = this.$route.params
+    // 根据路由中的查询字符串定位到对应的tab选项上
     this.currentTabVal = (this.$route.query.tabIndex + 1) + ''
   }
 }

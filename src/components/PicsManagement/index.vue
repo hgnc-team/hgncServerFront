@@ -72,7 +72,12 @@ import { uploadImagesToOSS, getOSSImagesList } from '@/api/goodsManage'
 import { BASE_URL } from '@/utils/request'
 export default {
   name: 'PicsManagement',
-  props: {},
+  props: {
+    dialogVisible: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       // 当前登录用户id
@@ -85,16 +90,16 @@ export default {
       // 已上传图片
       imagesList: [],
       // 上传地址
-      postUrl: BASE_URL + '/user/images/upload',
-      dialogVisible: true
+      postUrl: BASE_URL + '/user/images/upload'
     }
   },
   mounted() {
+    this.visible = this.dialogVisible
     this.refreshImageList()
   },
   methods: {
     closeDialog() {
-      this.dialogVisible = false
+      this.$root.eventHub.$emit('togglePicsCenterEvent')
     },
     // 刷新已上传图片列表
     refreshImageList() {

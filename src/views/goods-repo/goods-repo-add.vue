@@ -128,19 +128,6 @@
                     <img v-if="form.imageUrl" :src="form.imageUrl">
                   </div>
                 </el-form-item>
-                <!-- <div class="preview">
-                  <el-form-item label="上传商品图片" class="custom-form-item-label-top">
-                    <div class="fileupload-btn preview-img">
-                      <img src="../../assets/images/test-goods-img.png">
-                    </div>
-                  </el-form-item>
-
-                  <el-form-item label="商品缩略图" class="custom-form-item-label-top">
-                    <div class="fileupload-btn preview-img thumb_img">
-                      <img src="../../assets/images/test-goods-thumb-img.png">
-                    </div>
-                  </el-form-item>
-                </div> -->
                 <small>点击更换商品图片或商品缩略图</small>
               </el-collapse-item>
             </el-collapse>
@@ -275,40 +262,4 @@ export default {
 </script>
 
 <style lang="scss">
-.upload-pic-wrap{
-  width: 320px;
-  height:320px;
-  max-height:320px;
-  border:1px dashed #ccc;
-  color:#999;
-  overflow:hidden;
-  background-color:#eee;
-  position:relative;
-  .el-input{
-    background-color:red;
-    >input{
-      display:block;
-      width:100%;
-      height:100%;
-      cursor:pointer;
-    }
-  }
-  .add-icon{
-    display:inline-block;
-    width:80px;
-    height:80px;
-    background:rgba(153, 153, 153, 0.1);
-    border-radius: 100%;
-    text-align:center;
-    position:absolute;
-    left:50%;
-    top:50%;
-    margin-left:-40px;
-    margin-top:-40px;
-  }
-  img{
-    display:inline-block;
-    width: 100%;
-  }
-}
 </style>

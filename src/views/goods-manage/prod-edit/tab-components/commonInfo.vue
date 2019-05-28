@@ -3,7 +3,7 @@
     <el-container>
       <el-main style="padding:20px;">
         <el-form-item label="商品名称">
-          <el-input v-model="form.prodName" />
+          <el-input v-model="form.prodName" style="width:50em;"/>
         </el-form-item>
         <el-form-item label="商品货号">
           <el-input v-model="form.prodNo" />
@@ -133,6 +133,21 @@
         <el-collapse v-model="activeNames[5]" class="custom-collapse">
           <el-collapse-item title="商品图片" name="1">
             <el-form-item label="上传商品图片" class="custom-form-item-label-top">
+              <div class="upload-pic-wrap" @click="openPicsCenter">
+                <span v-if="!form.imageUrl" class="add-icon">
+                  <font-awesome-icon :icon="['fas', 'plus']" style="font-size:45px;margin-top:17px;" />
+                </span>
+                <img v-if="form.imageUrl" :src="form.imageUrl">
+              </div>
+            </el-form-item>
+
+            <el-form-item v-if="form.imageUrl" label="商品缩略图" class="custom-form-item-label-top">
+              <div class="upload-pic-wrap" style="width:80px;height:80px;" @click="openPicsCenter">
+                <img v-if="form.imageUrl" :src="form.imageUrl">
+              </div>
+            </el-form-item>
+            <small>点击更换商品图片或商品缩略图</small>
+            <!-- <el-form-item label="上传商品图片" class="custom-form-item-label-top">
               <div class="fileupload-btn preview-img">
                 <img src="../../../../assets/images/test-goods-img.png">
               </div>
@@ -143,7 +158,7 @@
                 <img src="../../../../assets/images/test-goods-thumb-img.png">
               </div>
             </el-form-item>
-            <small>点击更换商品图片或商品缩略图</small>
+            <small>点击更换商品图片或商品缩略图</small> -->
           </el-collapse-item>
         </el-collapse>
 
@@ -194,7 +209,6 @@
                 <small>购买数量达到优惠数量时享受的优惠价格</small>
               </div>
             </el-form-item>
-
           </el-collapse-item>
         </el-collapse>
       </el-aside>
@@ -205,6 +219,73 @@
 <script>
 export default {
   name: 'CommonInfo',
+  props: {
+    // 商品名称
+    goodName: {
+      type: String,
+      default: ''
+    },
+    // 货号/商品id
+    goodsNo: {
+      type: String,
+      default: ''
+    },
+    // 目前同货号相同
+    id: {
+      type: String,
+      default: ''
+    },
+    // 库存
+    inventory: {
+      type: Number,
+      default: 0
+    },
+    // 价格
+    price: {
+      type: Number,
+      default: 0
+    },
+    // 排序
+    sort: {
+      type: Number,
+      default: 0
+    },
+    // 商品首图
+    thumb: {
+      type: String,
+      default: ''
+    },
+    // 销售商家名称
+    sellerName: {
+      type: String,
+      default: ''
+    },
+    // 商家状态
+    onSale: {
+      type: Boolean,
+      default: true
+    },
+    // 是否精品
+    prime: {
+      type: Boolean,
+      default: false
+    },
+    // 是否新品
+    new: {
+      type: Boolean,
+      default: false
+    },
+    // 是否热销
+    hot: {
+      type: Boolean,
+      default: false
+    },
+    // 审核状态
+    reviewStatus: {
+      type: Number,
+      default: 1
+    }
+  },
   data() {
     return {
       // 激活面板名称
@@ -232,11 +313,11 @@ export default {
         // 商品货号
         prodNo: '',
         // 本店售价
-        price: 0.00,
+        price: 0,
         // 市场售价
-        marketPrice: 0.00,
+        marketPrice: 0,
         // 库存数量
-        stock: 999,
+        stock: 0,
         // 警告数量
         stockWarnNum: 1,
         // 商品重量
@@ -299,6 +380,39 @@ export default {
             label: '海尔'
           }
         ]
+      }
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.initForm()
+    })
+  },
+  methods: {
+    // 打开素材中心
+    openPicsCenter() {
+      this.$root.eventHub.$emit('togglePicsCenterEvent')
+    },
+    initForm() {
+      // 商品名称
+      this.form.prodName = this.goodName
+      // 商品价格
+      this.form.price = this.price
+      // 商品库存
+      this.form.stock = this.inventory
+      // 商品货号
+      this.form.prodNo = this.goodsNo
+      // 是否上架销售
+      this.form.onSale = this.onSale
+      // 商品首图
+      this.form.imageUrl = this.thumb
+      // 新品、热销、精品 数据处理
+      if (this.prime) {
+        this.addSuggestList.push('0')
+      } else if (this.new) {
+        this.addSuggestList.push('1')
+      } else if (this.hot) {
+        this.addSuggestList.push('2')
       }
     }
   }
