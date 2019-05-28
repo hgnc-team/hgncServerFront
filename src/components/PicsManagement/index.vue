@@ -14,9 +14,9 @@
           <div class="left-side-inner">
             <ul class="left-menu-wrap">
               <li class="selected"><span>图片库</span></li>
-              <li><span>视频库</span></li>
+              <!-- <li><span>视频库</span></li>
               <li><span>音乐库</span></li>
-              <li><span>动图库</span></li>
+              <li><span>动图库</span></li> -->
             </ul>
           </div>
           <div class="upload-btn-wrap">
