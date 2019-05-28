@@ -242,8 +242,16 @@ export default {
         price: this.form.price,
         pointRate: 0,
         detail: '',
-        titleImage: this.form.imageId
+        titleImage: [this.form.imageId]
       })
+        .then(res => {
+          if (res.status === 200) {
+            this.$message({
+              type: 'success',
+              message: '添加商品成功！'
+            })
+          }
+        })
     }
   }
 }

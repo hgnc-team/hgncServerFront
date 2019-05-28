@@ -86,13 +86,13 @@
                 打勾表示允许销售，否则不允许销售。
               </el-checkbox>
             </el-form-item>
-
+            <!-- {{ form.addSuggestList }} -->
             <el-form-item label="加入推荐：">
               <!-- {{ form.addSuggestList }} -->
               <el-checkbox-group v-model="form.addSuggestList">
-                <el-checkbox label="精品" value="0" />
-                <el-checkbox label="新品" value="1" />
-                <el-checkbox label="热销" value="2" />
+                <el-checkbox label="0">精品</el-checkbox>
+                <el-checkbox label="1">新品</el-checkbox>
+                <el-checkbox label="2">热销</el-checkbox>
               </el-checkbox-group>
             </el-form-item>
 
@@ -406,11 +406,11 @@ export default {
       this.form.imageUrl = this.thumb
       // 新品、热销、精品 数据处理
       if (this.prime) {
-        this.addSuggestList.push('0')
+        this.form.addSuggestList.push('0')
       } else if (this.new) {
-        this.addSuggestList.push('1')
+        this.form.addSuggestList.push('1')
       } else if (this.hot) {
-        this.addSuggestList.push('2')
+        this.form.addSuggestList.push('2')
       }
     }
   }

@@ -369,9 +369,9 @@ export default {
                 goodsNo: o.id,
                 price: o.price,
                 onSale: o.alive === 1, // 1 上架 0下架
-                prime: 1,
-                new: 1,
-                hot: 1,
+                prime: true,
+                new: true,
+                hot: true,
                 inventory: o.inventory,
                 sort: 0
               }
