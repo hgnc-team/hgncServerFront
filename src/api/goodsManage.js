@@ -29,14 +29,13 @@ export function getSecondClass(data) {
 }
 
 // 2019-05-21
-// http://yapi.maiyidesan.cn:3000/project/24/interface/api/423
+// http://yapi.maiyidesan.cn:3000/project/24/interface/api/471
 // 商品库中新建商品
 export function addProdToRepo(data) {
   return request({
-    url: '/v1/api/goods/add',
+    url: '/v1/api/goods/create',
     method: 'post',
-    data,
-    headers: { 'Content-Type': 'multipart/form-data' }
+    data
   })
 }
 

@@ -43,15 +43,15 @@
           </el-header>
           <el-main class="category-bd-wrap">
             <ul class="images-list">
-              <li v-for="(item,index) in imagesList" :key="index" class="image-item">
-                <div :style="{ 'background-image' : `url('${item}')`}" class="cover">
+              <li v-for="item in imagesList" :key="item.id" class="image-item" @click="select(item)">
+                <div :style="{ 'background-image' : `url('${item.url}')`}" class="cover">
                   <div class="mask" />
                   <span data-hint="预览" class="icon preview">
                     <img
-                      v-preview="item"
-                      :src="item"
-                      :alt="item"
-                      :key="index"
+                      v-preview="item.url"
+                      :src="item.url"
+                      :alt="item.url"
+                      :key="item.id"
                       preview-title-enable="true"
                       preview-nav-enable="true"
                       class="placeholder-img">
@@ -101,16 +101,25 @@ export default {
     togglePicsCenter() {
       this.$root.eventHub.$emit('togglePicsCenterEvent')
     },
+    // 选中某张图片
+    select(pic) {
+      this.$root.eventHub.$emit('selectPicsCenterEvent', pic)
+    },
     // 刷新已上传图片列表
     refreshImageList() {
       this.picsManagementMapApi.query()
         .then(res => {
           if (res.status === 200) {
-            const teampArr = []
+            const tempArr = []
             res.data.forEach(o => {
-              teampArr.push(`https://images.maiyidesan.cn/users/${this.userId}/${o.path}`)
+              // tempArr.push(`https://images.maiyidesan.cn/users/${this.userId}/${o.path}`)
+              tempArr.push({
+                id: o.id,
+                url: `https://images.maiyidesan.cn/users/${this.userId}/${o.path}`,
+                fileName: o.path
+              })
             })
-            this.imagesList = teampArr
+            this.imagesList = tempArr
           }
         })
     },

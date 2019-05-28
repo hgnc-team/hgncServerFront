@@ -185,6 +185,8 @@ export default {
         uploadFileInstance: null,
         // 商品封面图
         imageUrl: '',
+        // 商品封面首图在素材库中的id
+        imageId: '',
         // 商品封面图名称
         fileName: ''
       },
@@ -219,43 +221,29 @@ export default {
     this.$root.eventHub.$on('togglePicsCenterEvent', () => {
       this.visible = !this.visible
     })
+    // 监听素材中心组件中选中图片事件
+    this.$root.eventHub.$on('selectPicsCenterEvent', data => {
+      this.form.imageUrl = data.url
+      this.form.imageId = data.id
+      this.visible = false
+    })
   },
   methods: {
-    // 上传图片，没有做实际上传，仅本地预览
-    // uploadPic(el) {
-    //   console.log(el)
-    //   var dom = document.getElementById(el)
-    //   var files = dom.files
-    //   var r = new FileReader()
-    //   var that = this
-    //   r.readAsDataURL(files[0])
-    //   r.onload = function(e) {
-    //     that.form.imageUrl = this.result
-    //   }
-    //   if (files.length !== 0) {
-    //     this.form.uploadFileInstance = files[0]
-    //     this.form.fileName = files[0].name
-    //   }
-    // },
+    // 切换素材中心弹窗显示状态
     togglePicsCenter() {
       this.$root.eventHub.$emit('togglePicsCenterEvent')
     },
     // 添加商品
     addProdToRepo() {
       const selectedCateArr = this.$store.state.user.selectedCateArr
-      const formData = new FormData()
-      formData.append('title', this.form.prodName)
-      formData.append('type', selectedCateArr[selectedCateArr.length - 1])
-      formData.append('price', this.form.price)
-      // formData.append('stardardTitle', null)
-      formData.append('pointRate', 0)
-      formData.append('detail', 0)
-      if (this.form.uploadFileInstance) {
-        formData.append('titleImage', this.form.uploadFileInstance)
-      }
-      // formData.append('flowImages', null)
-      // formData.append('detailImages', null)
-      this.prodRepoAddMapApi.add(formData)
+      this.prodRepoAddMapApi.add({
+        title: this.form.prodName,
+        type: selectedCateArr[selectedCateArr.length - 1],
+        price: this.form.price,
+        pointRate: 0,
+        detail: '',
+        titleImage: this.form.imageId
+      })
     }
   }
 }

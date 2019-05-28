@@ -295,6 +295,10 @@ export default {
         ['0']
       ],
       form: {
+        // 商品首图url
+        imageUrl: '',
+        // 商品首图在素材库中的id
+        imageId: '',
         // 商品名称
         prodName: '',
         // 商品货号
@@ -373,6 +377,13 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.initForm()
+      // 监听素材中心组件中选中图片事件
+      this.$root.eventHub.$on('selectPicsCenterEvent', data => {
+        this.form.imageUrl = data.url
+        this.form.imageId = data.id
+        // 关闭素材中心弹窗
+        this.togglePicsCenter()
+      })
     })
   },
   methods: {

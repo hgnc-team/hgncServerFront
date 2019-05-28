@@ -91,7 +91,6 @@ export default {
       this.visible = !this.visible
     })
     // 读取路由带过来的参数
-    // console.log(this.$route.params)
     this.prodData = this.$route.params
     // 根据路由中的查询字符串定位到对应的tab选项上
     this.currentTabVal = (this.$route.query.tabIndex + 1) + ''
