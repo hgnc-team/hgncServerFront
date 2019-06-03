@@ -17,12 +17,12 @@
       <el-form ref="commonInfoForm" :model="form" :label-position="'left'" label-width="100px;" class="commonForm" >
         <el-container>
           <el-main style="padding:20px;">
-            <el-form-item label="商品名称：">
-              <el-input v-model="form.prodName" />
+            <el-form-item :rules="[ { required: true, message: '商品名称不能为空！' } ]" label="商品名称：" prop="prodNo">
+              <el-input v-model="form.prodName" clearable />
             </el-form-item>
 
             <el-form-item label="商品货号：">
-              <el-input v-model="form.prodNo" />
+              <el-input v-model="form.prodNo" clearable />
               <small>
                 如果您不输入商品货号，系统将自动生成一个唯一的货号。
               </small>
@@ -30,20 +30,20 @@
 
             <el-form-item label="本店售价：">
               <div style="display:flex;">
-                <el-input v-model="form.price" />
+                <el-input v-model="form.price" clearable />
                 <el-button type="default" class="inline-block right-beside-btn">按市场价计算</el-button>
               </div>
             </el-form-item>
 
-            <el-form-item label="市场售价：">
+            <el-form-item :rules="[ { required: true, message: '市场售价不能为空！' } ]" prop="marketPrice" label="市场售价：">
               <div style="display:flex;">
-                <el-input v-model="form.marketPrice" />
+                <el-input v-model="form.marketPrice" clearable />
                 <el-button type="default" class="inline-block right-beside-btn">取整数</el-button>
               </div>
             </el-form-item>
             <el-form-item label="商品重量：">
               <div style="display:flex">
-                <el-input v-model="form.weight" class="input-with-select" />
+                <el-input v-model="form.weight" class="input-with-select" clearable />
                 <el-select slot="append" v-model="form.unit" placeholder="请选择单位" class="right-beside-btn">
                   <el-option label="克" value="g" />
                   <el-option label="千克" value="kg" />
@@ -79,8 +79,8 @@
             <!--选择商品分类 start-->
             <el-collapse v-model="activeNames[1]" class="custom-collapse">
               <el-collapse-item title="商品分类" name="1">
-                <el-form-item label="选择商品分类" class="custom-form-item-label-top">
-                  <cate-casecader />
+                <el-form-item :rules="rules.cateId" label="选择商品分类" class="custom-form-item-label-top" prop="cateId" required>
+                  <cate-casecader :cate-id="form.cateId" clearable @value-change="cateCasecaderValueChangehandle" />
                 </el-form-item>
               </el-collapse-item>
             </el-collapse>
@@ -101,7 +101,7 @@
             <!--添加产品封面图 start-->
             <el-collapse v-model="activeNames[3]" class="custom-collapse">
               <el-collapse-item title="商品图片" name="1">
-                <el-form-item label="上传商品图片" class="custom-form-item-label-top">
+                <el-form-item :rules="[ { required: true, message: '必须上传商品首图！' } ]" prop="imageUrl" label="上传商品图片" class="custom-form-item-label-top" >
                   <div class="upload-pic-wrap" @click="togglePicsCenter()">
                     <span v-if="!form.imageUrl" class="add-icon">
                       <font-awesome-icon :icon="['fas', 'plus']" style="font-size:45px;margin-top:17px;" />
@@ -133,6 +133,7 @@
 import CateCasecader from '@/components/cateCasecader'
 import { addProdToRepo } from '@/api/goodsManage'
 import PicsManagement from '@/components/PicsManagement'
+import _ from 'lodash'
 
 export default {
   name: 'GoodsRepoAdd',
@@ -141,6 +142,13 @@ export default {
     PicsManagement
   },
   data() {
+    function checkCateId(rule, value, callback) {
+      if (_.isArray(value) && value.length === 0) {
+        callback(new Error('分类不能为空'))
+      } else {
+        callback()
+      }
+    }
     return {
       // 素材中心弹窗可见状态
       visible: false,
@@ -188,7 +196,12 @@ export default {
         // 商品封面首图在素材库中的id
         imageId: '',
         // 商品封面图名称
-        fileName: ''
+        fileName: '',
+        // 商品分类id,包含多级因此是一个array
+        cateId: []
+      },
+      rules: {
+        cateId: { validator: checkCateId }
       },
       preSetData: {
         brandList: [
@@ -229,29 +242,39 @@ export default {
     })
   },
   methods: {
+    // 分类级联菜单发生变化
+    cateCasecaderValueChangehandle(data) {
+      this.form.cateId = data
+      // 触发验证
+      this.$refs.commonInfoForm.validateField('cateId', () => {})
+    },
     // 切换素材中心弹窗显示状态
     togglePicsCenter() {
       this.$root.eventHub.$emit('togglePicsCenterEvent')
     },
     // 添加商品
     addProdToRepo() {
-      const selectedCateArr = this.$store.state.user.selectedCateArr
-      this.prodRepoAddMapApi.add({
-        title: this.form.prodName,
-        type: selectedCateArr[selectedCateArr.length - 1],
-        price: this.form.price,
-        pointRate: 0,
-        detail: '',
-        titleImage: [this.form.imageId]
-      })
-        .then(res => {
-          if (res.status === 200) {
-            this.$message({
-              type: 'success',
-              message: '添加商品成功！'
+      this.$refs.commonInfoForm.validate(valid => {
+        if (valid) {
+          const selectedCateArr = this.$store.state.user.selectedCateArr
+          this.prodRepoAddMapApi.add({
+            title: this.form.prodName,
+            type: selectedCateArr[selectedCateArr.length - 1],
+            price: this.form.price,
+            pointRate: 0,
+            detail: '',
+            titleImage: [this.form.imageId]
+          })
+            .then(res => {
+              if (res.status === 200) {
+                this.$message({
+                  type: 'success',
+                  message: '添加商品成功！'
+                })
+              }
             })
-          }
-        })
+        }
+      })
     }
   }
 }

@@ -45,10 +45,10 @@ const user = {
     },
     SET_ID: (state, id) => {
       state.id = id
-    },
-    SET_SEL_CATE_ARR: (state, array) => {
-      state.selectedCateArr = array
     }
+    // SET_SEL_CATE_ARR: (state, array) => {
+    //   state.selectedCateArr = array
+    // }
   },
 
   actions: {

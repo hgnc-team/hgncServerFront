@@ -363,6 +363,7 @@ export default {
               {
                 id: o.id,
                 thumb: `https://images.maiyidesan.cn/goods/${o.id}/${o.imageUrl}`,
+                type: o.type.split(';'),
                 goodName: o.title,
                 sellerName: '后台无此列数据', // to do
                 reviewStatus: 1,

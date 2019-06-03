@@ -2,19 +2,19 @@
   <el-form ref="commonInfoForm" :model="form" :label-position="'left'" label-width="100px;" class="commonForm" >
     <el-container>
       <el-main style="padding:20px;">
-        <el-form-item label="商品名称">
-          <el-input v-model="form.prodName" style="width:50em;"/>
+        <el-form-item :rules="[{required: true, message: '商品名称不能为空！'}]" label="商品名称" prop="prodName">
+          <el-input v-model="form.prodName" style="width:24em;" clearable />
         </el-form-item>
-        <el-form-item label="商品货号">
-          <el-input v-model="form.prodNo" />
+        <el-form-item :rules="[{required: true, message: '商品货号不能为空！'}]" label="商品货号" prop="prodNo">
+          <el-input v-model="form.prodNo" clearable />
           <small>
             如果您不输入商品货号，系统将自动生成一个唯一的货号。
           </small>
         </el-form-item>
 
-        <el-form-item label="本店售价">
+        <el-form-item :rules="[{required: true, message: '售价不能为空！'}]" label="本店售价" prop="price">
           <div style="display:flex;">
-            <el-input v-model="form.price" />
+            <el-input v-model="form.price" clearable />
             <el-button type="default" class="inline-block right-beside-btn">按市场价计算</el-button>
           </div>
         </el-form-item>
@@ -97,21 +97,16 @@
             </el-form-item>
 
             <el-form-item>
-              <el-button type="primary" size="mini">更新</el-button>
+              <el-button type="primary" size="mini" @click="editProd">更新</el-button>
             </el-form-item>
           </el-collapse-item>
         </el-collapse>
 
         <el-collapse v-model="activeNames[3]" class="custom-collapse">
           <el-collapse-item title="商品分类" name="1">
-            <el-form-item label="选择商品分类" class="custom-form-item-label-top">
-              123
+            <el-form-item :rules="rules.cateId" label="选择商品分类" class="custom-form-item-label-top" prop="cateId" required>
+              <cate-casecader :cate-id="form.cateId" clearable @value-change="cateCasecaderValueChangehandle" />
             </el-form-item>
-
-            <el-form-item label="选择扩展分类" class="custom-form-item-label-top">
-              123
-            </el-form-item>
-
           </el-collapse-item>
         </el-collapse>
 
@@ -132,7 +127,7 @@
 
         <el-collapse v-model="activeNames[5]" class="custom-collapse">
           <el-collapse-item title="商品图片" name="1">
-            <el-form-item label="上传商品图片" class="custom-form-item-label-top">
+            <el-form-item :rules="[{required: true, message: '商品图片不能为空！'}]" label="上传商品图片" class="custom-form-item-label-top" prop="imageUrl">
               <div class="upload-pic-wrap" @click="togglePicsCenter">
                 <span v-if="!form.imageUrl" class="add-icon">
                   <font-awesome-icon :icon="['fas', 'plus']" style="font-size:45px;margin-top:17px;" />
@@ -204,8 +199,15 @@
 </template>
 
 <script>
+import { editProd } from '@/api/goodsManage'
+import CateCasecader from '@/components/cateCasecader'
+import _ from 'lodash'
+
 export default {
   name: 'CommonInfo',
+  components: {
+    CateCasecader
+  },
   props: {
     // 商品名称
     goodName: {
@@ -221,6 +223,12 @@ export default {
     id: {
       type: String,
       default: ''
+    },
+    type: {
+      type: Array,
+      default: () => {
+        return []
+      }
     },
     // 库存
     inventory: {
@@ -274,7 +282,21 @@ export default {
     }
   },
   data() {
+    // 商品分类字段自定义校验
+    function checkCateId(rule, value, callback) {
+      if (_.isArray(value) && value.length === 0) {
+        callback(new Error('分类不能为空'))
+      } else {
+        callback()
+      }
+    }
     return {
+      rules: {
+        cateId: { validator: checkCateId }
+      },
+      commonInfoMapApi: {
+        edit: editProd
+      },
       // 激活面板名称
       activeNames: [
         // seo优化
@@ -309,6 +331,8 @@ export default {
         marketPrice: 0,
         // 库存数量
         stock: 0,
+        // 当前分类
+        cateId: [],
         // 警告数量
         stockWarnNum: 1,
         // 商品重量
@@ -377,6 +401,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.initForm()
+      // console.log(this.type)
       // 监听素材中心组件中选中图片事件
       this.$root.eventHub.$on('selectPicsCenterEvent', data => {
         this.form.imageUrl = data.url
@@ -387,6 +412,43 @@ export default {
     })
   },
   methods: {
+    // 分类发生变化
+    cateCasecaderValueChangehandle(val) {
+      this.form.cateId = val
+      // 触发验证
+      this.$refs.commonInfoForm.validateField('cateId', () => {})
+    },
+    // 编辑更新商品
+    editProd() {
+      // 校验表单
+      this.$refs.commonInfoForm.validate(valid => {
+        if (valid) {
+          this.commonInfoMapApi.edit({
+            id: this.id,
+            title: this.form.prodName,
+            // type信息缺失
+            // type: this.,
+            price: this.form.price,
+            standardTitle: '',
+            // pointRate缺失
+            // pointRate: this.,
+            detail: '',
+            flowImages: [],
+            detailImages: [],
+            titleImage: this.form.imageId ? [this.form.imageId] : undefined
+          })
+            .then(res => {
+              // console.log(res)
+              if (res.status === 200) {
+                this.$message({
+                  type: 'success',
+                  message: '商品通用信息编辑成功！'
+                })
+              }
+            })
+        }
+      })
+    },
     // 打开素材中心
     togglePicsCenter() {
       this.$root.eventHub.$emit('togglePicsCenterEvent')
@@ -394,6 +456,8 @@ export default {
     initForm() {
       // 商品名称
       this.form.prodName = this.goodName
+      // 商品分类
+      this.form.cateId = this.type
       // 商品价格
       this.form.price = this.price
       // 商品库存

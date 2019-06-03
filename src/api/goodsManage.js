@@ -78,10 +78,11 @@ export function uploadImagesToOSS(data) {
 // 2019-05-26
 // http://yapi.maiyidesan.cn:3000/project/15/interface/api/457
 // 存储到oss上我的图片列表
-export function getOSSImagesList() {
+export function getOSSImagesList(data) {
   return request({
     url: '/v1/api/user/images/myImages',
-    method: 'post'
+    method: 'post',
+    data
   })
 }
 
@@ -126,3 +127,13 @@ export function recoverRecycleBinGoods(ids) {
   })
 }
 
+// 2019-05-29
+// http://yapi.maiyidesan.cn:3000/project/24/interface/api/469
+// 编辑商品
+export function editProd(data) {
+  return request({
+    url: '/v1/api/goods/edit',
+    method: 'post',
+    data
+  })
+}

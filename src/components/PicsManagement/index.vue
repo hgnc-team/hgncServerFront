@@ -4,10 +4,10 @@
       :visible="dialogVisible"
       :show-close="false"
       :append-to-body="true"
-      width="1096px"
+      width="940px"
       custom-class="pics-manage-compontent-dialog"
       title="">
-      <el-container style="height:548px;" class="left-side">
+      <el-container style="height:auto" class="left-side">
         <el-aside width="120px" style="background-color:#212121;position:relative;">
           <div class="title-wrap">
             <h2>素材中心</h2>
@@ -42,7 +42,7 @@
               <font-awesome-icon :icon="['fas', 'times']" />
             </div>
           </el-header>
-          <el-main class="category-bd-wrap">
+          <el-main class="category-bd-wrap" style="position:relative;">
             <ul class="images-list">
               <li v-for="item in imagesList" :key="item.id" class="image-item" @click="select(item)">
                 <div :style="{ 'background-image' : `url('${item.url}')`}" class="cover">
@@ -61,6 +61,19 @@
                 </div>
               </li>
             </ul>
+            <!--分页导航 start-->
+            <div class="pageNavWrap">
+              <el-pagination
+                :current-page="pageNav.pageNo"
+                :page-sizes="[10, 20, 50, 100]"
+                :page-size="pageNav.pageSize"
+                :total="pageNav.total"
+                layout="total, sizes, prev, pager, next, jumper"
+                background
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange" />
+            </div>
+            <!--分页导航 end-->
           </el-main>
         </el-container>
       </el-container>
@@ -81,6 +94,12 @@ export default {
   },
   data() {
     return {
+      // 分页导航
+      pageNav: {
+        total: 0,
+        pageNo: 1,
+        pageSize: 10
+      },
       // 当前登录用户id
       userId: this.$store.getters.id,
       // 接口api
@@ -99,6 +118,16 @@ export default {
     this.refreshImageList()
   },
   methods: {
+    handleSizeChange(val) {
+      // console.log(`每页 ${val} 条`)
+      this.pageNav.pageSize = val
+      this.refreshImageList()
+    },
+    handleCurrentChange(val) {
+      // console.log(`当前页: ${val}`)
+      this.pageNav.pageNo = val
+      this.refreshImageList()
+    },
     togglePicsCenter() {
       this.$root.eventHub.$emit('togglePicsCenterEvent')
     },
@@ -108,11 +137,14 @@ export default {
     },
     // 刷新已上传图片列表
     refreshImageList() {
-      this.picsManagementMapApi.query()
+      this.picsManagementMapApi.query({
+        page: this.pageNav.pageNo,
+        pageSize: this.pageNav.pageSize
+      })
         .then(res => {
           if (res.status === 200) {
             const tempArr = []
-            res.data.forEach(o => {
+            res.data.data.forEach(o => {
               // tempArr.push(`https://images.maiyidesan.cn/users/${this.userId}/${o.path}`)
               tempArr.push({
                 id: o.id,
@@ -121,6 +153,8 @@ export default {
               })
             })
             this.imagesList = tempArr
+            // 设置分页
+            this.pageNav.total = res.data.total
           }
         })
     },
@@ -221,7 +255,7 @@ export default {
       // 已上传图片列表显示
       .category-bd-wrap{
         ul.images-list{
-          width:936px;
+          width:780px;
           display: flex;
           justify-content: flex-start;
           align-content: flex-start;
