@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       // 当前值
-      currentValue: this.cateId,
+      // currentValue: this.cateId,
       firstClass: [],
       clearable: false,
       props: {
@@ -51,6 +51,16 @@ export default {
         firstClass: getTopClass,
         // 二级分类
         secondClass: getSecondClass
+      }
+    }
+  },
+  computed: {
+    currentValue: {
+      get: function() {
+        return this.cateId
+      },
+      set: function(newVal) {
+        this.cateId = newVal
       }
     }
   },
@@ -112,17 +122,14 @@ export default {
       })
         .then(res => {
           if (res.status === 200) {
-            res.data.forEach(o => {
-              this.firstClass.forEach(o1 => {
-                if (o.pid === o1.id) {
-                  o1.children.push({
-                    id: o.id,
-                    name: o.name,
-                    children: null
-                  })
+            this.firstClass[_.findIndex(this.firstClass, o => { return o.id === val[0] })]
+              .children = _.map(res.data, value => {
+                return {
+                  id: value.id,
+                  name: value.name,
+                  children: null
                 }
               })
-            })
           }
         })
     }

@@ -104,7 +104,7 @@
 
         <el-collapse v-model="activeNames[3]" class="custom-collapse">
           <el-collapse-item title="商品分类" name="1">
-            <el-form-item :rules="rules.cateId" label="选择商品分类" class="custom-form-item-label-top" prop="cateId" required>
+            <el-form-item :rules="rules.cateId" label="选择商品分类" class="custom-form-item-label-top" prop="cateId" required style="margin-bottom:20px;">
               <cate-casecader :cate-id="form.cateId" clearable @value-change="cateCasecaderValueChangehandle" />
             </el-form-item>
           </el-collapse-item>

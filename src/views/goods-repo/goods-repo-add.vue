@@ -270,6 +270,19 @@ export default {
                   type: 'success',
                   message: '添加商品成功！'
                 })
+                // 弹窗提示用户添加成功，可以继续添加商品，或返回商品列表
+                this.$confirm('是否继续添加商品?', '', {
+                  confirmButtonText: '继续添加',
+                  cancelButtonText: '返回商品列表',
+                  type: 'warning'
+                }).then(() => {
+                  this.form.cateId = []
+                  // 清空表单
+                  this.$refs.commonInfoForm.resetFields()
+                }).catch(() => {
+                  // 跳转路由
+                  this.$router.push({ path: '/goodsRepo/list' })
+                })
               }
             })
         }
