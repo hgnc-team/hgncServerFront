@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     renderTable(data) {
-      console.log(data)
+      // console.log(data)
       // 子分类数据为空，则提示用户
       if (data.length === 0) {
         this.$message({

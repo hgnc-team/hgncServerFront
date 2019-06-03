@@ -190,7 +190,17 @@ export const constantRouterMap = [
         component: () =>
                 import('@/views/goods-manage/goods-brands'),
         name: 'goodsBrands',
-        meta: { title: 'goodsBrands', icon: 'copyright', noCache: true }
+        meta: { title: 'goodsBrands.index', icon: 'copyright', noCache: true },
+        children: [
+          // 添加或者编辑品牌
+          {
+            path: 'goodsBrandsEdit',
+            hidden: true,
+            component: () => import('@/views/goods-manage/brands-edit'),
+            name: 'goodsBrandsEdit',
+            meta: { title: 'goodsBrands.add', icon: 'exchange-alt', noCache: true }
+          }
+        ]
       }
     ]
   },

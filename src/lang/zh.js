@@ -11,7 +11,10 @@ export default {
     goodsList: '商品列表',
     goodsRecycleBin: '商品回收站',
     goodsCates: '商品分类',
-    goodsBrands: '商品品牌',
+    goodsBrands: {
+      index: '商品品牌',
+      add: '添加品牌'
+    },
     prodEdit: {
       title: '编辑商品'
     },
