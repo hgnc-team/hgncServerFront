@@ -202,6 +202,7 @@ export default {
                 id: o.id,
                 thumb: `https://images.maiyidesan.cn/goods/${o.id}/${o.imageUrl}`,
                 goodName: o.title,
+                type: o.type.split(';'),
                 sellerName: '后台无此列数据', // to do
                 reviewStatus: 1,
                 goodsNo: o.id,

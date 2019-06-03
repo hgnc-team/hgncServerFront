@@ -426,8 +426,7 @@ export default {
           this.commonInfoMapApi.edit({
             id: this.id,
             title: this.form.prodName,
-            // type信息缺失
-            // type: this.,
+            type: this.form.cateId,
             price: this.form.price,
             standardTitle: '',
             // pointRate缺失
@@ -438,7 +437,6 @@ export default {
             titleImage: this.form.imageId ? [this.form.imageId] : undefined
           })
             .then(res => {
-              // console.log(res)
               if (res.status === 200) {
                 this.$message({
                   type: 'success',

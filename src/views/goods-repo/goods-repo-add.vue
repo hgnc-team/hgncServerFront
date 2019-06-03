@@ -17,7 +17,7 @@
       <el-form ref="commonInfoForm" :model="form" :label-position="'left'" label-width="100px;" class="commonForm" >
         <el-container>
           <el-main style="padding:20px;">
-            <el-form-item :rules="[ { required: true, message: '商品名称不能为空！' } ]" label="商品名称：" prop="prodNo">
+            <el-form-item :rules="[ { required: true, message: '商品名称不能为空！' } ]" label="商品名称：" prop="prodName">
               <el-input v-model="form.prodName" clearable />
             </el-form-item>
 
@@ -28,14 +28,14 @@
               </small>
             </el-form-item>
 
-            <el-form-item label="本店售价：">
+            <el-form-item :rules="[ { required: true, message: '市场售价不能为空！' } ]" prop="price" label="本店售价：">
               <div style="display:flex;">
                 <el-input v-model="form.price" clearable />
                 <el-button type="default" class="inline-block right-beside-btn">按市场价计算</el-button>
               </div>
             </el-form-item>
 
-            <el-form-item :rules="[ { required: true, message: '市场售价不能为空！' } ]" prop="marketPrice" label="市场售价：">
+            <el-form-item label="市场售价：">
               <div style="display:flex;">
                 <el-input v-model="form.marketPrice" clearable />
                 <el-button type="default" class="inline-block right-beside-btn">取整数</el-button>
@@ -256,10 +256,9 @@ export default {
     addProdToRepo() {
       this.$refs.commonInfoForm.validate(valid => {
         if (valid) {
-          const selectedCateArr = this.$store.state.user.selectedCateArr
           this.prodRepoAddMapApi.add({
             title: this.form.prodName,
-            type: selectedCateArr[selectedCateArr.length - 1],
+            type: this.form.cateId,
             price: this.form.price,
             pointRate: 0,
             detail: '',
