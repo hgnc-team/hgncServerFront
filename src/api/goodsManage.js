@@ -170,3 +170,13 @@ export function delBrands(ids) {
     }
   })
 }
+
+// http://yapi.maiyidesan.cn:3000/project/24/interface/api/475
+// 编辑品牌
+export function editBrands(data) {
+  return request({
+    url: '/v1/api/brand/edit',
+    method: 'post',
+    data
+  })
+}

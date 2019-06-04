@@ -1,7 +1,7 @@
 <template>
   <el-main class="brands-edit-wrap contentwrapper">
     <div>
-      <h3 class="heading">添加品牌
+      <h3 class="heading">{{ action === 'add' ? '添加' : '编辑' }}品牌
         <span style="float:right;margin-top:-3px;">
           <router-link to="/goodsBrands">
             <el-button type="default" size="mini" style="">
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { addBrand } from '@/api/goodsManage'
+import { addBrand, editBrands } from '@/api/goodsManage'
 import PicsManagement from '@/components/PicsManagement'
 // import { BASE_IMAGE_URL } from '@/utils/request'
 
@@ -87,6 +87,8 @@ export default {
       }
     }
     return {
+      // 是编辑 还是 新增
+      action: 'add',
       // 表单验证规则
       rules: {
         brandWebSite: { validator: validateWebSite, trigger: 'blur' }
@@ -95,10 +97,13 @@ export default {
       visible: false,
       // api映射
       brandEditMapApi: {
-        add: addBrand
+        add: addBrand,
+        edit: editBrands
       },
       // 表单字段
       form: {
+        // 品牌
+        id: '',
         // 品牌名称
         brandName: '',
         // 品牌网址
@@ -117,6 +122,15 @@ export default {
     }
   },
   mounted() {
+    // 读取路由带过来的参数
+    this.logoData = this.$route.params
+    // 如果有参数传来，则为编辑某个品牌
+    if (this.logoData.id) {
+      this.initForm()
+    }
+    // 根据路由中的查询字符串定位到对应的tab选项上
+    this.action = this.$route.query.action
+
     // 监听素材中心弹窗打开事件
     this.$root.eventHub.$on('togglePicsCenterEvent', () => {
       this.visible = !this.visible
@@ -130,6 +144,76 @@ export default {
     })
   },
   methods: {
+    // 编辑
+    doEdit() {
+      console.log('edit')
+      this.brandEditMapApi.edit({
+        id: this.form.id,
+        name: this.form.brandName,
+        site: this.form.brandWebSite,
+        logo: this.form.brandLOGOFileName,
+        description: this.form.brandDescrib,
+        order: this.form.sort,
+        active: this.form.visible
+      }).then(res => {
+        if (res.status === 200) {
+          this.$message({
+            type: 'success',
+            message: '编辑成功！'
+          })
+        }
+      })
+    },
+    // 新增
+    doAdd() {
+      this.brandEditMapApi.add({
+        name: this.form.brandName,
+        site: this.form.brandWebSite,
+        logo: this.form.brandLOGOFileName,
+        description: this.form.brandDescrib,
+        order: this.form.sort,
+        active: this.form.visible
+      })
+        .then(res => {
+          // console.log(res)
+          if (res.status === 200) {
+            this.$message({
+              type: 'success',
+              message: '添加品牌成功！'
+            })
+            // 弹窗提示用户添加成功，可以继续添加商品，或返回商品列表
+            this.$confirm('是否继续添加品牌?', '', {
+              confirmButtonText: '继续添加',
+              cancelButtonText: '返回品牌列表',
+              type: 'warning'
+            }).then(() => {
+              // 清空表单
+              this.form.brandLOGO = ''
+              this.form.brandLOGOFileName = ''
+              this.form.brandDescrib = ''
+              this.form.sort = 0
+              this.form.visible = true
+              this.$refs.editBrandsForm.resetFields()
+            }).catch(() => {
+              // 跳转路由
+              this.$router.push({ path: '/goodsBrands' })
+            })
+          }
+        })
+    },
+    // 初始化表单
+    initForm() {
+      const tempArr = this.logoData.brandLogo.split('/')
+      this.form.id = this.logoData.id
+      this.form.brandName = this.logoData.brandName
+      this.form.brandLOGO = this.logoData.brandLogo
+      this.form.brandLOGOFileName = tempArr[tempArr.length - 1]
+      this.form.brandWebSite = this.logoData.brandWebsiteAddress
+      this.form.brandDescrib = this.logoData.brandDescrib
+      this.form.sort = this.logoData.sort
+      this.form.visible = this.logoData.visible
+      // console.log(this.form)
+    },
     // 删除logo图片
     delPics() {
       this.form.brandLOGO = ''
@@ -143,40 +227,13 @@ export default {
     addBrand() {
       this.$refs.editBrandsForm.validate(valid => {
         if (valid) {
-          this.brandEditMapApi.add({
-            name: this.form.brandName,
-            site: this.form.brandWebSite,
-            logo: this.form.brandLOGOFileName,
-            description: this.form.brandDescrib,
-            order: this.form.sort,
-            active: this.form.visible
-          })
-            .then(res => {
-              // console.log(res)
-              if (res.status === 200) {
-                this.$message({
-                  type: 'success',
-                  message: '添加品牌成功！'
-                })
-                // 弹窗提示用户添加成功，可以继续添加商品，或返回商品列表
-                this.$confirm('是否继续添加品牌?', '', {
-                  confirmButtonText: '继续添加',
-                  cancelButtonText: '返回品牌列表',
-                  type: 'warning'
-                }).then(() => {
-                  // 清空表单
-                  this.form.brandLOGO = ''
-                  this.form.brandLOGOFileName = ''
-                  this.form.brandDescrib = ''
-                  this.form.sort = 0
-                  this.form.visible = true
-                  this.$refs.editBrandsForm.resetFields()
-                }).catch(() => {
-                  // 跳转路由
-                  this.$router.push({ path: '/goodsBrands' })
-                })
-              }
-            })
+          if (this.action === 'add') {
+            // 新增
+            this.doAdd()
+          } else if (this.action === 'edit') {
+            // 编辑
+            this.doEdit()
+          }
         }
       })
     }

@@ -3,7 +3,7 @@
     <div>
       <h3 class="heading">商品品牌
         <span style="float:right;margin-top:-3px;">
-          <router-link to="/goodsBrands/goodsBrandsEdit">
+          <router-link :to="{ name: 'goodsBrandsEdit', query: { action: 'add' }}">
             <el-button type="default" size="mini" style="">
               <font-awesome-icon :icon="['fas', 'plus']" />
               添加商品
@@ -25,7 +25,7 @@
       <el-table-column prop="operate" label="操作" width="130">
         <template slot-scope="scope">
           <div>
-            <router-link to="/goodsCates/goodsCateEdit">
+            <router-link :to="{ name: 'goodsBrandsEdit', params: scope.row, query: { action: 'edit', id: scope.row.id }}">
               <el-button size="medium" type="text" title="编辑">
                 <font-awesome-icon :icon="['fas', 'edit']" size="lg" fixed-width/>
               </el-button>
@@ -115,6 +115,7 @@ export default {
           })
         })
     },
+    // 获取logo列表
     getBrandsList() {
       this.brandsListMapApi.list({
         page: this.pageNav.pageNo,
