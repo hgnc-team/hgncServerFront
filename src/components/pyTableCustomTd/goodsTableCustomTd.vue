@@ -6,8 +6,8 @@
         placement="right"
         popper-class="editablePopper"
         trigger="click">
-        <img :src="data.thumb" style="width:180px;height:180px;z-index:11">
-        <span slot="reference" class="editable-click cursor_pointer" ><img :src="data.thumb"></span>
+        <img :src="data[prop]" style="width:180px;height:180px;z-index:11">
+        <span slot="reference" class="editable-click cursor_pointer" ><img :src="data[prop]"></span>
       </el-popover>
     </span>
     <!--带编辑功能文本字段-->

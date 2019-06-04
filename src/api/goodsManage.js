@@ -137,3 +137,24 @@ export function editProd(data) {
     data
   })
 }
+
+// 2019-06-04
+//  http://yapi.maiyidesan.cn:3000/project/24/interface/api/473
+// 添加品牌
+export function addBrand(data) {
+  return request({
+    url: '/v1/api/brand/add',
+    method: 'post',
+    data
+  })
+}
+
+//
+// 获取品牌列表
+export function getBrandsList(data) {
+  return request({
+    url: '/v1/api/brand/list',
+    method: 'post',
+    data
+  })
+}

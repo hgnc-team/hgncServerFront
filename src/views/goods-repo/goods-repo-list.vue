@@ -102,6 +102,7 @@ import goodsTableCustomTd from '../../components/pyTableCustomTd/goodsTableCusto
 import _ from 'lodash'
 import { getProdsList } from '@/api/goodsManage'
 import CateCasecader from '@/components/cateCasecader'
+import { BASE_IMAGE_URL } from '@/utils/request'
 
 export default {
   name: 'GoodsRepoList',
@@ -200,7 +201,7 @@ export default {
             tempArr.push(
               {
                 id: o.id,
-                thumb: `https://images.maiyidesan.cn/goods/${o.id}/${o.imageUrl}`,
+                thumb: `${BASE_IMAGE_URL}goods/${o.id}/${o.imageUrl}`,
                 goodName: o.title,
                 type: o.type.split(';'),
                 sellerName: '后台无此列数据', // to do

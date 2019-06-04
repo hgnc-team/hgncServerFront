@@ -84,3 +84,4 @@ service.interceptors.response.use(
 export default service
 
 export const BASE_URL = 'http://server.maiyidesan.cn/v1/api/'
+export const BASE_IMAGE_URL = 'https://images.maiyidesan.cn/'

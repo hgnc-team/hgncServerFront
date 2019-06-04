@@ -19,14 +19,7 @@
       stripe>
       <el-table-column v-for="item in tableSheme" :key="item.prop" :prop="item.prop" :label="item.name" :sortable="item.sortable" :width="item.width">
         <template slot-scope="scope">
-          <span v-if="item.prop === 'cateName'">
-            <router-link to="" @click.native="getSubClass(scope.row)">
-              <font-awesome-icon :icon="['far', 'minus-square']" style="margin-right:5px;"/>{{ scope.row[item.prop] }}
-            </router-link>
-          </span>
-          <span v-else-if="item.prop !== 'cateName'">
-            <goods-table-custom-td :prop="item.prop" :name="item.name" :link-color="item.linkColor" :type="item.type" :data="scope.row" :is-row-menu-wrap-cell="item.isRowMenuWrapCell || false"/>
-          </span>
+          <goods-table-custom-td :prop="item.prop" :name="item.name" :link-color="item.linkColor" :type="item.type" :data="scope.row" :is-row-menu-wrap-cell="item.isRowMenuWrapCell || false"/>
         </template>
       </el-table-column>
       <el-table-column prop="operate" label="操作" width="130">
@@ -44,6 +37,17 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="pageNavWrap">
+      <el-pagination
+        :current-page="pageNav.pageNo"
+        :page-sizes="[10, 20, 50, 100]"
+        :page-size="pageNav.pageSize"
+        :total="pageNav.total"
+        layout="total, sizes, prev, pager, next, jumper"
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange" />
+    </div>
     <router-view />
   </el-main>
 </template>
@@ -51,6 +55,9 @@
 <script>
 import tableSheme from './goods-brands-table-sheme'
 import goodsTableCustomTd from '../../components/pyTableCustomTd/goodsTableCustomTd'
+import { getBrandsList } from '@/api/goodsManage'
+import { BASE_IMAGE_URL } from '@/utils/request'
+import _ from 'lodash'
 
 export default {
   name: 'GoodsBrands',
@@ -59,10 +66,62 @@ export default {
   },
   data() {
     return {
-      tableSheme: tableSheme
+      // 分页导航
+      pageNav: {
+        pageNo: 1,
+        pageSize: 10,
+        total: 0
+      },
+      // 表格字段
+      tableSheme: tableSheme,
+      // 接口api
+      brandsListMapApi: {
+        list: getBrandsList
+      },
+      // 表格数据
+      tableData: []
     }
   },
-  methods: {}
+  mounted() {
+    this.getBrandsList()
+  },
+  methods: {
+    getBrandsList() {
+      this.brandsListMapApi.list({
+        page: this.pageNav.pageNo,
+        pageSize: this.pageNav.pageSize
+      })
+        .then(res => {
+          console.log(res)
+          if (res.status === 200) {
+            this.tableData = _.map(res.data.data, value => {
+              return {
+                id: value.id,
+                brandLogo: `${BASE_IMAGE_URL}brands/${value.logo}`,
+                brandName: value.name,
+                brandWebsiteAddress: value.site,
+                brandDescrib: value.description,
+                sort: value.order,
+                visible: !!value.active
+              }
+            })
+            this.pageNav.pageNo = res.data.page
+            this.pageNav.pageSize = res.data.pageSize
+            this.pageNav.total = res.data.total
+          }
+        })
+    },
+    handleSizeChange(val) {
+      // console.log(`每页 ${val} 条`)
+      this.pageNav.pageSize = val
+      this.getBrandsList()
+    },
+    handleCurrentChange(val) {
+      // console.log(`当前页: ${val}`)
+      this.pageNav.pageNo = val
+      this.getBrandsList()
+    }
+  }
 }
 </script>
 

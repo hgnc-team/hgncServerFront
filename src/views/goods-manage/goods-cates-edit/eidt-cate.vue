@@ -15,23 +15,23 @@
     <el-form ref="editCateForm" :model="form" :label-position="'left'" label-width="100px;" class="commonForm">
       <el-container>
         <el-main style="padding:20px;">
-          <el-form-item label="分类名称">
-            <el-input v-model="form.cateName" />
+          <el-form-item label="分类名称" class="custom-from-item">
+            <el-input v-model="form.cateName" class="custom-input"/>
           </el-form-item>
 
-          <el-form-item label="上级分类">
-            <el-input v-model="form.pCateName" />
+          <el-form-item label="上级分类" class="custom-from-item">
+            <el-input v-model="form.pCateName" class="custom-input" />
           </el-form-item>
 
-          <el-form-item label="数量单位">
-            <el-input v-model="form.numUnit" />
+          <el-form-item label="数量单位" class="custom-from-item">
+            <el-input v-model="form.numUnit" class="custom-input" />
           </el-form-item>
 
-          <el-form-item label="价格区间个数">
-            <el-input v-model="form.priceRangeNum" />
+          <el-form-item label="价格区间个数" class="custom-from-item">
+            <el-input v-model="form.priceRangeNum" class="custom-input" />
           </el-form-item>
 
-          <el-form-item label="筛选属性">
+          <el-form-item label="筛选属性" class="custom-from-item">
             placeholder
           </el-form-item>
 
@@ -233,5 +233,15 @@ export default {
   background-color:#fff;
   // 为什么是10，魔术数字
   z-index:10;
+  .custom-from-item{
+    .el-form-item__label{
+      width:100px;
+    }
+  }
+  .custom-input{
+    &.el-input, .el-textarea{
+      width:30em;
+    }
+  }
 }
 </style>

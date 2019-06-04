@@ -1,4 +1,11 @@
 export default [
+  // {
+  //   prop: 'id',
+  //   name: 'ID',
+  //   type: 'text',
+  //   editable: false,
+  //   sortable: false
+  // },
   {
     prop: 'brandLogo',
     name: '品牌LOGO',
