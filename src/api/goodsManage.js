@@ -149,12 +149,24 @@ export function addBrand(data) {
   })
 }
 
-//
+// http://yapi.maiyidesan.cn:3000/project/24/interface/api/477
 // 获取品牌列表
 export function getBrandsList(data) {
   return request({
     url: '/v1/api/brand/list',
     method: 'post',
     data
+  })
+}
+
+// http://yapi.maiyidesan.cn:3000/project/24/interface/api/479
+// 删除品牌
+export function delBrands(ids) {
+  return request({
+    url: '/v1/api/brand/delete',
+    method: 'post',
+    data: {
+      ids
+    }
   })
 }

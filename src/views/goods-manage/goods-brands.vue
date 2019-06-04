@@ -30,7 +30,7 @@
                 <font-awesome-icon :icon="['fas', 'edit']" size="lg" fixed-width/>
               </el-button>
             </router-link>
-            <el-button size="medium" type="text" title="删除">
+            <el-button size="medium" type="text" title="删除" @click="delBrands(scope.row.id)">
               <font-awesome-icon :icon="['fas', 'trash-alt']" size="lg" fixed-width class="py-text-danger"/>
             </el-button>
           </div>
@@ -55,7 +55,7 @@
 <script>
 import tableSheme from './goods-brands-table-sheme'
 import goodsTableCustomTd from '../../components/pyTableCustomTd/goodsTableCustomTd'
-import { getBrandsList } from '@/api/goodsManage'
+import { getBrandsList, delBrands } from '@/api/goodsManage'
 import { BASE_IMAGE_URL } from '@/utils/request'
 import _ from 'lodash'
 
@@ -76,7 +76,8 @@ export default {
       tableSheme: tableSheme,
       // 接口api
       brandsListMapApi: {
-        list: getBrandsList
+        list: getBrandsList,
+        del: delBrands
       },
       // 表格数据
       tableData: []
@@ -86,6 +87,34 @@ export default {
     this.getBrandsList()
   },
   methods: {
+    // 删除logo
+    delBrands(id) {
+      this.$confirm('是否确认删除？', '', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          this.brandsListMapApi.del([id])
+            .then(res => {
+              // console.log(res)
+              if (res.status === 200) {
+                this.$message({
+                  type: 'success',
+                  message: '删除成功！'
+                })
+                // 刷新列表
+                this.getBrandsList()
+              }
+            })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+    },
     getBrandsList() {
       this.brandsListMapApi.list({
         page: this.pageNav.pageNo,
@@ -112,12 +141,10 @@ export default {
         })
     },
     handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`)
       this.pageNav.pageSize = val
       this.getBrandsList()
     },
     handleCurrentChange(val) {
-      // console.log(`当前页: ${val}`)
       this.pageNav.pageNo = val
       this.getBrandsList()
     }
