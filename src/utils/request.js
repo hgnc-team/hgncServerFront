@@ -38,9 +38,7 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    // console.log(response)
     if (res.status !== 200) {
-      // alert('OK')
       return Promise.reject('error')
     } else {
       return response.data
@@ -71,9 +69,29 @@ service.interceptors.response.use(
     // }
   },
   error => {
-    console.log('err' + error) // for debug
+    console.log(error)
+    const res = error.response.data
+    if (res.status === 401) {
+      // token超时了，需要刷新token,重新发起请求
+      if (res.data.code === 'RF') {
+        store.dispatch('RefreshToken').then(token => {
+          // 重新发起原请求
+          return new Promise((resolve, reject) => {
+            service.request(error.response.config)
+              .then(() => {
+                resolve()
+              })
+          })
+        })
+      } else if (res.data.code === 'FF' || res.data.code === 'SF' || res.data.code === 'OE' || res.data.code === 'ER') {
+        store.dispatch('FedLogOut').then(() => {
+          location.reload() // 为了重新实例化vue-router对象 避免bug
+        })
+      }
+      return Promise.reject(res.data.msg)
+    }
     Message({
-      message: error.message,
+      message: res.data.msg,
       type: 'error',
       duration: 5 * 1000
     })

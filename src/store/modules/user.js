@@ -1,4 +1,4 @@
-import { loginByUsername, logout } from '@/api/login'
+import { loginByUsername, logout, refreshToken } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
@@ -139,8 +139,22 @@ const user = {
         removeToken()
         resolve()
       })
-    }
+    },
 
+    // 刷新用户token
+    RefreshToken({ commit, state }) {
+      return new Promise((resolve, reject) => {
+        refreshToken().then(res => {
+          if (res.status === 200 && res.data.token) {
+            commit('SET_TOKEN', res.data.token)
+            setToken(res.data.token)
+            resolve(state.token)
+          } else {
+            resolve(state.token)
+          }
+        })
+      })
+    }
     // 动态修改权限
     // ChangeRoles({ commit, dispatch }, role) {
     //   return new Promise(resolve => {

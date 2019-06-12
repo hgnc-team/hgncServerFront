@@ -27,3 +27,12 @@ export function getUserInfo(userId) {
   })
 }
 
+// 2019-06-04
+// http://yapi.maiyidesan.cn:3000/project/15/interface/api/435
+export function refreshToken() {
+  return request({
+    url: '/v1/api/user/refleshToken',
+    method: 'post'
+  })
+}
+
