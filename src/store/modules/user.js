@@ -1,4 +1,4 @@
-import { loginByUsername, logout, refreshToken } from '@/api/login'
+import { loginByUsername, logout, refreshToken, getUserInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
@@ -60,7 +60,6 @@ const user = {
           const data = response.data
           commit('SET_TOKEN', data.token)
           commit('SET_NAME', data.user.phone) // 已手机号码，作为用户名
-          commit('SET_ROLES', ['admin']) // 后台没有返回用户角色，前台暂时写明角色
           // 用户的id
           commit('SET_ID', data.user.id)
           setToken(response.data.token)
@@ -70,37 +69,37 @@ const user = {
         })
       })
     },
-    // 获取用户信息
-    // GetUserInfo({ commit, state }) {
-    //   return new Promise((resolve, reject) => {
-
-    //   })
-    // }
     // 获取用户信息,没有使用
-    // GetUserInfo({ commit, state }) {
-    //   return new Promise((resolve, reject) => {
-    //     getUserInfo(state.token).then(response => {
-    //       // 由于mockjs 不支持自定义状态码只能这样hack
-    //       if (!response.data) {
-    //         reject('Verification failed, please login again.')
-    //       }
-    //       const data = response.data
-
-    //       if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-    //         commit('SET_ROLES', data.roles)
-    //       } else {
-    //         reject('getInfo: roles must be a non-null array!')
-    //       }
-
-    //       commit('SET_NAME', data.name)
-    //       commit('SET_AVATAR', data.avatar)
-    //       commit('SET_INTRODUCTION', data.introduction)
-    //       resolve(response)
-    //     }).catch(error => {
-    //       reject(error)
-    //     })
-    //   })
-    // },
+    GetUserInfo({ commit, state }) {
+      return new Promise((resolve, reject) => {
+        // debugger
+        getUserInfo().then(response => {
+          // 由于mockjs 不支持自定义状态码只能这样hack
+          // if (!response.data) {
+          //   reject('Verification failed, please login again.')
+          // }
+          const data = response.data
+          // 此法判断是管理员登录
+          if (data.phone === 'admin') {
+            commit('SET_ROLES', ['admin'])
+          } else {
+            commit('SET_ROLES', [])
+          }
+          // if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
+          //   commit('SET_ROLES', data.roles)
+          // } else {
+          //   reject('getInfo: roles must be a non-null array!')
+          // }
+          commit('SET_NAME', data.phone)
+          commit('SET_ID', data.id)
+          // commit('SET_AVATAR', data.avatar)
+          // commit('SET_INTRODUCTION', data.introduction)
+          resolve(response)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
 
     // 第三方验证登录
     // LoginByThirdparty({ commit, state }, code) {
