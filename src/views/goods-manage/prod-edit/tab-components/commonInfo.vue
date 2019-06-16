@@ -426,11 +426,12 @@ export default {
           this.commonInfoMapApi.edit({
             id: this.id,
             title: this.form.prodName,
-            type: this.form.cateId,
+            type: this.form.cateId.join(';'),
             price: this.form.price,
             standardTitle: '',
             // pointRate缺失
             // pointRate: this.,
+            inventory: this.form.stock,
             detail: '',
             flowImages: [],
             detailImages: [],
