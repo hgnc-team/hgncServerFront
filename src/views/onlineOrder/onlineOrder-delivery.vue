@@ -123,6 +123,19 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <div class="pageNavWrap">
+        <el-pagination
+          :current-page="pageNav.pageNo"
+          :page-sizes="[10, 20, 50, 100]"
+          :page-size="pageNav.pageSize"
+          :total="pageNav.total"
+          layout="total, sizes, prev, pager, next, jumper"
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </div>
     </el-main>
   </el-container>
 </template>
@@ -130,6 +143,7 @@
 <script>
 import tableSheme from './onlineOrder-delivery-table-sheme'
 import goodsTableCustomTd from '@/components/pyTableCustomTd/goodsTableCustomTd'
+import { getOrderList } from '@/api/orderManage'
 
 export default {
   name: 'OnlineOrderDelivery',
@@ -138,6 +152,14 @@ export default {
   },
   data() {
     return {
+      // 当前选择的记录id
+      currentId: '',
+      // 分页导航
+      pageNav: {
+        total: 0,
+        pageNo: 1,
+        pageSize: 10
+      },
       // 列表数据
       tableData: [],
       // 订单列表sheme
@@ -151,6 +173,9 @@ export default {
         sellerKeyWord: '',
         // 买家搜索关键字
         customerKeyWords: ''
+      },
+      orderManageMapApi: {
+        query: getOrderList
       },
       preList: {
         orderStatus: [
@@ -176,6 +201,52 @@ export default {
           }
         ]
       }
+    }
+  },
+  mounted() {
+    this.geOrdersListByPageNo()
+  },
+  methods: {
+    geOrdersListByPageNo() {
+      this.orderManageMapApi
+        .query({
+          page: this.pageNav.pageNo,
+          pageSize: this.pageNav.pageSize
+        })
+        .then(res => {
+          // console.log(res)
+          const tempArr = []
+          if (res.status === 200) {
+            // 设置分页
+            this.pageNav.total = res.data.total
+            res.data.data.forEach(o => {
+              tempArr.push({
+                orderId: o.id,
+                sellerName: '无此数据记录',
+                orderTime: o.timestamp,
+                buyerInfo: `收件人： ${o.receiver}    联系电话： ${o.phone}    收件地址: ${o.province +
+                  o.city +
+                  o.region +
+                  o.detail}`,
+                totalPrice: o.totalPrice,
+                totalPay: o.totalPrice,
+                status: o.status
+              })
+            })
+            this.tableData = tempArr
+          }
+        })
+    },
+    // 翻页动作
+    handleSizeChange(val) {
+      // console.log(`每页 ${val} 条`)
+      this.pageNav.pageSize = val
+      this.geOrdersListByPageNo()
+    },
+    handleCurrentChange(val) {
+      // console.log(`当前页: ${val}`)
+      this.pageNav.pageNo = val
+      this.geOrdersListByPageNo()
     }
   }
 }

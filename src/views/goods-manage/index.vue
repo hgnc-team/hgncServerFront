@@ -11,22 +11,26 @@
             <!--全部/已上架/未上架/自营 begin-->
             <ul class="nav nav-pills py-nav">
               <li class="active">
-                <a href="javascript:void(0)">全部
+                <a href="javascript:void(0)">
+                  全部
                   <span class="badge badge-info use-plugins-num">18</span>
                 </a>
               </li>
               <li>
-                <a href="javascript:void(0)">已上架
+                <a href="javascript:void(0)">
+                  已上架
                   <span class="badge badge-info use-plugins-num">18</span>
                 </a>
               </li>
               <li>
-                <a href="javascript:void(0)">未上架
+                <a href="javascript:void(0)">
+                  未上架
                   <span class="badge badge-info use-plugins-num">18</span>
                 </a>
               </li>
               <li>
-                <a href="javascript:void(0)">自营
+                <a href="javascript:void(0)">
+                  自营
                   <span class="badge badge-info use-plugins-num">18</span>
                 </a>
               </li>
@@ -35,10 +39,20 @@
           </el-col>
           <el-col :span="12">
             <el-form-item>
-              <el-input v-model="mainForm.sellerKeyWord" placeholder="请输入商家关键字" size="mini" clearable />
+              <el-input
+                v-model="mainForm.sellerKeyWord"
+                placeholder="请输入商家关键字"
+                size="mini"
+                clearable
+              />
             </el-form-item>
             <el-form-item>
-              <el-input v-model="mainForm.goodsKeyWord" placeholder="请输入商品关键字" size="mini" clearable />
+              <el-input
+                v-model="mainForm.goodsKeyWord"
+                placeholder="请输入商品关键字"
+                size="mini"
+                clearable
+              />
             </el-form-item>
 
             <el-form-item>
@@ -52,10 +66,15 @@
             <el-form-item>
               <el-dropdown @command="handleCommand">
                 <el-button type="default" size="mini">
-                  <font-awesome-icon :icon="['fas', 'cog']" fixed-width />批量操作<i class="el-icon-arrow-down el-icon--right" />
+                  <font-awesome-icon :icon="['fas', 'cog']" fixed-width />批量操作
+                  <i class="el-icon-arrow-down el-icon--right" />
                 </el-button>
                 <el-dropdown-menu slot="dropdown" size="mini">
-                  <el-dropdown-item v-for="item in preList.batchOpList" :command="item" :key="item.value">
+                  <el-dropdown-item
+                    v-for="item in preList.batchOpList"
+                    :command="item"
+                    :key="item.value"
+                  >
                     <font-awesome-icon :icon="[item.iconType, item.icon]" fixed-width />
                     {{ item.label }}
                   </el-dropdown-item>
@@ -63,14 +82,36 @@
               </el-dropdown>
             </el-form-item>
             <el-form-item>
-              <el-select v-model="mainForm.reviewStatus" size="mini" placeholder="请选择审核状态" value-key="value" clearable>
-                <el-option v-for="item in preList.reviewStatusList" :key="item.value" :label="item.label" :value="item" />
+              <el-select
+                v-model="mainForm.reviewStatus"
+                size="mini"
+                placeholder="请选择审核状态"
+                value-key="value"
+                clearable
+              >
+                <el-option
+                  v-for="item in preList.reviewStatusList"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item"
+                />
               </el-select>
             </el-form-item>
 
             <el-form-item>
-              <el-select v-model="mainForm.seller" size="mini" placeholder="请选商家" value-key="value" clearable>
-                <el-option v-for="item in preList.sellerList" :key="item.value" :label="item.label" :value="item" />
+              <el-select
+                v-model="mainForm.seller"
+                size="mini"
+                placeholder="请选商家"
+                value-key="value"
+                clearable
+              >
+                <el-option
+                  v-for="item in preList.sellerList"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item"
+                />
               </el-select>
             </el-form-item>
 
@@ -85,7 +126,12 @@
             </el-form-item>
             <el-form-item>
               <el-select v-model="mainForm.selectedBrand" placeholder="请选择品牌" size="mini" clearable>
-                <el-option v-for="item in preList.brandList" :key="item.value" :label="item.label" :value="item.value" />
+                <el-option
+                  v-for="item in preList.brandList"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
               </el-select>
             </el-form-item>
           </el-col>
@@ -98,11 +144,27 @@
         header-row-class-name="py-table-header"
         stripe
         @cell-mouse-enter="handleCellMouseEnter"
-        @cell-mouse-leave="handleCellMouseLeave">
+        @cell-mouse-leave="handleCellMouseLeave"
+      >
         <el-table-column type="selection" />
-        <el-table-column v-for="item in tableSheme" :key="item.prop" :prop="item.prop" :label="item.name" :sortable="item.sortable">
+        <el-table-column
+          v-for="item in tableSheme"
+          :key="item.prop"
+          :prop="item.prop"
+          :label="item.name"
+          :sortable="item.sortable"
+        >
           <template slot-scope="scope">
-            <goods-table-custom-td :table-user-name="'GoodsManageIndex'" :current-id="currentId" :prop="item.prop" :name="item.name" :link-color="item.linkColor" :type="item.type" :data="scope.row" :is-row-menu-wrap-cell="item.isRowMenuWrapCell || false"/>
+            <goods-table-custom-td
+              :table-user-name="'GoodsManageIndex'"
+              :current-id="currentId"
+              :prop="item.prop"
+              :name="item.name"
+              :link-color="item.linkColor"
+              :type="item.type"
+              :data="scope.row"
+              :is-row-menu-wrap-cell="item.isRowMenuWrapCell || false"
+            />
           </template>
         </el-table-column>
       </el-table>
@@ -115,7 +177,8 @@
           layout="total, sizes, prev, pager, next, jumper"
           background
           @size-change="handleSizeChange"
-          @current-change="handleCurrentChange" />
+          @current-change="handleCurrentChange"
+        />
       </div>
     </el-main>
     <router-view />
@@ -342,26 +405,27 @@ export default {
   },
   methods: {
     getProdsListByPageNo() {
-      this.goodsManageMapApi.query({
-      // type: "39",
-        page: this.pageNav.pageNo,
-        pageSize: this.pageNav.pageSize
-        // 一下排序字段要么传，要么不传
-        // orderBy: [
-        //   [
-        //     'price',
-        //     'desc'
-        //   ]
-        // ]
-      }).then(res => {
-        // console.log(res)
-        const tempArr = []
-        if (res.status === 200) {
-          res.data.data.forEach(o => {
+      this.goodsManageMapApi
+        .query({
+          // type: "39",
+          page: this.pageNav.pageNo,
+          pageSize: this.pageNav.pageSize
+          // 一下排序字段要么传，要么不传
+          // orderBy: [
+          //   [
+          //     'price',
+          //     'desc'
+          //   ]
+          // ]
+        })
+        .then(res => {
+          // console.log(res)
+          const tempArr = []
+          if (res.status === 200) {
             // 设置分页
             this.pageNav.total = res.data.total
-            tempArr.push(
-              {
+            res.data.data.forEach(o => {
+              tempArr.push({
                 id: o.id,
                 thumb: `${BASE_IMAGE_URL}goods/${o.id}/${o.imageUrl}`,
                 type: o.type.split(';'),
@@ -376,12 +440,11 @@ export default {
                 hot: true,
                 inventory: o.inventory,
                 sort: 0
-              }
-            )
-          })
-          this.tableData = tempArr
-        }
-      })
+              })
+            })
+            this.tableData = tempArr
+          }
+        })
     },
     handleSizeChange(val) {
       // console.log(`每页 ${val} 条`)
