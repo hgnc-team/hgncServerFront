@@ -4,6 +4,7 @@
 @import './element-ui.scss';
 @import './sidebar.scss';
 @import './btn.scss';
+@import './bootstrap/stylesheets/_bootstrap.scss';
 
 body {
   height: 100%;
@@ -214,6 +215,21 @@ code {
 .m_b0 {
   margin-bottom: 0px !important;
 }
+.w100 {
+  width: 100px;
+}
+.w80 {
+  width: 80px;
+}
+.w70 {
+  width: 70px;
+}
+.w50 {
+  width: 50px;
+}
+.w30 {
+  width: 30px;
+}
 
 // 公共表格样式
 table {
@@ -224,13 +240,23 @@ table {
 }
 .table {
   width: 100%;
+  thead {
+    th {
+      vertical-align: bottom;
+      background-color: #ebf2f6;
+    }
+  }
   th,
   td {
     padding: 8px;
     line-height: 20px;
     text-align: left;
-    vertical-align: top;
+    // vertical-align: top;
     border-top: 1px solid #ddd;
+  }
+
+  th {
+    text-shadow: 1px 1px 0 #fff;
   }
 }
 
@@ -252,5 +278,25 @@ table {
         width: 15%;
       }
     }
+  }
+}
+
+.table_vam {
+  th,
+  td {
+    vertical-align: middle !important;
+  }
+}
+
+.order-table-list {
+  .table-list {
+    th {
+      text-align: center;
+    }
+  }
+}
+.table-list {
+  td {
+    text-align: center;
   }
 }

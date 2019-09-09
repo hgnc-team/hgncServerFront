@@ -277,14 +277,14 @@
         <table class="table table-striped table_vam m_b0 order-table-list">
           <thead>
             <tr class="table-list">
-              <th class="w80">商品缩略图</th>
+              <th class="w100">商品缩略图</th>
               <th>商品名称 [ 品牌 ]</th>
               <th class="w80">货号</th>
               <th class="w70">货品号</th>
               <th class="w100">价格</th>
-              <th class="w30">数量</th>
+              <th class="w70">数量</th>
               <th class="w100">属性</th>
-              <th class="w50">库存</th>
+              <th class="w70">库存</th>
               <th class="w100">小计</th>
             </tr>
           </thead>
