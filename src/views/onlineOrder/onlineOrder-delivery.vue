@@ -101,6 +101,8 @@
         style="width:100%;"
         header-row-class-name="py-table-header"
         stripe
+        @cell-mouse-enter="handleCellMouseEnter"
+        @cell-mouse-leave="handleCellMouseLeave"
       >
         <el-table-column
           v-for="item in tableSheme"
@@ -137,10 +139,12 @@
         />
       </div>
     </el-main>
+    <router-view />
   </el-container>
 </template>
 
 <script>
+import _ from 'lodash'
 import tableSheme from './onlineOrder-delivery-table-sheme'
 import goodsTableCustomTd from '@/components/pyTableCustomTd/goodsTableCustomTd'
 import { getOrderList } from '@/api/orderManage'
@@ -221,7 +225,7 @@ export default {
             this.pageNav.total = res.data.total
             res.data.data.forEach(o => {
               tempArr.push({
-                orderId: o.id,
+                id: o.id,
                 sellerName: '无此数据记录',
                 orderTime: o.timestamp,
                 buyerInfo: `收件人： ${o.receiver}    联系电话： ${o.phone}    收件地址: ${o.province +
@@ -247,6 +251,23 @@ export default {
       // console.log(`当前页: ${val}`)
       this.pageNav.pageNo = val
       this.geOrdersListByPageNo()
+    },
+    // 鼠标经过单元格
+    handleCellMouseEnter(row, column, cell, event) {
+      _.forEach(this.tableSheme, (value, index) => {
+        if ('isRowMenuWrapCell' in value) {
+          value.isRowMenuWrapCell = true
+          this.currentId = row.id
+        }
+      })
+    },
+    // 鼠标离开
+    handleCellMouseLeave(row, column, cell, event) {
+      _.forEach(this.tableSheme, (value, index) => {
+        if ('isRowMenuWrapCell' in value) {
+          value.isRowMenuWrapCell = false
+        }
+      })
     }
   }
 }

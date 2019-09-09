@@ -1,10 +1,11 @@
 export default [
   {
-    prop: 'orderId',
+    prop: 'id',
     name: '订单编号',
     type: 'text',
     editable: false,
-    sortable: false
+    sortable: false,
+    isRowMenuWrapCell: false
   },
   {
     prop: 'sellerName',

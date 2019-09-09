@@ -2,27 +2,22 @@
   <div>
     <!--显示缩略图-->
     <span v-if="type === 'image'" class="thumb-img-wrap">
-      <el-popover
-        placement="right"
-        popper-class="editablePopper"
-        trigger="click">
-        <img :src="data[prop]" style="width:180px;height:180px;z-index:11">
-        <span slot="reference" class="editable-click cursor_pointer" ><img :src="data[prop]"></span>
+      <el-popover placement="right" popper-class="editablePopper" trigger="click">
+        <img :src="data[prop]" style="width:180px;height:180px;z-index:11" />
+        <span slot="reference" class="editable-click cursor_pointer">
+          <img :src="data[prop]" />
+        </span>
       </el-popover>
     </span>
     <!--带编辑功能文本字段-->
     <span v-else-if="type === 'input'">
-      <el-popover
-        placement="top"
-        popper-class="editablePopper"
-        trigger="click"
-        @hide="resetData">
+      <el-popover placement="top" popper-class="editablePopper" trigger="click" @hide="resetData">
         <div class="editable-container">
           <h3 class="popover-title">请输入{{ name }}</h3>
           <div class="popover-content">
             <el-form :inline="true" :model="data" class="editable-form-inline">
-              <el-form-item label="">
-                <el-input v-model="data[prop]" size="mini" clearable/>
+              <el-form-item label>
+                <el-input v-model="data[prop]" size="mini" clearable />
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" size="mini">确定</el-button>
@@ -33,27 +28,79 @@
             </el-form>
           </div>
         </div>
-        <span slot="reference" :title="data[prop]" class="editable-click cursor_pointer" style="display:inline-block;max-width:15em;height:2em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">{{ data[prop] }}</span>
+        <span
+          slot="reference"
+          :title="data[prop]"
+          class="editable-click cursor_pointer"
+          style="display:inline-block;max-width:15em;height:2em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"
+        >{{ data[prop] }}</span>
       </el-popover>
-      <br>
+      <br />
       <!--特殊的文本下面 展示一行操作按钮 ecjia的设计-->
       <span v-if="isRowMenuWrapCell && data.id === currentId">
         <ul v-if="tableUserName === 'GoodsManageIndex'" class="goodsOpMenu">
-          <li><router-link :to="{name:'prodEditIndex', params: data, query: {tabIndex: 0, prodId: data.id}}">编辑</router-link></li>
-          <li><router-link :to="{name:'prodEditIndex', params: data, query: {tabIndex: 2, prodId: data.id}}">商品属性</router-link></li>
-          <li><router-link :to="{name:'prodEditIndex', params: data, query: {tabIndex: 3, prodId: data.id}}">商品相册</router-link></li>
-          <li><router-link :to="{name:'prodEditIndex', params: data, query: {tabIndex: 4, prodId: data.id}}">关联商品</router-link></li>
-          <li><router-link :to="{name:'prodEditIndex', params: data, query: {tabIndex: 5, prodId: data.id}}">关联文章</router-link></li>
-          <li><a href="jvascript:void(0)">预览</a></li>
-          <li><a href="jvascript:void(0)">导入商品库</a></li>
-          <li><a href="jvascript:void(0)" class="py-text-danger" @click="fakeDel(data)">删除</a></li>
+          <li>
+            <router-link
+              :to="{name:'prodEditIndex', params: data, query: {tabIndex: 0, prodId: data.id}}"
+            >编辑</router-link>
+          </li>
+          <li>
+            <router-link
+              :to="{name:'prodEditIndex', params: data, query: {tabIndex: 2, prodId: data.id}}"
+            >商品属性</router-link>
+          </li>
+          <li>
+            <router-link
+              :to="{name:'prodEditIndex', params: data, query: {tabIndex: 3, prodId: data.id}}"
+            >商品相册</router-link>
+          </li>
+          <li>
+            <router-link
+              :to="{name:'prodEditIndex', params: data, query: {tabIndex: 4, prodId: data.id}}"
+            >关联商品</router-link>
+          </li>
+          <li>
+            <router-link
+              :to="{name:'prodEditIndex', params: data, query: {tabIndex: 5, prodId: data.id}}"
+            >关联文章</router-link>
+          </li>
+          <li>
+            <a href="jvascript:void(0)">预览</a>
+          </li>
+          <li>
+            <a href="jvascript:void(0)">导入商品库</a>
+          </li>
+          <li>
+            <a href="jvascript:void(0)" class="py-text-danger" @click="fakeDel(data)">删除</a>
+          </li>
         </ul>
         <ul v-if="tableUserName === 'GoodsRepoList'" class="goodsOpMenu">
-          <li><router-link :to="{name:'prodEditIndex', params: data, query: {tabIndex: 0, prodId: data.id}}">编辑</router-link></li>
-          <li><router-link :to="{name:'prodEditIndex', params: data, query: {tabIndex: 2, prodId: data.id}}">商品属性</router-link></li>
-          <li><router-link :to="{name:'prodEditIndex', params: data, query: {tabIndex: 3, prodId: data.id}}">商品相册</router-link></li>
-          <li><a href="jvascript:void(0)">预览</a></li>
-          <li><a href="jvascript:void(0)" class="py-text-danger" @click="fakeDel(data)">删除</a></li>
+          <li>
+            <router-link
+              :to="{name:'prodEditIndex', params: data, query: {tabIndex: 0, prodId: data.id}}"
+            >编辑</router-link>
+          </li>
+          <li>
+            <router-link
+              :to="{name:'prodEditIndex', params: data, query: {tabIndex: 2, prodId: data.id}}"
+            >商品属性</router-link>
+          </li>
+          <li>
+            <router-link
+              :to="{name:'prodEditIndex', params: data, query: {tabIndex: 3, prodId: data.id}}"
+            >商品相册</router-link>
+          </li>
+          <li>
+            <a href="jvascript:void(0)">预览</a>
+          </li>
+          <li>
+            <a href="jvascript:void(0)" class="py-text-danger" @click="fakeDel(data)">删除</a>
+          </li>
+        </ul>
+        <ul v-if="tableUserName ==='OnlineOrderDelivery'" class="goodsOpMenu">
+          <li>
+            <router-link :to="123">查看</router-link>
+          </li>
         </ul>
       </span>
     </span>
@@ -66,21 +113,35 @@
     <!--普通文本字段-->
     <span v-else-if="type === 'text'">
       <span :class="{'py-text-danger': linkColor === 'danger'}">{{ data[prop] }}</span>
+      <br />
+      <span v-if="isRowMenuWrapCell && data.id === currentId">
+        <ul v-if="tableUserName ==='OnlineOrderDelivery'" class="goodsOpMenu">
+          <li>
+            <router-link :to="{name:'onlineOrderDetail'}">查看</router-link>
+          </li>
+        </ul>
+      </span>
     </span>
     <!--下拉列表字段-->
     <span v-else-if="type === 'select'">
-      <el-popover
-        placement="top"
-        popper-class="editablePopper"
-        trigger="click"
-        @hide="resetData">
+      <el-popover placement="top" popper-class="editablePopper" trigger="click" @hide="resetData">
         <div class="editable-container">
           <h3 class="popover-title">请输入{{ name }}</h3>
           <div class="popover-content">
             <el-form :inline="true" :model="data" class="editable-form-inline">
-              <el-form-item label="">
-                <el-select v-model="data.reviewStatus" size="mini" placeholder="请选择审核状态" value-key="value">
-                  <el-option v-for="item in preList.reviewStatusList" :key="item.value" :label="item.label" :value="item" />
+              <el-form-item label>
+                <el-select
+                  v-model="data.reviewStatus"
+                  size="mini"
+                  placeholder="请选择审核状态"
+                  value-key="value"
+                >
+                  <el-option
+                    v-for="item in preList.reviewStatusList"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item"
+                  />
                 </el-select>
               </el-form-item>
               <el-form-item>
@@ -185,19 +246,16 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          this.goodOperMapApi.fakeDel([
-            data.id
-          ])
-            .then(res => {
-              console.log(res)
-              if (res.status === 200) {
-                this.$message({
-                  type: 'success',
-                  message: '删除成功，已移入回收站'
-                })
-                this.$root.eventHub.$emit('refreshGoodsListEvent')
-              }
-            })
+          this.goodOperMapApi.fakeDel([data.id]).then(res => {
+            console.log(res)
+            if (res.status === 200) {
+              this.$message({
+                type: 'success',
+                message: '删除成功，已移入回收站'
+              })
+              this.$root.eventHub.$emit('refreshGoodsListEvent')
+            }
+          })
         })
         .catch(() => {
           this.$message({
@@ -211,53 +269,53 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.thumb-img-wrap{
-  display:inline-block;
-  img{
-    display:block;
+.thumb-img-wrap {
+  display: inline-block;
+  img {
+    display: block;
     width: 60px;
     height: 60px;
-    border:1px solid #ddd;
-    border-radius:4px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.055);
-    transition: all .2s ease-in-out;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+    transition: all 0.2s ease-in-out;
   }
 }
 
-ul.goodsOpMenu{
-    list-style:none;
-    display: inline-block;
-    margin:0;
-    padding-left: 0;
-    word-break: keep-all;
-    width: 40em;
-    position: absolute;
-    z-index: 10;
-  li{
-    float:left;
-    a{
-      padding:0 0.5em;
-      border-right:1px solid #ddd;
+ul.goodsOpMenu {
+  list-style: none;
+  display: inline-block;
+  margin: 0;
+  padding-left: 0;
+  word-break: keep-all;
+  width: 40em;
+  position: absolute;
+  z-index: 10;
+  li {
+    float: left;
+    a {
+      padding: 0 0.5em;
+      border-right: 1px solid #ddd;
     }
-     &:last-child{
-        a{
-          border-right:none;
-        }
+    &:last-child {
+      a {
+        border-right: none;
       }
+    }
   }
 }
 
-.editable-click{
+.editable-click {
   text-decoration: none;
   border-bottom: 1px dotted #0088cc;
 }
-.cursor_pointer{
+.cursor_pointer {
   cursor: pointer;
 }
 
-.editable-form-inline{
-  .el-form-item{
-    margin-bottom:0;
+.editable-form-inline {
+  .el-form-item {
+    margin-bottom: 0;
   }
 }
 </style>
