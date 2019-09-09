@@ -1,7 +1,14 @@
 <template>
   <el-main class="order-detail-wrap">
     <div>
-      <h3 class="heading">配送订单信息</h3>
+      <h3 class="heading">
+        配送订单信息
+        <router-link to="/onlineOrderManage/index">
+          <el-button type="default" size="mini" style="float:right;margin-top:-3px;">
+            <font-awesome-icon :icon="['fas', 'reply']" />返回配送订单列表
+          </el-button>
+        </router-link>
+      </h3>
     </div>
     <!--步骤条 start-->
     <div class="order-status-base order-five-base">
@@ -399,6 +406,102 @@
       </el-collapse-item>
     </el-collapse>
     <!--商品信息 end-->
+
+    <!--费用信息 start-->
+    <el-collapse v-model="activeNames[5]" class="custom-collapse">
+      <el-collapse-item title="费用信息" name="1">
+        <table class="table m_b0">
+          <tbody>
+            <tr>
+              <td>
+                <div align="right">
+                  商品总金额：
+                  <strong>￥301.90</strong>
+                  - 折扣：
+                  <strong>￥30.19</strong>
+                  + 发票税额：
+                  <strong>￥0.00</strong>
+                  + 配送费用：
+                  <strong>￥0.00</strong>
+                  + 保价费用：
+                  <strong>￥0.00</strong>
+                  + 支付费用：
+                  <strong>￥0.00</strong>
+                  + 包装费用：
+                  <strong>￥0.00</strong>
+                  + 贺卡费用：
+                  <strong>￥0.00</strong>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div align="right">
+                  = 订单总金额：
+                  <strong>￥271.71</strong>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div align="right">
+                  - 已付款金额：
+                  <strong>￥0.00</strong>
+                  - 使用余额：
+                  <strong>￥271.71</strong>
+                  - 使用积分：
+                  <strong>￥0.00</strong>
+                  - 使用红包：
+                  <strong>￥0.00</strong>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div align="right">
+                  = 应付款金额：
+                  <strong>￥0.00</strong>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </el-collapse-item>
+    </el-collapse>
+    <!--费用信息 end-->
+
+    <!--操作记录 start-->
+    <el-collapse v-model="activeNames[6]" class="custom-collapse">
+      <el-collapse-item title="操作记录" name="1">
+        <table class="table table-striped m_b0">
+          <thead>
+            <tr>
+              <th class="w150">
+                <strong>操作者</strong>
+              </th>
+              <th class="w180">
+                <strong>操作时间</strong>
+              </th>
+              <th class="w150">
+                <strong>订单状态</strong>
+              </th>
+              <th class="w150">
+                <strong>操作备注</strong>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>买家</td>
+              <td>2018-03-23 08:26:18</td>
+              <td>已接单</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </el-collapse-item>
+    </el-collapse>
+    <!--操作记录 end-->
   </el-main>
 </template>
 
@@ -423,6 +526,10 @@ export default {
         // 收货人信息
         ['1'],
         // 商品信息
+        ['1'],
+        // 费用信息
+        ['1'],
+        // 操作记录
         ['1']
       ]
     }
