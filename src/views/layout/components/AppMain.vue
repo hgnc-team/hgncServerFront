@@ -2,7 +2,7 @@
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
       <keep-alive :include="cachedViews">
-        <router-view :key="key"/>
+        <router-view :key="key" />
       </keep-alive>
     </transition>
   </section>
@@ -30,7 +30,8 @@ export default {
   position: relative;
   overflow: hidden;
   /*一屏高度,传递到子元素亦是一屏，不做次设置，即使子元素设置height:100%,无法生效，占满一屏*/
-  display:flex;
+  display: flex;
+  height: calc(100% - 100px);
 }
 </style>
 
